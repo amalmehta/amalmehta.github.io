@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://amalmehta.github.io/PortfolioWebsite/sitemap.xml
