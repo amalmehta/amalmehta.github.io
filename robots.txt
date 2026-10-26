@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://amalmehta.github.io/PortfolioWebsite/sitemap.xml
+Sitemap: https://amalmehta.com/sitemap.xml
