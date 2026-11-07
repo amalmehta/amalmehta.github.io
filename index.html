@@ -144,6 +144,107 @@
 }
   </script>
   <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Apps you can use",
+      "itemListElement": [
+          {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "LLM Understander",
+                  "description": "Teaches how a large language model is trained, from tokens to RLHF, and how it becomes an agent, with a real tiny transformer training live on your Mac.",
+                  "applicationCategory": "EducationalApplication",
+                  "operatingSystem": "macOS 14 or later",
+                  "offers": {
+                      "@type": "Offer",
+                      "price": "0",
+                      "priceCurrency": "USD"
+                  },
+                  "downloadUrl": "https://github.com/amalmehta/LLMUnderstander/releases/latest/download/LLM-Understander.zip",
+                  "url": "https://amalmehta.github.io/LLMUnderstander/",
+                  "author": {
+                      "@type": "Person",
+                      "name": "Amal Mehta",
+                      "url": "https://amalmehta.com/"
+                  }
+              }
+          },
+          {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Messaging Graph",
+                  "description": "Reads your Messages history on your Mac and shows who you’ve drifted from, plans that never got a date and messages worth sending; nothing leaves your Mac.",
+                  "applicationCategory": "LifestyleApplication",
+                  "operatingSystem": "macOS 13 or later",
+                  "offers": {
+                      "@type": "Offer",
+                      "price": "0",
+                      "priceCurrency": "USD"
+                  },
+                  "downloadUrl": "https://github.com/amalmehta/MessagingGraph/releases/latest/download/Messaging-Graph.zip",
+                  "url": "https://github.com/amalmehta/MessagingGraph",
+                  "author": {
+                      "@type": "Person",
+                      "name": "Amal Mehta",
+                      "url": "https://amalmehta.com/"
+                  }
+              }
+          },
+          {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "AI Advances",
+                  "description": "Tracks where AI is heading: the latest models, what each lab is working on, and dated forecasts that update themselves every morning from public data.",
+                  "applicationCategory": "ReferenceApplication",
+                  "operatingSystem": "macOS 14 or later",
+                  "offers": {
+                      "@type": "Offer",
+                      "price": "0",
+                      "priceCurrency": "USD"
+                  },
+                  "downloadUrl": "https://github.com/amalmehta/ai-advances/releases/latest",
+                  "url": "https://amalmehta.github.io/ai-advances/",
+                  "author": {
+                      "@type": "Person",
+                      "name": "Amal Mehta",
+                      "url": "https://amalmehta.com/"
+                  }
+              }
+          },
+          {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Avengers Assemble",
+                  "description": "Give it a goal and a company of AI agents gets to work, while multi-armed bandits learn which specialist, on which Claude model, should do each task.",
+                  "applicationCategory": "BusinessApplication",
+                  "operatingSystem": "macOS 14 or later",
+                  "offers": {
+                      "@type": "Offer",
+                      "price": "0",
+                      "priceCurrency": "USD"
+                  },
+                  "downloadUrl": "https://github.com/amalmehta/AvengersAssemble/releases/latest/download/AvengersAssemble.zip",
+                  "url": "https://amalmehta.github.io/AvengersAssemble/",
+                  "author": {
+                      "@type": "Person",
+                      "name": "Amal Mehta",
+                      "url": "https://amalmehta.com/"
+                  }
+              }
+          }
+      ]
+  }
+  </script>
   <script src="email.js" defer></script>
   <script src="mischief.js" defer></script>
   <script src="anchors.js" defer></script>
@@ -338,9 +439,14 @@
         <div>
           <h3>Independent ML &amp; Robotics Research</h3>
           <!-- Saved for later: <p class="where">San Francisco Bay Area</p> -->
-          <p>The result that hooked me: in a toy repair task, GRPO on visible tests raised the pass rate from 35% to 58% while true correctness fell from 31% to 2%, because the agent learned to delete 98% of the branches no test reaches. My focus is RL post-training when rewards can’t be checked.</p><!-- once: Running four research programs end to end on my own: decoding hand movement from motor-cortex spikes, post-training a small transformer with GRPO and DPO, testing sim-to-real transfer of meta-learned drone control, and training a Go engine from scratch by self-play. -->
+          <p>My focus is RL post-training when rewards can’t be checked. The result that hooked me: trained only on visible tests, a code agent’s pass rate went up while its real correctness fell to 2%, because it learned to delete the code no test reaches.</p>
+          <p>I wrote down a prediction before each of 50 follow-ups. Random audits only delayed the hack, while choosing which episodes to audit held it off. RL never beat the fine-tuned starting point on honest repair.</p>
+          <p>Alongside it: a brain–computer interface decoder that keeps working on most later days without new labels, and a learned controller that halves a simulated quadrotor’s tracking error.</p>
+          <!-- Saved for later, the fuller version with every number (the resume keeps them):
+          <p>The result that hooked me: in a toy repair task, GRPO on visible tests raised the pass rate from 35% to 58% while true correctness fell from 31% to 2%, because the agent learned to delete 98% of the branches no test reaches. My focus is RL post-training when rewards can’t be checked.</p>[once: Running four research programs end to end on my own: decoding hand movement from motor-cortex spikes, post-training a small transformer with GRPO and DPO, testing sim-to-real transfer of meta-learned drone control, and training a Go engine from scratch by self-play.]
           <p>I wrote down a prediction before each of 50 follow-ups, and 15 were refuted. Auditing a random 25% of episodes delayed the hack rather than preventing it; choosing which 10% to audit held false success to 0.04, against 0.24 at random. RL still never beat the fine-tuned starting point on honest repair when the agent picks its single best answer.</p>
-          <p>Alongside it: re-centring each channel on a new day’s unlabelled spikes keeps a cursor decoder at R² 0.72 on 17 of 19 later days, against 0.42 for a linear decoder, though the two days the electrodes were re-mapped break it. In simulation, a learned residual cuts quadrotor tracking error from adaptive control’s 14.0 cm to 7.3 cm, and meta-learning adds little to it.</p><!-- Saved for later, once also: a 9×9 Go engine trained by self-play. -->
+          <p>Alongside it: re-centring each channel on a new day’s unlabelled spikes keeps a cursor decoder at R² 0.72 on 17 of 19 later days, against 0.42 for a linear decoder, though the two days the electrodes were re-mapped break it. In simulation, a learned residual cuts quadrotor tracking error from adaptive control’s 14.0 cm to 7.3 cm, and meta-learning adds little to it.</p>[Saved for later, once also: a 9×9 Go engine trained by self-play.]
+          -->
           <p>Member of the Sensorimotor AI journal club at Berkeley’s Redwood Center for Theoretical Neuroscience, and mentor to undergraduate scholars from UC Berkeley.</p>
           <p class="tags"><span class="chip">Neural decoding</span> <span class="chip">GRPO</span> <span class="chip">Sim-to-real</span> <span class="chip">Meta-learning</span></p>
         </div>
@@ -621,7 +727,7 @@
         <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg><strong>Talking to folks with strong ideas</strong></li>
       </ul>
       <p class="more">Teams of 20–50, in person 3–5 days a week, moving fast on hard technical problems.</p>
-      <p class="more">Products that have a beneficial impact on the broader world.</p>
+      <!-- Saved for later: <p class="more">Products that have a beneficial impact on the broader world.</p> -->
     </section>
   </main>
 

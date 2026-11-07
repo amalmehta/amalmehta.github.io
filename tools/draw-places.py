@@ -1216,13 +1216,68 @@ def boston():
     return svg("boston", "".join(b), ("#6ba3d6", "#f1eadc"))
 
 
+# ---------------------------------------------------------------- Edinburgh: the castle on its rock above the Old Town at dusk
+def edinburgh():
+    rng = random.Random(1124)
+    b = []
+    b.append(glow(820, 470, 700, 240, "#ffd3a1", 0.65))
+    b.append(clouds(rng, 4, 60, 200, colour="#f3d6cf", opacity=0.5))
+    # Arthur's Seat, low and far off to the right
+    b.append(poly(ridge(560, W + 40, 520, rng, [(0.45, 0.28, 1.0), (0.8, 0.18, 0.6)], 170, step=20), "#7d6f8c", opacity="0.75"))
+    # Castle Rock: a sheer volcanic crag, darker toward the gardens
+    rock = [(-40, 640), (-40, 430), (60, 395), (150, 372), (250, 360), (360, 352), (470, 356), (560, 372), (640, 412), (700, 470), (760, 560), (800, 640)]
+    b.append(poly(rock, "#4b4351"))
+    for _ in range(26):  # cracks and ledges in the basalt
+        x, y = rng.uniform(40, 700), rng.uniform(420, 620)
+        b.append(f'<path d="M{x:.0f} {y:.0f} l{rng.uniform(-30, 30):.0f} {rng.uniform(18, 50):.0f}" stroke="#3a3440" stroke-width="3" opacity="0.7"/>')
+    # The castle along the top: curtain walls, the Half Moon Battery, the palace and a few towers, windows lit
+    stone, shade = "#a99f93", "#857b70"
+    b.append('<rect x="70" y="300" width="560" height="74" fill="#a99f93"/>')
+    for x in range(70, 630, 20):
+        b.append(f'<rect x="{x}" y="290" width="12" height="12" fill="{stone}"/>')
+    b.append(f'<path d="M500 374 V286 A70 26 0 0 1 640 286 V374 Z" fill="{shade}"/>')  # the Half Moon Battery
+    b.append(f'<rect x="160" y="222" width="200" height="80" fill="{stone}"/><path d="M152 224 L260 180 L368 224 Z" fill="#5f5a5e"/>')
+    b.append(f'<rect x="380" y="200" width="96" height="100" fill="{shade}"/><path d="M372 202 L428 162 L484 202 Z" fill="#5f5a5e"/>')
+    for x, w, h in ((110, 40, 120), (300, 34, 150), (440, 30, 176)):
+        b.append(f'<rect x="{x}" y="{300 - h}" width="{w}" height="{h}" fill="{stone}"/>')
+        for k in range(0, w, 10):
+            b.append(f'<rect x="{x + k}" y="{300 - h - 9}" width="6" height="10" fill="{stone}"/>')
+    b.append('<rect x="456" y="96" width="3" height="40" fill="#3b3438"/><path d="M459 98 h30 l-6 9 6 9 h-30 Z" fill="#2f5d8a"/>')
+    for x, y in ((180, 250), (220, 250), (260, 250), (300, 250), (400, 230), (430, 230), (190, 330), (260, 330), (330, 330), (400, 330), (540, 320), (590, 320), (310, 190), (450, 150)):
+        b.append(f'<rect x="{x}" y="{y}" width="11" height="18" rx="5" fill="#ffd98e"/>')
+    # The Old Town ridge running down to the right: tall tenements and a spire
+    x = 760
+    while x < W + 10:
+        w, h = rng.randint(46, 74), rng.randint(130, 210)
+        top = 560 - h
+        b.append(f'<rect x="{x}" y="{top}" width="{w}" height="{h + 80}" fill="{rng.choice(("#5a4f55", "#665a5e", "#4f4750"))}"/>')
+        b.append(poly([(x - 2, top), (x + w / 2, top - 22), (x + w + 2, top)], "#3f383d"))
+        for wy in range(top + 16, 600, 30):
+            for wx in range(x + 8, x + w - 10, 16):
+                if rng.random() < 0.45:
+                    b.append(f'<rect x="{wx}" y="{wy}" width="8" height="13" fill="#ffd98e"/>')
+        x += w
+    b.append('<rect x="930" y="300" width="34" height="140" fill="#5a4f55"/><path d="M924 302 L947 170 L970 302 Z" fill="#4a4248"/>')
+    # Princes Street Gardens below: dark trees, a path, and the gardens' lamps
+    b.append(f'<rect y="640" width="{W}" height="160" fill="#26302a"/>')
+    for _ in range(46):
+        cx, cy = rng.uniform(-20, W + 20), rng.uniform(612, 690)
+        b.append(f'<circle cx="{cx:.0f}" cy="{cy:.0f}" r="{rng.uniform(26, 44):.0f}" fill="{rng.choice(("#2f3d33", "#35473a", "#3b4f3f"))}"/>')
+    b.append(f'<path d="M0 770 C300 730 700 760 {W} 720" fill="none" stroke="#c9bfa8" stroke-width="10" opacity="0.6"/>')
+    for x in range(80, W, 160):
+        y = 770 - 50 * x / W
+        b.append(glow(x, y - 30, 30, 30, "#ffe0a3", 0.8))
+        b.append(f'<rect x="{x - 2}" y="{y - 30:.0f}" width="4" height="30" fill="#1e2420"/>')
+    return svg("edinburgh", "".join(b), ("#46557f", "#f0b991"))
+
+
 PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofoten), ("patagonia", patagonia),
           ("bhutan", bhutan), ("samarkand", samarkand), ("faroe-islands", faroe),
           ("chamonix", chamonix), ("garibaldi", garibaldi), ("glacier-national-park", glacier), ("moorea", moorea),
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:

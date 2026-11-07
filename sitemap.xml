@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Every public page; pages marked noindex (Writings until its first piece, 404) stay out. Built by tools/make-sitemap.py; the tests check this list. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://amalmehta.com/</loc><lastmod>2026-11-06</lastmod></url>
-  <url><loc>https://amalmehta.com/interests.html</loc><lastmod>2026-11-06</lastmod></url>
-  <url><loc>https://amalmehta.com/photos.html</loc><lastmod>2026-11-06</lastmod></url>
+  <url><loc>https://amalmehta.com/</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://amalmehta.com/interests.html</loc><lastmod>2026-11-07</lastmod></url>
+  <url><loc>https://amalmehta.com/photos.html</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://amalmehta.com/project-alphago.html</loc><lastmod>2026-11-06</lastmod></url>
   <url><loc>https://amalmehta.com/project-bci.html</loc><lastmod>2026-11-06</lastmod></url>
   <url><loc>https://amalmehta.com/project-drone.html</loc><lastmod>2026-11-06</lastmod></url>
   <url><loc>https://amalmehta.com/project-post-training.html</loc><lastmod>2026-11-06</lastmod></url>
   <url><loc>https://amalmehta.com/project-rewarding.html</loc><lastmod>2026-11-06</lastmod></url>
   <url><loc>https://amalmehta.com/thinking.html</loc><lastmod>2026-11-06</lastmod></url>
-  <url><loc>https://amalmehta.com/values.html</loc><lastmod>2026-11-06</lastmod></url>
+  <url><loc>https://amalmehta.com/values.html</loc><lastmod>2026-11-07</lastmod></url>
 </urlset>

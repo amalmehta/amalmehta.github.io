@@ -321,12 +321,32 @@ class SearchTest(unittest.TestCase):
         for day in days:
             self.assertLessEqual(datetime.date.fromisoformat(day), datetime.date.today())
 
+    def test_apps_are_described_for_search(self):
+        # Apps you can use is listed as free macOS software, each with the card's name, line, macOS and download.
+        import html as htmllib, json
+        html = INDEX.read_text(encoding="utf-8")
+        blocks = [json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)]
+        listed = [e["item"] for b in blocks if b.get("@type") == "ItemList" for e in b["itemListElement"]
+                  if e["item"]["@type"] == "SoftwareApplication"]
+        sec = html[html.index('<section id="apps"'):]
+        sec = re.sub(r"<!--.*?-->", "", sec[:sec.index("</section>")], flags=re.S)
+        cards = re.findall(r'<li class="app" id="[a-z0-9-]+">.*?</li>', sec, re.S)
+        self.assertEqual(len(listed), len(cards))
+        for item, card in zip(listed, cards):
+            with self.subTest(app=item["name"]):
+                self.assertEqual(item["name"], htmllib.unescape(re.search(r"<h3>(.*?)</h3>", card).group(1)))
+                self.assertEqual(item["description"], htmllib.unescape(re.search(r"</h3>\s*<p>(.*?)</p>", card, re.S).group(1)))
+                self.assertIn(item["operatingSystem"], card)
+                self.assertIn(f'<a class="download" href="{item["downloadUrl"]}">', card)
+                self.assertEqual(item["offers"]["price"], "0")
+
     def test_featured_projects_are_described_for_search(self):
         # The profile's structured data names each Featured card, with the same hook, its demo (or, without one, its code) and source.
         import html as htmllib, json
         html = INDEX.read_text(encoding="utf-8")
         blocks = [json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)]
-        listed = [e["item"] for b in blocks if b.get("@type") == "ItemList" for e in b["itemListElement"]]
+        listed = [e["item"] for b in blocks if b.get("@type") == "ItemList" for e in b["itemListElement"]
+                  if e["item"]["@type"] == "SoftwareSourceCode"]
         sec = html[html.index('<section id="featured"'):]
         cards = re.findall(r'<article class="project".*?</article>', sec[:sec.index("</section>")], flags=re.S)
         self.assertEqual(len(listed), len(cards))
