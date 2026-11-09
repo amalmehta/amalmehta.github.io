@@ -5,6 +5,8 @@ address, with the date it last changed, so search engines know what to recrawl.
 Run from the repo root after editing a page, before committing: python3 tools/make-sitemap.py
 A page with uncommitted changes gets today's date; any other, its last commit's.
 The tests check the list of pages and that every date is real and not in the future.
+It also sets "Evolving site · <month>" in every page's header (and the deep-dive template)
+to the month of the newest change, so the header never falls behind.
 """
 import datetime, pathlib, re, subprocess
 
@@ -36,6 +38,26 @@ def build():
             + "</urlset>\n")
 
 
+HEADER = re.compile(r'(<a class="nav-status"[^>]*>Evolving site · <time datetime=")\d{4}-\d{2}(">)[A-Z][a-z]{2} \d{4}(</time>)')
+
+
+def date_headers(sitemap):
+    """Point every header's "Evolving site · <month>" at the newest change in the sitemap; True if any page moved."""
+    newest = datetime.date.fromisoformat(max(re.findall(r"<lastmod>([\d-]+)</lastmod>", sitemap)))
+    label = newest.strftime("%b %Y")
+    moved = False
+    for path in sorted(ROOT.glob("*.html")) + [ROOT / "tools" / "make-case-studies.py"]:
+        text = path.read_text(encoding="utf-8")
+        new = HEADER.sub(lambda m: f"{m.group(1)}{newest:%Y-%m}{m.group(2)}{label}{m.group(3)}", text)
+        if new != text:
+            path.write_text(new, encoding="utf-8")
+            moved = True
+    return moved
+
+
 if __name__ == "__main__":
-    (ROOT / "sitemap.xml").write_text(build(), encoding="utf-8")
+    sitemap = build()
+    if date_headers(sitemap):
+        sitemap = build()  # the pages whose header changed now count as changed today
+    (ROOT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
     print("wrote sitemap.xml")
