@@ -1210,6 +1210,45 @@ def langer():
     body.append('<path d="M812 562 L930 690" stroke="#1e262e" stroke-width="34" stroke-linecap="round"/>')
     return wrap(defs, body)
 
+def hamming():
+    """Richard Hamming asked what the most important problem in your field is, and why you aren't working on it:
+    a quiet office at Bell Labs, a chalkboard with a (7,4) code's parity circles, a terminal and a stack of tapes."""
+    rng = random.Random(1950)
+    defs = ('<linearGradient id="hwall" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0" stop-color="#d9cdb6"/><stop offset="1" stop-color="#c2b394"/></linearGradient>'
+            '<linearGradient id="hboard" x1="0" y1="0" x2="1" y2="1">'
+            '<stop offset="0" stop-color="#2f4a3c"/><stop offset="1" stop-color="#22362c"/></linearGradient>'
+            '<radialGradient id="hlight" cx="0.5" cy="0.5" r="0.5">'
+            '<stop offset="0" stop-color="#fff3d6" stop-opacity="0.7"/><stop offset="1" stop-color="#fff3d6" stop-opacity="0"/></radialGradient>')
+    body = [f'<rect width="{W}" height="{H}" fill="url(#hwall)"/>']
+    body.append('<ellipse cx="560" cy="300" rx="560" ry="300" fill="url(#hlight)"/>')
+    # The chalkboard: three overlapping circles, the four data bits inside and a parity bit in each lobe
+    body.append('<rect x="150" y="70" width="700" height="420" rx="8" fill="#6b4f33"/>')
+    body.append('<rect x="168" y="88" width="664" height="384" rx="4" fill="url(#hboard)"/>')
+    chalk = "#ece7da"
+    for cx, cy in ((440, 240), (560, 240), (500, 340)):
+        body.append(f'<circle cx="{cx}" cy="{cy}" r="100" fill="none" stroke="{chalk}" stroke-width="4" opacity="0.9"/>')
+    for x, y, t in ((500, 275, "1"), (440, 300, "0"), (560, 300, "1"), (500, 205, "1"), (390, 215, "0"), (610, 215, "1"), (500, 400, "0")):
+        body.append(f'<text x="{x}" y="{y}" font-family="Georgia, serif" font-size="34" fill="{chalk}" text-anchor="middle">{t}</text>')
+    body.append(f'<text x="214" y="138" font-family="Georgia, serif" font-size="26" fill="{chalk}" opacity="0.9">(7, 4)</text>')
+    body.append(f'<path d="M680 140 h110 M680 175 h80 M680 210 h96" stroke="{chalk}" stroke-width="4" opacity="0.6" stroke-linecap="round"/>')
+    body.append(f'<rect x="240" y="472" width="70" height="10" rx="3" fill="{chalk}"/><rect x="330" y="474" width="40" height="8" rx="3" fill="#f2cf6b"/>')
+    # A window with the light coming in
+    body.append('<rect x="930" y="80" width="200" height="300" fill="#b8cfdc"/><path d="M1030 80 V380 M930 230 H1130" stroke="#d9cdb6" stroke-width="12"/>')
+    # The desk: a terminal, a stack of tape reels and a notebook
+    body.append(f'<rect y="560" width="{W}" height="240" fill="#6b4a2f"/><rect y="552" width="{W}" height="14" fill="#8a6440"/>')
+    body.append('<rect x="760" y="420" width="250" height="150" rx="10" fill="#cfc6b3"/><rect x="782" y="440" width="206" height="104" rx="6" fill="#1d2a22"/>')
+    for k in range(5):
+        body.append(f'<path d="M798 {462 + k * 16} h{rng.randint(90, 170)}" stroke="#7fe0a0" stroke-width="3" opacity="0.85"/>')
+    body.append('<rect x="820" y="570" width="140" height="20" rx="4" fill="#bdb39e"/>')
+    for k in range(3):
+        y = 540 - k * 34
+        body.append(f'<ellipse cx="320" cy="{y + 26}" rx="80" ry="14" fill="#2b2b30"/><ellipse cx="320" cy="{y + 20}" rx="80" ry="14" fill="#3b3b42"/><ellipse cx="320" cy="{y + 20}" rx="22" ry="5" fill="#9aa1a8"/>')
+    body.append('<path d="M480 620 L640 606 L660 680 L496 696 Z" fill="#f4ecd9"/>')
+    for k in range(5):
+        body.append(f'<path d="M500 {632 + k * 12} L630 {620 + k * 12}" stroke="#7c7466" stroke-width="2" opacity="0.7"/>')
+    return wrap(defs, body)
+
 DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-blackboard": feynman,
             "kipchoge-vienna": kipchoge, "honnold-el-capitan": honnold, "alcaraz-wimbledon": alcaraz,
             "neuralink-chess": neuralink, "jobs-empty-room": jobs,
@@ -1218,7 +1257,7 @@ DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-bla
             "maps-earth": maps_earth, "grateful-garden": grateful_garden, "waymo-crosswalk": waymo,
             "zimmer-studio": zimmer, "nolan-folding-city": nolan,
             "finn-robot-arm": finn, "kalanithi-desk": kalanithi,
-            "langer-chip": langer}
+            "langer-chip": langer, "hamming-chalkboard": hamming}
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
