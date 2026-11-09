@@ -1013,6 +1013,8 @@ body { hanging-punctuation: first last; }
 .topic:nth-child(even) .skill-icon { background: var(--warm-soft); color: var(--warm); }
 
 /* Travel: a trip's stops as a timeline. timeline.js draws the line down and lights each stop in turn. */
+.photo.past img { filter: saturate(0.55); opacity: 0.85; }  /* a trip that's over stays on the timeline, quieter */
+.photo.past .trip-dates::before { content: "Past · "; }
 .trip-stops > summary { margin-top: 0.8rem; font-size: 0.88rem; color: var(--accent); cursor: pointer; width: fit-content; }
 .trip-stops > summary:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .trip-timeline { --dot: 0.7rem; position: relative; list-style: none; margin: 1rem 0 0; padding: 0 0 0 1.6rem; font-size: 0.9rem; line-height: 1.45; color: var(--muted); }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail if a "kept current" date on the site is more than six months old:
 the profile's Skills list and Now chip, the Live interests page, and the newest entry on
-Things I'm thinking about. Also flags a trip under Travel's "Places I'm going"
+Things I'm thinking about. Also flags Travel's "Trip timeline" when it has no upcoming trip
 once its last day has passed.
 
 Run from the repo root: python3 tools/check-staleness.py
@@ -47,15 +47,16 @@ def main():
     html = re.sub(r"<!--.*?-->", "", (ROOT / "photos.html").read_text(encoding="utf-8"), flags=re.S)
     going = html[html.index('class="wishlist going"'):]
     going = going[:going.index("</section>")]
-    for name, end in trips(going):
-        print(f"Places I'm going: {name}, until {end}")
-        if end < today:
-            print(f"  that trip is over: move it to Photos (or delete it) in photos.html, and update the Next: line on interests.html"); stale += 1
+    listed = trips(going)
+    for name, end in listed:
+        print(f"Trip timeline: {name}, until {end}" + (" (past)" if end < today else ""))
+    if not any(end >= today for _, end in listed):
+        print("  no upcoming trip: add the next one to the Trip timeline in photos.html"); stale += 1
     return 1 if stale else 0
 
 
 def trips(section):
-    """(name, last day) for each trip in a "Places I'm going" section."""
+    """(name, last day) for each trip in the Trip timeline."""
     out = []
     for fig in re.findall(r'<figure class="photo"[^>]*>(.*?)</figure>', section, flags=re.S):
         name = re.search(r"<strong>(.*?)</strong>", fig).group(1)

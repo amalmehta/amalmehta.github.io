@@ -1,4 +1,4 @@
-"""Draws the Travel page's illustrations (Places I'm going, Places I'd like to go, Places I've been) as 1200x800 SVGs in images/places/.
+"""Draws the Travel page's illustrations (the Trip timeline, Places I'd like to go, Places I've been) as 1200x800 SVGs in images/places/.
 
 Each is an original drawing of one iconic spot, not a photograph. Run from the
 repo root after changing a drawing:

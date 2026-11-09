@@ -690,7 +690,7 @@ class SubpagesTest(unittest.TestCase):
                 self.assertIn(f"There are {words[count]} secrets here.", (ROOT / page).read_text(encoding="utf-8"))
 
     def test_trips_have_dates(self):
-        # Each trip under "Places I'm going" gives its first and last day, in order.
+        # Each trip on the Trip timeline gives its first and last day, and the trips run in date order.
         html = re.sub(r"<!--.*?-->", "", (ROOT / "photos.html").read_text(encoding="utf-8"), flags=re.S)
         going = html[html.index('<section class="wishlist going">'):]
         going = going[:going.index("</section>")]
@@ -701,6 +701,8 @@ class SubpagesTest(unittest.TestCase):
                 days = re.findall(r'<time datetime="(\d{4}-\d{2}-\d{2})">', fig)
                 self.assertEqual(len(days), 2)
                 self.assertLessEqual(days[0], days[1])
+        starts = [re.findall(r'<time datetime="(\d{4}-\d{2}-\d{2})">', fig)[0] for fig in figures]
+        self.assertEqual(starts, sorted(starts))
 
     def test_photos_hidden_until_first_photo(self):
         html = re.sub(r"<!--.*?-->", "", (ROOT / "photos.html").read_text(encoding="utf-8"), flags=re.S)
@@ -967,7 +969,7 @@ class LinkingTest(unittest.TestCase):
                 self.assertIn(f'<a class="nav-status" href="https://github.com/amalmehta/PortfolioWebsite/commits/main/" title="See every change on GitHub">Evolving site · <time datetime="{newest}">', html)
 
     def test_places_im_going_is_a_reel(self):
-        # reel.js rolls Places I'm going past on its own; without it the row still scrolls by hand.
+        # reel.js rolls the Trip timeline past on its own; without it the row still scrolls by hand.
         html = (ROOT / "photos.html").read_text(encoding="utf-8")
         self.assertIn('<script src="reel.js" defer></script>', html)
         going = html[html.index('<section class="wishlist going">'):]
@@ -975,7 +977,7 @@ class LinkingTest(unittest.TestCase):
         self.assertIn("prefers-reduced-motion", (ROOT / "reel.js").read_text(encoding="utf-8"))
 
     def test_next_trip_is_a_planned_trip(self):
-        # "Next: …" on Live interests names a trip under Travel's Places I'm going.
+        # "Next: …" on Live interests names a trip on Travel's Trip timeline.
         nxt = re.search(r'<span class="next-trip">Next: ([^<]+?) in [A-Z][a-z]+\.</span>', (ROOT / "interests.html").read_text(encoding="utf-8"))
         if nxt:
             going = (ROOT / "photos.html").read_text(encoding="utf-8")

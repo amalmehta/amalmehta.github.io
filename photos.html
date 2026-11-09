@@ -305,17 +305,21 @@
     </section>
 
     <section class="wishlist going">
-      <h2 class="section-title">Places I’m going</h2>
-      <div class="photos reel" tabindex="0" role="group" aria-label="Places I’m going, scrolling sideways">
-        <!-- Upcoming trips, soonest first. The weekly staleness check flags a trip once its last day has passed:
-             then move it to Photos (or delete it). Drawings come from tools/draw-places.py.
+      <h2 class="section-title">Trip timeline</h2>
+      <div class="photos reel" tabindex="0" role="group" aria-label="Trip timeline, scrolling sideways">
+        <!-- Trips past and upcoming, in date order; past ones stay as a record, and reel.js marks them "past" once their
+             last day has gone by. Drawings come from tools/draw-places.py.
         <figure class="photo" id="place-place">
           <img src="images/places/place.svg" alt="Drawing: what it shows" loading="lazy" width="1200" height="800">
           <figcaption><strong>Place, country</strong> What for. <span class="trip-dates"><time datetime="YYYY-MM-DD">Month D</time>–<time datetime="YYYY-MM-DD">D, YYYY</time></span></figcaption>
         </figure>
         -->
+        <figure class="photo" id="place-boston">
+          <img src="images/places/boston.svg" alt="Drawing: sailboats on the Charles River below the Back Bay skyline in autumn, with the Prudential and Hancock towers, the State House’s gold dome and maple boughs in orange and red" fetchpriority="high" width="1200" height="800">
+          <figcaption><strong>Boston, Massachusetts</strong> An exploratory trip. <span class="trip-dates"><time datetime="2026-11-01">November 1</time>–<time datetime="2026-11-08">8, 2026</time></span></figcaption>
+        </figure>
         <figure class="photo" id="place-lassen">
-          <img src="images/places/lassen.svg" alt="Drawing: Lassen Peak glowing pink at sunset, mirrored in Manzanita Lake below a line of dark pines, with the first stars out" fetchpriority="high" width="1200" height="800">
+          <img src="images/places/lassen.svg" alt="Drawing: Lassen Peak glowing pink at sunset, mirrored in Manzanita Lake below a line of dark pines, with the first stars out" loading="lazy" width="1200" height="800">
           <figcaption><strong>Lassen Volcanic, California</strong> Burney Falls, a Manzanita Lake sunset under Lassen Peak, and dark-sky stars. <span class="trip-dates"><time datetime="2026-11-14">November 14</time>–<time datetime="2026-11-15">15, 2026</time></span></figcaption>
           <details class="trip-stops">
             <summary>Saturday’s stops</summary>
@@ -398,10 +402,6 @@
       <h2 class="section-title">Places I’ve been</h2>
       <p class="wishlist-note">A favourite few, drawn the same way.</p>
       <div class="photos">
-      <figure class="photo" id="place-boston">
-        <img src="images/places/boston.svg" alt="Drawing: sailboats on the Charles River below the Back Bay skyline in autumn, with the Prudential and Hancock towers, the State House’s gold dome and maple boughs in orange and red" loading="lazy" width="1200" height="800">
-        <figcaption><strong>Boston, Massachusetts</strong> An exploratory trip, November 2026.</figcaption>
-      </figure>
       <figure class="photo" id="place-machu-picchu">
         <img src="images/places/machu-picchu.svg" alt="Drawing: the stone houses and green terraces of Machu Picchu below the steep peak of Huayna Picchu, with cloud in the valley and a llama in front" loading="lazy" width="1200" height="800">
         <figcaption><strong>Machu Picchu, Peru</strong> Over the Salkantay pass to the lost city of the Incas.</figcaption>

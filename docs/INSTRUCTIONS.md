@@ -134,7 +134,7 @@ mkdir -p images/photos && sips -Z 1600 -s format png ~/Pictures/IMG_1234.HEIC --
 
 Then copy the commented-out `<figure class="photo">` template in `photos.html`. Fill in the file name, alt text (what the photo shows), the place and year, and one line about the moment, and put it above older photos. Set `width` and `height` to the new file's size (`sips -g pixelWidth -g pixelHeight images/photos/place-year.webp`); the tests check they match. Delete "Photos coming soon." once the first photo is in.
 
-**Places I’m going** is a sideways row that `reel.js` starts on the next trip, rests there for 2.5 seconds, then rolls past on its own and loops, resting on that trip each time round. It holds on hover, keyboard focus, a swipe or a map pin’s link, with a Pause button. With reduced motion or without JS it’s a row you scroll by hand. Add a trip the usual way; the reel copies the cards itself.
+The **Trip timeline** holds trips past and upcoming, in date order. A trip stays after it ends, and `reel.js` dims it and marks its dates "Past". It is a sideways row that `reel.js` starts on the next trip, rests there for 2.5 seconds, then rolls past on its own and loops, resting on that trip each time round. It holds on hover, keyboard focus, a swipe or a map pin’s link, with a Pause button. With reduced motion or without JS it’s a row you scroll by hand. Add a trip the usual way; the reel copies the cards itself.
 
 Below your photos, **Places I’d like to go** shows drawings (not photos) of one iconic spot per place, in `images/places/`. `tools/draw-places.py` draws them; edit it and run `python3 tools/draw-places.py` to redraw.
 

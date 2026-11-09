@@ -1,10 +1,14 @@
-// Travel: Places I'm going rests on the next trip for a moment when it comes into view, then rolls past on its own,
+// Travel: the Trip timeline marks trips whose last day has passed as past, rests on the next trip for a moment when it comes into view, then rolls past on its own,
 // looping, and rests there again each time round. It holds while a cursor or keyboard is on it, for a
 // few seconds after anything else moves it (a drag, a swipe, a map pin's link), and when Pause is pressed.
 // Without JS, or with reduced motion, it's a row you scroll by hand.
 (() => {
   const reel = document.querySelector(".reel");
-  if (!reel || reel.children.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!reel) return;
+  const today = new Date().toLocaleDateString("en-CA");
+  const lastDay = card => [...card.querySelectorAll("time[datetime]")].pop()?.getAttribute("datetime") ?? "";
+  for (const card of reel.children) if (lastDay(card) && lastDay(card) < today) card.classList.add("past");
+  if (reel.children.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   if (getComputedStyle(reel).display !== "flex") return;  // an older cached stylesheet: leave the plain grid alone
   const SPEED = 28, HOLD = 6000, REST = 2500, EDGE = 24;  // pixels a second; milliseconds; milliseconds; the edge fade's width
   const cards = [...reel.children];
@@ -32,11 +36,7 @@
   new ResizeObserver(topUp).observe(reel);
 
   // The next trip: the first card whose last day hasn't passed. Stop just short of it, so the edge fade misses it.
-  const today = new Date().toLocaleDateString("en-CA");
-  const next = cards.find(card => {
-    const days = card.querySelectorAll("time[datetime]");
-    return days.length && days[days.length - 1].getAttribute("datetime") >= today;
-  }) || cards[0];
+  const next = cards.find(card => lastDay(card) >= today) || cards[0];
   const stop = () => (next.offsetLeft - EDGE + period()) % period();
   if (!location.hash && reel.clientWidth) reel.scrollLeft = stop();  // a map pin's link keeps its own card in view
 
