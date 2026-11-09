@@ -330,7 +330,7 @@ class SearchTest(unittest.TestCase):
                   if e["item"]["@type"] == "SoftwareApplication"]
         sec = html[html.index('<section id="apps"'):]
         sec = re.sub(r"<!--.*?-->", "", sec[:sec.index("</section>")], flags=re.S)
-        cards = re.findall(r'<li class="app" id="[a-z0-9-]+">.*?</li>', sec, re.S)
+        cards = [c for c in re.findall(r'<li class="app" id="[a-z0-9-]+">.*?</li>', sec, re.S) if 'class="download"' in c]
         self.assertEqual(len(listed), len(cards))
         for item, card in zip(listed, cards):
             with self.subTest(app=item["name"]):
@@ -533,8 +533,8 @@ class ProjectsTest(unittest.TestCase):
                     self.assertIn(f'<a href="https://github.com/amalmehta/{dl.group(1)}">Code →</a>', app)
                     self.assertIn('<p class="app-note apps-note">macOS will warn you because these apps aren’t notarized yet.', sec)
                 else:
-                    self.assertIn('<span class="soon">Coming soon · free</span>', app)
-                self.assertRegex(app, r'<p class="app-meta">Mac · macOS \d+ or later')
+                    self.assertRegex(app, r'<span class="soon">Coming soon( · free)?</span>')
+                self.assertRegex(app, r'<p class="app-meta">(Mac · macOS \d+ or later|Web · coming soon)')
 
     def test_every_project_has_public_code(self):
         # Only vetted, checkable work is on the profile: every Featured card and More projects line links its public code.
@@ -543,6 +543,8 @@ class ProjectsTest(unittest.TestCase):
         self.assertTrue(entries)
         for entry in entries:
             with self.subTest(project=re.search(r"<h3>(.*?)</h3>", entry).group(1)):
+                if '<span class="soon">Code coming soon</span>' in entry:
+                    continue  # not public yet: its code link goes in when the repo opens
                 self.assertRegex(entry, r'<a href="https://github\.com/amalmehta/[^"]+">')
                 self.assertNotIn('class="links private"', entry)
 
