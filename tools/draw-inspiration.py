@@ -4,7 +4,7 @@ Each is an original flat drawing in the style of the Travel page's places, not a
 photograph. Run from the repo root after changing a drawing:
   python3 tools/draw-inspiration.py
 """
-import os, random, sys
+import math, os, random, sys
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "images/inspiration"
 W, H = 1200, 800
@@ -1153,6 +1153,63 @@ def kalanithi():
     body.append('<path d="M930 620 l-28 -18 M930 620 l-10 -32" stroke="#b7bcc3" stroke-width="7" stroke-linecap="round"/>')
     return wrap(defs, body)
 
+def langer():
+    """Robert Langer brought engineering into medicine: a lab bench with a tiny
+    drug-delivery chip under a magnifier with its wells opening one by one, beside polymer beads and a petri dish."""
+    rng = random.Random(1948)
+    defs = ('<linearGradient id="lwall" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0" stop-color="#e9eef2"/><stop offset="1" stop-color="#d3dce3"/></linearGradient>'
+            '<linearGradient id="lbench" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0" stop-color="#3c4a57"/><stop offset="1" stop-color="#26313b"/></linearGradient>'
+            '<radialGradient id="llens" cx="0.4" cy="0.35" r="0.7">'
+            '<stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/><stop offset="1" stop-color="#cfe6f3" stop-opacity="0.15"/></radialGradient>'
+            '<clipPath id="lclip"><circle cx="660" cy="410" r="210"/></clipPath>')
+    body = [f'<rect width="{W}" height="{H}" fill="url(#lwall)"/>']
+    # Shelves of glassware behind
+    for y in (120, 250):
+        body.append(f'<rect x="60" y="{y + 70}" width="1080" height="10" fill="#aeb9c3"/>')
+        x = 80
+        while x < 1120:
+            w, h = rng.randint(30, 60), rng.randint(40, 70)
+            col = rng.choice(("#b9dcef", "#cfe8d6", "#f1d9b5", "#e3d3ef"))
+            body.append(f'<rect x="{x}" y="{y + 70 - h}" width="{w}" height="{h}" rx="6" fill="{col}" opacity="0.85"/>')
+            body.append(f'<rect x="{x + w * 0.3:.0f}" y="{y + 70 - h - 14}" width="{w * 0.4:.0f}" height="16" fill="{col}" opacity="0.85"/>')
+            x += w + rng.randint(14, 40)
+    # The bench
+    body.append(f'<rect y="560" width="{W}" height="240" fill="url(#lbench)"/>')
+    body.append(f'<rect y="552" width="{W}" height="14" fill="#5b6b79"/>')
+    # A petri dish of polymer beads, and a few loose beads
+    body.append('<ellipse cx="220" cy="640" rx="140" ry="44" fill="#dbe8ef" opacity="0.9"/><ellipse cx="220" cy="634" rx="128" ry="38" fill="#eef5f9"/>')
+    for _ in range(60):
+        x, y = 220 + rng.gauss(0, 55), 634 + rng.gauss(0, 14)
+        body.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rng.uniform(4, 8):.1f}" fill="{rng.choice(("#f2a65a", "#e07a5f", "#81b29a", "#5fa8d3"))}"/>')
+    # The chip on the bench, and the magnifier showing it close up
+    body.append('<rect x="610" y="600" width="100" height="34" rx="4" fill="#9aa6b2"/>')
+    body.append('<path d="M660 600 L560 520 M660 600 L760 520" stroke="#c7d2db" stroke-width="2" opacity="0.6"/>')
+    body.append('<circle cx="660" cy="410" r="222" fill="#27313b"/>')
+    body.append('<g clip-path="url(#lclip)">')
+    body.append('<rect x="440" y="190" width="440" height="440" fill="#b5c1cc"/>')
+    k = 0
+    for row in range(4):
+        for col in range(4):
+            cx, cy = 535 + col * 84, 285 + row * 84
+            body.append(f'<rect x="{cx - 30}" y="{cy - 30}" width="60" height="60" rx="8" fill="#7f8c99"/>')
+            opened = k in (1, 6, 11)
+            if opened:  # a well that has opened, its dose spreading out as dots
+                body.append(f'<rect x="{cx - 26}" y="{cy - 26}" width="52" height="52" rx="6" fill="#e9eef2"/>')
+                for _ in range(16):
+                    a, d = rng.uniform(0, 6.28), rng.uniform(4, 30)
+                    body.append(f'<circle cx="{cx + d * math.cos(a):.0f}" cy="{cy + d * math.sin(a):.0f}" r="3.2" fill="#e07a5f"/>')
+            else:
+                body.append(f'<rect x="{cx - 26}" y="{cy - 26}" width="52" height="52" rx="6" fill="#d9a441"/>')
+                body.append(f'<rect x="{cx - 26}" y="{cy - 26}" width="52" height="10" rx="5" fill="#f2cf6b"/>')
+            k += 1
+    body.append('</g>')
+    body.append('<circle cx="660" cy="410" r="210" fill="url(#llens)"/>')
+    body.append('<circle cx="660" cy="410" r="214" fill="none" stroke="#1e262e" stroke-width="16"/>')
+    body.append('<path d="M812 562 L930 690" stroke="#1e262e" stroke-width="34" stroke-linecap="round"/>')
+    return wrap(defs, body)
+
 DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-blackboard": feynman,
             "kipchoge-vienna": kipchoge, "honnold-el-capitan": honnold, "alcaraz-wimbledon": alcaraz,
             "neuralink-chess": neuralink, "jobs-empty-room": jobs,
@@ -1160,7 +1217,8 @@ DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-bla
             "suzuki-zendo": suzuki, "spreadsheet-grid": spreadsheet, "ramanujan-slate": ramanujan,
             "maps-earth": maps_earth, "grateful-garden": grateful_garden, "waymo-crosswalk": waymo,
             "zimmer-studio": zimmer, "nolan-folding-city": nolan,
-            "finn-robot-arm": finn, "kalanithi-desk": kalanithi}
+            "finn-robot-arm": finn, "kalanithi-desk": kalanithi,
+            "langer-chip": langer}
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
