@@ -504,12 +504,12 @@ class ProjectsTest(unittest.TestCase):
                 self.assertRegex(links, r'<a href="https://github\.com/amalmehta/[^"]+">[^<]*GitHub')
                 demo = re.search(r'<a href="([^"]+)">Live demo', links)
                 if demo:
-                    self.assertTrue(demo.group(1).startswith("https://amalmehta.github.io/"), demo.group(1))
+                    self.assertTrue(demo.group(1).startswith("https://amalmehta.com/"), demo.group(1))
 
     def test_more_projects_are_compact_and_linkable(self):
         # One line each: an anchor, a name (with a "Play it" badge if it runs in the browser), a sentence,
         # and a link or a note that the repo is private.
-        items = re.findall(r'<li class="mini" id="[a-z0-9-]+">\s*<h3>[^<]+(?: <a class="try-badge inline" href="https://amalmehta\.github\.io/[^"]+">[^<]+</a>)?</h3>\s*<p>[^\n]+</p>\s*<p class="links[^"]*">.*?<a href=', self.section("more-projects"))
+        items = re.findall(r'<li class="mini" id="[a-z0-9-]+">\s*<h3>[^<]+(?: <a class="try-badge inline" href="https://amalmehta\.com/[^"]+">[^<]+</a>)?</h3>\s*<p>[^\n]+</p>\s*<p class="links[^"]*">.*?<a href=', self.section("more-projects"))
         self.assertEqual(len(items), self.section("more-projects").count('<li class="mini"'))
         self.assertTrue(items)
         self.assertNotIn("<img", self.section("more-projects"))

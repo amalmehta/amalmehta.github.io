@@ -46,9 +46,9 @@ PAGES = [
         ],
         "next": ["An 18-month plan in five phases: measure false success, extend the verifier, budget audits inside RL, go to long horizons, and build evaluations that predict the hack before it happens."],
         "figure": ("rewarding", 928, 1024, "Figures 1 and 2 from the project site: during training the visible pass rate climbs while true correctness falls, and the share of untested branches deleted rises towards all of them"),
-        "links": [("Live demo: proposal and results", "https://amalmehta.github.io/long_term_horizon_planning/"),
+        "links": [("Live demo: proposal and results", "https://amalmehta.com/long_term_horizon_planning/"),
                   ("Source on GitHub", "https://github.com/amalmehta/long_term_horizon_planning"),
-                  ("Experiment log", "https://amalmehta.github.io/long_term_horizon_planning/#log")],
+                  ("Experiment log", "https://amalmehta.com/long_term_horizon_planning/#log")],
     },
     {
         "slug": "bci", "card": "bci-projects",
@@ -108,7 +108,7 @@ PAGES = [
         ],
         "next": ["Test whether GRPO’s lead over SFT holds on a real distribution shift, such as new layouts or a bigger grid, not just denser walls."],
         "figure": ("post-training", 1200, 635, "Training curves across 3 seeds: GRPO climbs from the SFT starting point while RL from scratch stays at zero"),
-        "links": [("Live demo: race the checkpoints", "https://amalmehta.github.io/PostTrainingLab/"), ("Code and write-up on GitHub", "https://github.com/amalmehta/PostTrainingLab")],
+        "links": [("Live demo: race the checkpoints", "https://amalmehta.com/PostTrainingLab/"), ("Code and write-up on GitHub", "https://github.com/amalmehta/PostTrainingLab")],
     },
     {
         "slug": "drone", "card": "drone-autonomy",
@@ -137,7 +137,7 @@ PAGES = [
         ],
         "next": ["Flight tests on the recommended platform, an X500 V2 with a Jetson Orin Nano Super and a RealSense D435i, in five stages: system identification, hover, tracking, known obstacles, then an unknown room."],
         "figure": ("drone", 1200, 441, "Two recorded flights: the map built from depth, the final A* plan and the track flown"),
-        "links": [("Live demo: replay the flights", "https://amalmehta.github.io/DroneAutonomy/"),
+        "links": [("Live demo: replay the flights", "https://amalmehta.com/DroneAutonomy/"),
                   ("Source on GitHub", "https://github.com/amalmehta/DroneAutonomy"),
                   ("Paper draft (PDF)", "https://github.com/amalmehta/DroneAutonomy/blob/main/paper/Where%20Does%20Meta-Learning%20Help%20a%20Quadrotor.pdf")],
     },
@@ -171,7 +171,7 @@ PAGES = [
         ],
         "next": ["Measure its strength against people, and try the same pipeline on a second board or game, such as 7×7 Go or Connect Four."],
         "figure": ("alphago", 1200, 392, "Generation 44 against earlier generations, head to head, and the policy and value losses over 44 generations of training"),
-        "links": [("Play it in your browser", "https://amalmehta.github.io/AlphaGoLite/"),
+        "links": [("Play it in your browser", "https://amalmehta.com/AlphaGoLite/"),
                   ("Source on GitHub", "https://github.com/amalmehta/AlphaGoLite")],
     },
 ]
