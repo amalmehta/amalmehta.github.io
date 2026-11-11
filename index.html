@@ -444,6 +444,7 @@
       <h2 class="section-title">Research &amp; work</h2>
       <!-- Saved for later, the intro once under the heading: I started on brains: aligning brain scans at UCSF, then outlining melanoma in tissue images at Berkeley. That pulled me toward systems that learn: RL agents tuning an image generator for DARPA-funded work, a robot dog that learned to kick a ball in simulation, and now research on what agents learn when their rewards can’t be checked. -->
 
+      <p class="section-intro">I started in physics and brains: finding supernovae, classifying particle interactions, aligning brain scans at UCSF, then outlining melanoma at Berkeley. That pulled me toward systems that learn: RL agents tuning an image generator for DARPA-funded work, a robot dog that learned to kick a ball in simulation, and now research on what agents learn when their rewards can’t be checked.</p>
       <article class="role" id="independent-research">
         <p class="when">2025 – now</p>
         <div>
@@ -469,11 +470,11 @@
           <p class="where">DARPA-funded · remote</p>
           <p>Turned synthetic-data generation into a closed RL loop: agents (TD3, PPO, DDPG) set an image generator’s parameters, a spatiotemporal object detector retrained on what it produced, and the detector’s accuracy on real drone imagery came back as the reward.<!-- once: Real-world performance, not hand-tuned rendering, drove every iteration. --></p>
           <!-- Saved for later, the sentence once ended: …drove every iteration and closed the sim-to-real gap. -->
-          <p>Built the meta-RL codebase and ran its multi-week GPU training: a PEARL agent over TD3 that learns a probabilistic embedding of each generator task, so it adapts to a new one in a few tries.<!-- once: Owned the meta-RL codebase: …in a few tries, and that was also applied to a fighter-jet simulation. Ran and monitored its multi-week GPU training runs. --></p>
+          <p>Built the meta-RL codebase and ran its multi-week GPU training: a PEARL agent over TD3 that learns a probabilistic embedding of each generator task, so it adapts to a new one in a few tries, and it was also applied to a fighter-jet simulation.<!-- once: Owned the meta-RL codebase: …in a few tries, and that was also applied to a fighter-jet simulation. Ran and monitored its multi-week GPU training runs. --></p>
           <p>Also implemented domain adaptation from scratch to hold the detector’s accuracy with scarce real labels and mostly synthetic data (10–15 GB datasets), and built and benchmarked the GAN pipelines (DCGAN, InfoGAN, FineGAN) that produced its training images.</p>
           <figure class="shot"><img src="images/physicsai.svg" alt="Drawing: a drone’s camera looks down on a city block with cars boxed by a detector, beside the generator settings an RL agent tunes and its rising reward" loading="lazy" width="1280" height="720"></figure>
           <p class="tags"><span class="chip">TD3</span> <span class="chip">PPO</span> <span class="chip">DDPG</span> <span class="chip">PEARL meta-RL</span> <span class="chip">Domain adaptation</span> <span class="chip">GANs</span></p>
-          <!-- Saved for later: Award: team recognized as the top group in the nation for its reinforcement-learning work -->
+          <p>Our team was recognized as the top group in the nation for its reinforcement-learning work.</p>
         </div>
       </article>
 
@@ -482,8 +483,8 @@
         <div>
           <h3>Deep RL Researcher · Hybrid Robotics Lab</h3>
           <p class="where">UC Berkeley · Prof. Koushil Sreenath</p>
-          <p>Trained one RL policy that runs a Unitree Go1 robot dog through a whole soccer task (walk to the ball, kick it at a target, stay balanced) with no real-world training, and it hit the target about 60% of the time on the real robot. It replaced the multi-policy hierarchical framework used in prior work. It learned entirely in simulation, which can’t fully reproduce the ball’s friction on the ground, how it deforms when kicked, or sensor noise.<!-- once: Took graduate classes in RL and control theory alongside. --></p>
-          <p>The policy is PPO, trained in IsaacGym on a three-stage reward: reach the ball, kick it, then wait to see whether it scores. A reward gradient, a stage flag and masked inputs (the ball and goal positions are zeroed until they matter) let one network move between stages smoothly, and CPG-based gait tracking kept its walking steady. Also prototyped RLPD, SAC that learns from prior data, to fine-tune the simulation-trained policy on real robot runs and narrow the gap to hardware.</p>
+          <p>Trained one RL policy that runs a Unitree Go1 robot dog through a whole soccer task (walk to the ball, kick it at a target, stay balanced) with no real-world training, and it hit the target about 60% of the time on the real robot. It replaced the multi-policy hierarchical framework used in prior work.<!-- Saved for later, cut: It learned entirely in simulation, which can’t fully reproduce the ball’s friction on the ground, how it deforms when kicked, or sensor noise. --><!-- once: Took graduate classes in RL and control theory alongside. --></p>
+          <p>The policy is PPO, trained in IsaacGym on a three-stage reward: reach the ball, kick it, then wait to see whether it scores. A reward gradient, a stage flag and masked inputs (the ball and goal positions are zeroed until they matter) let one network move between stages smoothly, and CPG-based gait tracking kept its walking steady.</p><!-- Saved for later, cut: Also prototyped RLPD, SAC that learns from prior data, to fine-tune the simulation-trained policy on real robot runs and narrow the gap to hardware. -->
           <figure class="shot"><img src="images/robot-soccer.svg" alt="Drawing: a four-legged robot dog kicks a soccer ball along an arc into a target in a goal, on a simulation grid" loading="lazy" width="1280" height="720"></figure>
           <p class="tags"><span class="chip">PPO</span> <span class="chip">IsaacGym</span> <span class="chip">Multi-stage rewards</span> <span class="chip">Sim-to-real</span> <span class="chip">RLPD</span> <span class="chip">ROS</span> <span class="chip">OpenCV</span> <span class="chip">RealSense</span></p>
           <p class="links"><a href="papers/robot-soccer-thesis.pdf" type="application/pdf">Report (PDF, 330 KB) →</a></p>
@@ -509,7 +510,7 @@
         <div>
           <h3>Researcher · Abbasi-Asl Lab, UCSF</h3>
           <p class="where">UC San Francisco · Prof. Reza Abbasi-Asl</p>
-          <p>Built pipelines that line up 2D and 3D brain scans so they can be compared, such as the same brain across visits or different brains against a common template. They rest on empirical mode decomposition, which splits an image into layers from fine detail down to a smooth residue, extended here from flat signals to full 3D volumes.</p>
+          <p>Built pipelines that line up 2D and 3D brain scans so they can be compared, such as the same brain across visits or different brains against a common template.</p><!-- Saved for later, cut: They rest on empirical mode decomposition, which splits an image into layers from fine detail down to a smooth residue, extended here from flat signals to full 3D volumes. -->
           <!-- Saved for later, cut while that app is private: Methods from the lab later went into the Neuroimaging Platform Mac app. -->
           <figure class="shot"><img src="images/brain-emd.svg" alt="Drawing: a moving brain scan warped onto a fixed one along a deformation grid, and the same slice split by empirical mode decomposition into layers from fine detail to a smooth residue" loading="lazy" width="1280" height="720"></figure>
           <p class="tags"><span class="chip">Brain image registration</span> <span class="chip">Signal decomposition</span></p>
