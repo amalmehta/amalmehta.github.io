@@ -1,4 +1,4 @@
-"""Draws the site's illustrations as SVGs in images/: the four research entries
+"""Draws the site's illustrations as SVGs in images/: the six research entries
 (1280x720).
 
 Run from the repo root after changing a drawing:
@@ -401,7 +401,130 @@ def brain_emd():
     return svg("".join(b))
 
 
-DRAWINGS = (("robot-soccer", robot_soccer), ("physicsai", physicsai), ("vip-lab", vip_lab), ("brain-emd", brain_emd))
+# ---------------------------------------------------------------- supernova search
+def supernova():
+    """Image subtraction: the same patch of sky before and after, and what's left when one is taken from the other."""
+    rng = random.Random(11)
+    mono = 'font-family="Menlo,monospace" font-size="15"'
+    size, top, xs = 360, 170, (50, 460, 870)
+    stars = [(rng.uniform(12, size - 12), rng.uniform(12, size - 12), rng.uniform(0, 1) ** 3) for _ in range(70)]
+    gx, gy = 196, 168           # host galaxy, in panel coordinates
+    sn = (gx + 30, gy - 16)     # the new point of light on its edge
+    b = ['<defs><radialGradient id="galaxy"><stop offset="0" stop-color="#1c1b19" stop-opacity="0.85"/>'
+         '<stop offset="0.35" stop-color="#3b3a37" stop-opacity="0.45"/><stop offset="1" stop-color="#3b3a37" stop-opacity="0"/></radialGradient>']
+    for i, x in enumerate(xs):
+        b.append(f'<clipPath id="sky{i}"><rect x="{x}" y="{top}" width="{size}" height="{size}" rx="8"/></clipPath>')
+    b.append('</defs>')
+    for i, (x, label) in enumerate(zip(xs, ("before", "after", "difference"))):
+        b.append(f'<rect x="{x}" y="{top}" width="{size}" height="{size}" rx="8" fill="#fff" stroke="#d8d3c6" stroke-width="2"/>')
+        b.append(f'<text x="{x}" y="{top - 18}" {mono} fill="{INK}">{label}</text>')
+        b.append(f'<g clip-path="url(#sky{i})">')
+        # Faint sky-coordinate grid.
+        b.append(f'<g stroke="{BLUE}" stroke-width="1" opacity="0.18">')
+        for k in range(40, size, 40):
+            b.append(f'<line x1="{x + k}" y1="{top}" x2="{x + k}" y2="{top + size}"/>'
+                     f'<line x1="{x}" y1="{top + k}" x2="{x + size}" y2="{top + k}"/>')
+        b.append('</g>')
+        if i < 2:
+            b.append(f'<ellipse cx="{x + gx}" cy="{top + gy}" rx="62" ry="34" transform="rotate(-28 {x + gx} {top + gy})" fill="url(#galaxy)"/>')
+            for sx, sy, m in stars:
+                r = 1.4 + 5.5 * m
+                if m > 0.35:
+                    b.append(f'<circle cx="{x + sx:.1f}" cy="{top + sy:.1f}" r="{r * 2.2:.1f}" fill="{INK}" opacity="0.12"/>')
+                b.append(f'<circle cx="{x + sx:.1f}" cy="{top + sy:.1f}" r="{r:.1f}" fill="{INK}"/>')
+        else:
+            # Stars and the galaxy cancel, leaving only faint residue.
+            for sx, sy, m in stars:
+                if m > 0.08:
+                    b.append(f'<circle cx="{x + sx + rng.uniform(-1.5, 1.5):.1f}" cy="{top + sy + rng.uniform(-1.5, 1.5):.1f}" '
+                             f'r="{1.2 + 2.5 * m:.1f}" fill="{GREY}" opacity="0.14"/>')
+        if i > 0:
+            cx, cy = x + sn[0], top + sn[1]
+            b.append(f'<circle cx="{cx}" cy="{cy}" r="13" fill="{INK}" opacity="0.15"/><circle cx="{cx}" cy="{cy}" r="5.5" fill="{INK}"/>')
+            b.append(f'<circle cx="{cx}" cy="{cy}" r="26" fill="none" stroke="{WARM}" stroke-width="4"/>')
+        b.append('</g>')
+    # Minus and equals between the panels.
+    for x, sign in ((435, "−"), (845, "=")):
+        b.append(f'<text x="{x}" y="{top + size / 2 + 14}" font-family="Georgia,serif" font-size="44" fill="{INK}" text-anchor="middle">{sign}</text>')
+    b.append(f'<text x="{xs[2] + sn[0] + 34}" y="{top + sn[1] - 30}" {mono} fill="{WARM}">new</text>')
+    return svg("".join(b))
+
+
+# ---------------------------------------------------------------- particle interactions
+def particles():
+    """A 3D detector volume: voxel hits from one interaction, each labelled track or shower."""
+    rng = random.Random(5)
+    mono = 'font-family="Menlo,monospace" font-size="15"'
+    s, cx, cy = 34, 500, 360
+    c30, s30 = math.cos(math.pi / 6), 0.5
+
+    def P(x, y, z):
+        return (cx + (x - y) * c30 * s, cy + (x + y - 10) * s30 * s - (z - 5) * s)
+
+    def pts(*ps):
+        return " ".join("%.1f,%.1f" % P(*p) for p in ps)
+
+    b = []
+    # Floor grid and the far walls of the volume.
+    b.append(f'<g stroke="#cfdbe8" stroke-width="1.2" fill="none">')
+    for k in range(0, 11):
+        b.append(f'<polyline points="{pts((k, 0, 0), (k, 10, 0))}"/><polyline points="{pts((0, k, 0), (10, k, 0))}"/>')
+    b.append('</g>')
+    b.append(f'<g stroke="#b9b4a8" stroke-width="2" fill="none" stroke-dasharray="6 7">'
+             f'<polyline points="{pts((0, 0, 0), (0, 0, 10))}"/><polyline points="{pts((0, 0, 10), (10, 0, 10))}"/>'
+             f'<polyline points="{pts((0, 0, 10), (0, 10, 10))}"/></g>')
+
+    # Hits: two tracks and a shower from one vertex.
+    v = (2.4, 4.6, 5.4)
+    hits = []
+    for d, n in (((0.7, 0.15, 0.1), 15), ((-0.15, 0.3, 0.7), 7)):
+        L = math.sqrt(sum(c * c for c in d))
+        for k in range(1, n + 1):
+            t = k * 0.5
+            hits.append(tuple(v[j] + d[j] / L * t + rng.uniform(-0.06, 0.06) for j in range(3)) + ("track",))
+    sd = (0.25, 0.75, -0.2)
+    L = math.sqrt(sum(c * c for c in sd))
+    sd = tuple(c / L for c in sd)
+    for _ in range(95):
+        t = rng.uniform(0.6, 6.0)
+        spread = 0.08 + 0.17 * t
+        p = tuple(v[j] + sd[j] * t + rng.gauss(0, spread) for j in range(3))
+        if all(0.2 < p[j] < 9.8 for j in range(3)):
+            hits.append(p + ("shower",))
+    hits.sort(key=lambda h: h[0] + h[1] + h[2])
+
+    def voxel(x, y, z, kind):
+        h = 0.2
+        col, top_col, side_col = (BLUE, "#6d93ba", "#244a70") if kind == "track" else (WARM, "#c98262", "#7f3d1d")
+        top = pts((x - h, y - h, z + h), (x + h, y - h, z + h), (x + h, y + h, z + h), (x - h, y + h, z + h))
+        left = pts((x - h, y + h, z + h), (x + h, y + h, z + h), (x + h, y + h, z - h), (x - h, y + h, z - h))
+        right = pts((x + h, y - h, z + h), (x + h, y + h, z + h), (x + h, y + h, z - h), (x + h, y - h, z - h))
+        return (f'<polygon points="{left}" fill="{col}"/><polygon points="{right}" fill="{side_col}"/>'
+                f'<polygon points="{top}" fill="{top_col}"/>')
+    b.append("".join(voxel(*h) for h in hits))
+    vx, vy = P(*v)
+    b.append(f'<circle cx="{vx:.1f}" cy="{vy:.1f}" r="9" fill="{PAPER}" stroke="{INK}" stroke-width="3.5"/>')
+
+    # Near edges of the volume.
+    b.append(f'<g stroke="{INK}" stroke-width="2.5" fill="none" stroke-linejoin="round">'
+             f'<polygon points="{pts((10, 0, 0), (10, 10, 0), (0, 10, 0), (0, 10, 10), (10, 10, 10), (10, 0, 10))}"/>'
+             f'<polyline points="{pts((10, 10, 0), (10, 10, 10))}"/>'
+             f'<polyline points="{pts((0, 0, 0), (10, 0, 0))}" stroke="#b9b4a8" stroke-width="2" stroke-dasharray="6 7"/>'
+             f'<polyline points="{pts((0, 0, 0), (0, 10, 0))}" stroke="#b9b4a8" stroke-width="2" stroke-dasharray="6 7"/></g>')
+
+    # Legend: what the network labels each hit.
+    lx, ly = 1010, 300
+    for i, (label, col) in enumerate((("track", BLUE), ("shower", WARM))):
+        y = ly + i * 44
+        b.append(f'<rect x="{lx}" y="{y - 13}" width="18" height="18" rx="3" fill="{col}"/>'
+                 f'<text x="{lx + 32}" y="{y + 2}" {mono} fill="{INK}">{label}</text>')
+    b.append(f'<circle cx="{lx + 9}" cy="{ly + 84}" r="8" fill="{PAPER}" stroke="{INK}" stroke-width="3"/>'
+             f'<text x="{lx + 32}" y="{ly + 90}" {mono} fill="{INK}">vertex</text>')
+    return svg("".join(b))
+
+
+DRAWINGS = (("robot-soccer", robot_soccer), ("physicsai", physicsai), ("vip-lab", vip_lab), ("brain-emd", brain_emd),
+            ("supernova", supernova), ("particles", particles))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in DRAWINGS:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:

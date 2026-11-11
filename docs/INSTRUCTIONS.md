@@ -114,7 +114,7 @@ The tests fail if a clip or poster is over 2 MB or a poster's size doesn't match
 
 ## Research drawings
 
-PhysicsAI, Hybrid Robotics Lab, the Video & Image Processing Lab and the Abbasi-Asl Lab each show a drawing (`images/physicsai.svg`, `robot-soccer.svg`, `vip-lab.svg`, `brain-emd.svg`), not a photo or clip. They're illustrations, not real results: the detection scores, settings, tumour outline and decomposition layers in them are made up. `tools/draw-research-art.py` draws all four; edit it and run `python3 tools/draw-research-art.py` to redraw them.
+PhysicsAI, Hybrid Robotics Lab, the Video & Image Processing Lab, the Abbasi-Asl Lab, the Berkeley Institute for Data Science and the Perlmutter Cosmology Group each show a drawing (`images/physicsai.svg`, `robot-soccer.svg`, `vip-lab.svg`, `brain-emd.svg`, `particles.svg`, `supernova.svg`), not a photo or clip. They're illustrations, not real results: the detection scores, settings, tumour outline, decomposition layers, sky and detector hits in them are made up. `tools/draw-research-art.py` draws all six; edit it and run `python3 tools/draw-research-art.py` to redraw them.
 
 ## Writing (archived)
 

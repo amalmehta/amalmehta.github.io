@@ -431,7 +431,8 @@ class ImagesTest(unittest.TestCase):
 class MediaTest(unittest.TestCase):
     REQUIRED = ("autoplay", "muted", "loop", "playsinline")
     # Research entries that must carry an image or clip (matched on their heading).
-    RESEARCH = ("PhysicsAI", "Hybrid Robotics Lab", "Video & Image Processing Lab", "Abbasi-Asl Lab")
+    RESEARCH = ("PhysicsAI", "Hybrid Robotics Lab", "Video & Image Processing Lab", "Abbasi-Asl Lab",
+                "Berkeley Institute for Data Science", "Perlmutter Cosmology Group")
 
     def test_videos_are_silent_inline_loops(self):
         # Cards show stills until real clips exist; any clip added must follow these rules.
