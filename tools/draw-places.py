@@ -1271,13 +1271,63 @@ def edinburgh():
     return svg("edinburgh", "".join(b), ("#46557f", "#f0b991"))
 
 
+# ---------------------------------------------------------------- Taipei: Taipei 101 at dusk, from Elephant Mountain
+def taipei():
+    rng = random.Random(101)
+    b = []
+    b.append(glow(640, 560, 760, 260, "#ffc59a", 0.6))
+    b.append(clouds(rng, 4, 70, 220, colour="#f2cfd2", opacity=0.45))
+    # Yangmingshan, low and blue across the basin
+    b.append(poly(ridge(-40, W + 40, 560, rng, [(0.2, 0.25, 0.8), (0.55, 0.3, 1.0), (0.9, 0.2, 0.7)], 150, step=20), "#7a7f9e", opacity="0.8"))
+    # The city: rows of blocks, nearer rows darker, windows lit
+    for base, hmin, hmax, cols, p in ((600, 30, 90, ("#6a6a86", "#73718c"), 0.25), (650, 40, 120, ("#4f4f69", "#57556f", "#4a4a62"), 0.35)):
+        x = -20
+        while x < W + 20:
+            w, h = rng.randint(30, 64), rng.randint(hmin, hmax)
+            b.append(f'<rect x="{x}" y="{base - h}" width="{w}" height="{h + 160}" fill="{rng.choice(cols)}"/>')
+            for wy in range(base - h + 8, base + 120, 14):
+                for wx in range(x + 5, x + w - 6, 10):
+                    if rng.random() < p:
+                        b.append(f'<rect x="{wx}" y="{wy}" width="5" height="7" fill="#ffd98e" opacity="0.85"/>')
+            x += w + rng.randint(0, 6)
+    # Taipei 101: a podium, eight flaring segments, the crown and its spire
+    cx, glass, edge, lit = 700, "#4f7f88", "#7fb0b4", "#ffe2a6"
+    b.append(glow(cx, 330, 170, 330, "#ffe8bf", 0.35))
+    b.append(poly([(cx - 70, 660), (cx - 56, 540), (cx + 56, 540), (cx + 70, 660)], "#466f78"))
+    for k in range(4):
+        b.append(f'<rect x="{cx - 52 + k * 28}" y="552" width="18" height="96" fill="#3d6169"/>')
+    top = 540
+    for k in range(8):
+        y0, y1 = top - k * 40, top - (k + 1) * 40
+        b.append(poly([(cx - 40, y0), (cx - 49, y1), (cx + 49, y1), (cx + 40, y0)], glass, stroke=edge, stroke_width="2"))
+        b.append(f'<path d="M{cx - 49} {y1} H{cx + 49}" stroke="{lit}" stroke-width="3"/>')
+        for wy in range(y1 + 8, y0 - 2, 8):
+            b.append(f'<path d="M{cx - 42} {wy} H{cx + 42}" stroke="#3e6a72" stroke-width="1.5"/>')
+        b.append(f'<path d="M{cx} {y1 + 2} V{y0}" stroke="#3e6a72" stroke-width="2"/>')
+    crown = top - 8 * 40
+    b.append(poly([(cx - 34, crown), (cx - 26, crown - 34), (cx + 26, crown - 34), (cx + 34, crown)], glass, stroke=edge, stroke_width="2"))
+    b.append(poly([(cx - 20, crown - 34), (cx - 14, crown - 62), (cx + 14, crown - 62), (cx + 20, crown - 34)], glass, stroke=edge, stroke_width="2"))
+    b.append(f'<rect x="{cx - 4}" y="{crown - 150}" width="8" height="90" fill="#9fb9bd"/>')
+    b.append(f'<circle cx="{cx}" cy="{crown - 152}" r="4" fill="#ff8a6b"/>')
+    # Elephant Mountain in front: a dark wooded ridge, boulders on its crest
+    hill = [(-40, H), (-40, 600), (120, 610), (260, 640), (380, 690), (470, 740), (540, H)]
+    b.append(poly(hill, "#25332b"))
+    for _ in range(26):
+        x, y = rng.uniform(-20, 420), rng.uniform(600, 700)
+        if y > 600 + (x + 40) * 0.2:
+            b.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rng.uniform(16, 30):.0f}" fill="{rng.choice(("#2b3c31", "#30443a", "#223028"))}"/>')
+    b.append('<path d="M60 640 q40 -40 90 -18 q20 18 -10 32 q-50 12 -80 -14 Z" fill="#3a3f3c"/>')
+    b.append(glow(1050, H, 520, 70, "#ffd8a8", 0.25))
+    return svg("taipei", "".join(b), ("#3f4a7a", "#f2b28f"))
+
+
 PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofoten), ("patagonia", patagonia),
           ("bhutan", bhutan), ("samarkand", samarkand), ("faroe-islands", faroe),
           ("chamonix", chamonix), ("garibaldi", garibaldi), ("glacier-national-park", glacier), ("moorea", moorea),
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:
