@@ -11,13 +11,13 @@
   <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <meta name="description" content="A 9×9 Go engine that taught itself by self-play in 11 hours on one laptop; its last generation beats its first in 79 of 80 games, and still loses all 40 to GNU Go’s weakest level.">
+  <meta name="description" content="A 9×9 Go engine that taught itself by self-play on one laptop CPU, going from 0 to 32 wins in 40 games against GNU Go’s weakest level.">
   <link rel="canonical" href="https://amalmehta.com/project-alphago.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Amal Mehta">
   <meta property="og:url" content="https://amalmehta.com/project-alphago.html">
   <meta property="og:title" content="AlphaGo Lite · Amal Mehta">
-  <meta property="og:description" content="A 9×9 Go engine that taught itself by self-play in 11 hours on one laptop; its last generation beats its first in 79 of 80 games, and still loses all 40 to GNU Go’s weakest level.">
+  <meta property="og:description" content="A 9×9 Go engine that taught itself by self-play on one laptop CPU, going from 0 to 32 wins in 40 games against GNU Go’s weakest level.">
   <meta property="og:image" content="https://amalmehta.com/images/og-project-alphago.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -48,7 +48,7 @@
     <header class="page-head">
       <p class="card-when">2026 · 9×9 Go, one laptop CPU</p>
       <h1>AlphaGo Lite</h1>
-      <p class="case-hook">A 9×9 Go engine that taught itself by self-play in 11 hours on one laptop; its last generation beats its first in 79 of 80 games, and still loses all 40 to GNU Go’s weakest level.</p>
+      <p class="case-hook">A 9×9 Go engine that taught itself by self-play on one laptop CPU, going from 0 to 32 wins in 40 games against GNU Go’s weakest level.</p>
       <p class="links"><a href="https://amalmehta.com/AlphaGoLite/">Play it in your browser →</a> <a href="https://github.com/amalmehta/AlphaGoLite">Source on GitHub →</a></p>
     </header>
 
@@ -62,7 +62,7 @@
       <h2 class="section-title">Setup</h2>
       <p>Standard 9×9 Go: simple ko, no suicide, area scoring and a komi of 7.5. The network is a small residual net, 4 blocks of 48 channels and 188,173 parameters, that reads 6 planes describing the board and outputs a move (any of the 81 points, or pass) and a guess at who will win. It was chosen over a 6×64 net that took about twice as long per position.</p>
       <p>Each generation plays 160 games against itself with Monte Carlo tree search guided by the network: 160 simulations on a quarter of the moves and 40 on the rest, so most moves are cheap. The network then trains on where the search spent its visits and on who won, with every position seen in all 8 rotations and reflections.</p>
-      <p>In all, 44 generations and 7,040 self-play games, in about 11 hours over four sittings on one 8-core Intel Core i9 with no GPU.</p>
+      <p>In all, 107 generations and 17,120 self-play games, in about 23 hours on one 8-core Intel Core i9 with no GPU. After generation 44, which still lost every game to GNU Go, four things changed at once: each generation trained only on the last 12 generations’ games, a small extra output learned to predict who owns each point at the end, the engine could pass only once the game was played out, and self-play games could run to 250 moves instead of 162.</p>
     </section>
 
     <section class="case-part">
@@ -80,30 +80,30 @@
     <section class="case-part">
       <h2 class="section-title">Results</h2>
       <div class="stats">
-        <div class="stat"><strong>79/80</strong><span>games generation 44 won against generation 0</span></div>
-        <div class="stat"><strong>46/80</strong><span>against generation 39, as gains slowed</span></div>
-        <div class="stat"><strong>0/40</strong><span>against GNU Go at its weakest level</span></div>
-        <div class="stat"><strong>11 h</strong><span>of training on one laptop CPU</span></div>
+        <div class="stat"><strong>32/40</strong><span>games won against GNU Go at its weakest level, up from 0</span></div>
+        <div class="stat"><strong>76/80</strong><span>against generation 44</span></div>
+        <div class="stat"><strong>80/80</strong><span>against generation 0</span></div>
+        <div class="stat"><strong>23 h</strong><span>of training on one laptop CPU</span></div>
       </div>
-      <p>Each head-to-head is 80 games at 64 simulations a move. Generation 44 beat generation 0 in 79 of 80 games, generation 19 in 78 and generation 34 in 59; against generation 39 it won 46. Over training the policy loss fell from 4.09 to 2.90 nats and the value loss from 0.69 to 0.57.</p>
-      <p>Against an outside opponent it’s still weak: at 400 simulations a move it lost all 40 games to GNU Go 3.8 at level 1, its weakest setting, by a median of 81 points.</p>
-      <p>The same network runs in PyTorch, in Core ML in the Mac app and in the browser, and the three agree to within 8 millionths. A 400-simulation search takes about half a second in the app and about a second in the browser.</p>
+      <p>At 400 simulations a move, generation 107 beat GNU Go 3.8 at level 1, its weakest setting, in 32 of 40 games: 17 of 20 as Black and 15 of 20 as White, by a median of 3.5 points. Generation 44 lost all 40 of the same games by a median of 81.</p>
+      <p>Against its own past, generation 107 beat generation 44 in 76 of 80 games and generation 51 in 77 at 160 simulations a move, and generation 0 in all 80 at 64. Over training the policy loss fell from 4.09 to 2.26 nats and the value loss from 0.69 to about 0.41, though part of that drop comes from training on fewer, newer games.</p>
+      <p>The browser demo runs generation 107, and its pass rule matches the Python version on 3,000 random positions. A 400-simulation search takes about a second in the browser.</p>
       <figure class="case-figure">
-        <picture><source type="image/avif" srcset="images/case/alphago.avif"><source type="image/webp" srcset="images/case/alphago.webp"><img src="images/case/alphago.webp" alt="Generation 44 against earlier generations, head to head, and the policy and value losses over 44 generations of training" loading="lazy" width="1200" height="392"></picture>
-        <figcaption>Generation 44 against earlier generations, head to head, and the policy and value losses over 44 generations of training.</figcaption>
+        <picture><source type="image/avif" srcset="images/case/alphago.avif"><source type="image/webp" srcset="images/case/alphago.webp"><img src="images/case/alphago.webp" alt="Generation 107 head to head against generations 0, 44 and 51 and GNU Go level 1, and the policy and value losses over 107 generations of training" loading="lazy" width="1200" height="392"></picture>
+        <figcaption>Generation 107 head to head against generations 0, 44 and 51 and GNU Go level 1, and the policy and value losses over 107 generations of training.</figcaption>
       </figure>
     </section>
 
     <section class="case-part">
       <h2 class="section-title">What didn’t work</h2>
-      <p>In absolute terms it’s weak: it lost every game to GNU Go’s weakest level, and it has never been measured against people. Gains were flattening by the end, with generation 44 beating generation 39 only 46 times in 80.</p>
-      <p>One run stalled for two hours when a self-play worker died and its job was silently dropped; timeouts and retries fixed it. It’s one training run with one seed, on a machine shared with other work.</p>
-      <p>The app leaves out superko, handicap stones, time controls and saving games, the search runs on a single thread, and scoring doesn’t remove dead stones.</p>
+      <p>In absolute terms it’s still weak: GNU Go level 1 is that program’s weakest setting, and the engine has never been measured against people. About half its wins are by 4.5 points or less, and two of its 8 losses were by 73.5 and 47.5.</p>
+      <p>One run stalled for two hours when a self-play worker died and its job was silently dropped; timeouts and retries fixed it. It’s one training run with one seed, on a machine shared with other work, and the four changes after generation 44 went in together, so which of them mattered isn’t known.</p>
+      <p>The Mac app still runs generation 44 without the new pass rule. It leaves out superko, handicap stones, time controls and saving games, the search runs on a single thread, and scoring doesn’t remove dead stones.</p>
     </section>
 
     <section class="case-part">
       <h2 class="section-title">What’s next</h2>
-      <p>Measure its strength against people, and try the same pipeline on a second board or game, such as 7×7 Go or Connect Four.</p>
+      <p>Bring the Mac app up to generation 107, test which of the four changes mattered, and measure its strength against people.</p>
     </section>
 
     <nav class="case-nav" aria-label="Other projects">
