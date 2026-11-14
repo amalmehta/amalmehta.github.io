@@ -7,7 +7,9 @@ cd "$(dirname "$0")"
 TMP=$(mktemp -d)
 find . -name amal-mehta-resume.tex | grep -- "${1:-}" | while read -r tex; do
   dir=$(dirname "$tex")
-  (cd "$dir" && tectonic -c minimal amal-mehta-resume.tex 2>&1 | grep -v "absolute path" || true)
+  if ! (cd "$dir" && tectonic -c minimal amal-mehta-resume.tex >"$TMP/log" 2>&1); then
+    grep -v "absolute path" "$TMP/log"; echo "$dir: LaTeX error, not built"; continue
+  fi
   python3 - "$tex" "$TMP/docx.tex" <<'PY'
 import re, sys
 s = open(sys.argv[1]).read().split(r"\begin{document}")[1]

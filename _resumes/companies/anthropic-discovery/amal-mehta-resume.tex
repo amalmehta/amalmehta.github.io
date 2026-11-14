@@ -1,0 +1,87 @@
+% Anthropic: Research Scientist, Discovery (Engineering & Applied Sciences), ML researcher track. Not served on the website.
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in,vmargin=0.4in]{geometry}
+\usepackage{fontspec}\setmainfont{Times New Roman}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Amal Mehta — Resume}, pdfauthor={Amal Mehta}}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{-0.6em}\rule{\linewidth}{0.5pt}]
+\titlespacing*{\section}{0pt}{5pt}{2pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.2pt,topsep=1pt,parsep=0pt}
+\newcommand{\role}[4]{\textbf{#1}\hfill\textbf{#2}\\\textit{#3}\hfill\textit{#4}}
+
+\begin{document}\fontsize{9.8}{11.2}\selectfont
+
+\begin{center}
+{\LARGE\bfseries Amal Mehta}\\[3pt]
+SF Bay Area \quad$\cdot$\quad \href{mailto:amal.mehta@gmail.com}{amal.mehta@gmail.com} \quad$\cdot$\quad \href{https://amalmehta.com/}{amalmehta.com} \quad$\cdot$\quad \href{https://www.linkedin.com/in/amal-mehta-264413a9/}{LinkedIn} \quad$\cdot$\quad \href{https://github.com/amalmehta}{GitHub}
+\end{center}
+
+ML researcher who builds RL environments, rewards, verifiers and evaluations, and studies how they break. Six years of applied deep learning across physics-based simulation, robotics, neural data and medical imaging. Predictions written before runs; code and a demo for every study.
+
+\section*{Experience}
+
+\role{Independent ML \& Robotics Research}{Sept 2025 -- Present}{Self-directed projects; details at \href{https://amalmehta.com/}{amalmehta.com}}{San Francisco Bay Area}
+\begin{itemize}
+\item \href{https://amalmehta.com/long_term_horizon_planning/}{\textbf{Reward and verifier robustness in RL:}} built a code-repair environment with visible and hidden checks; GRPO on visible tests raised pass rate 35\%\,$\to$\,58\% while true correctness fell 31\%\,$\to$\,2\%, as the agent deleted 98\% of untested branches. Ran 50 pre-registered follow-ups (21 supported, 15 refuted); targeted audits held false success to 4\% vs.\ 24\% for random audits at the same 10\% budget.
+\item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Simulation-based environment:}} batched quadrotor simulator modelled on a Holybro X500 with PX4-style commands and randomized payload, motor wear, wind and latency; a learned residual cut held-out tracking error to 7.3\,cm vs.\ 14.0\,cm for tuned L1 adaptive control.
+\item \href{https://github.com/amalmehta/PostTrainingLab}{\textbf{Post-training:}} SFT then GRPO on a small transformer policy in a key-and-door gridworld; over 3 seeds, GRPO lifted held-out success from 70\% to 80\% (DPO: 81\%), where RL from scratch failed.
+\item \href{https://amalmehta.com/AlphaGoLite/}{\textbf{AlphaGo Lite:}} AlphaZero-style 9$\times$9 Go from scratch on one laptop CPU (107 generations, 17,120 self-play games); went from 0 to 32 wins in 40 games against GNU Go level 1. Runs in the browser (ONNX) and a Mac app (Core ML).
+\item \href{https://github.com/amalmehta/BCIProjects}{\textbf{Brain--computer interfaces:}} on public neural data, label-free decoding held R\textsuperscript{2} 0.72 on held-out days to day 138 (Wiener 0.42).
+\item \textbf{Tools:} \href{https://amalmehta.com/LLMUnderstander/}{LLM Understander}, an interactive \href{https://github.com/amalmehta/LLMUnderstander/releases/latest}{Mac app} on how LLMs are trained; \href{https://github.com/amalmehta/researcher_pal}{Researcher Pal}, Claude Code skills for research papers.
+\end{itemize}
+
+\role{Deep Learning Scientist}{Sept 2021 -- Aug 2025}{PhysicsAI (DARPA-funded)}{Pacifica, CA (remote)}
+\begin{itemize}
+\item Built an RL loop that learns from real-world feedback: policies (TD3, PPO, DDPG) set a synthetic-image generator's parameters, and a detector's accuracy on real drone imagery was the reward.
+\item Built the PEARL meta-RL codebase and ran its multi-week GPU training; also applied to a fighter-jet simulation.
+\item Implemented domain adaptation from scratch to hold detector accuracy with scarce real labels, on 10--15\,GB mostly synthetic datasets.
+\item Built GAN-based synthesis pipelines (DCGAN, InfoGAN, FineGAN) producing training data for downstream detection models.
+\end{itemize}
+
+\role{Deep RL Researcher}{Aug 2023 -- Mar 2024}{Hybrid Robotics Lab, UC Berkeley --- adv.\ Prof.\ Koushil Sreenath}{Berkeley, CA}
+\begin{itemize}
+\item Trained a single multi-stage PPO policy in IsaacGym for a Unitree Go1 quadruped to track, approach, and shoot a soccer ball at a target, replacing the multi-policy hierarchical framework used in prior work; $\sim$60\% kicking accuracy on hardware.
+\item Designed the three-stage reward and CPG-based gait tracking; prototyped RLPD to fine-tune the sim-trained policy on real robot data.
+\end{itemize}
+
+\role{Research Assistant}{June 2020 -- Dec 2022}{Video \& Image Processing Lab, BAIR --- adv.\ Prof.\ Avideh Zakhor}{UC Berkeley}
+\begin{itemize}
+\item Developed a deep CNN segmentation pipeline for invasive melanoma in large-scale histopathological images (F1 0.44 vs.\ 0.14 for the prior best); published at SPIE Medical Imaging 2023; Stowell-Orbison Award Poster Session at USCAP 2022.
+\end{itemize}
+
+\role{Researcher}{June 2020 -- Aug 2020}{Abbasi-Asl Lab, UCSF --- adv.\ Prof.\ Reza Abbasi-Asl}{San Francisco, CA}
+\begin{itemize}
+\item Built empirical mode decomposition (EMD) pipelines to align 2D and 3D brain scans across visits and to a common template.
+\end{itemize}
+
+\section*{Education}
+
+\role{University of California, Berkeley}{2021}{B.A.\ Computer Science --- Regents Scholar}{Berkeley, CA}
+
+
+\role{Stanford University}{Aug 2021 -- May 2023}{Graduate coursework --- Autonomous Systems \& Artificial Intelligence}{}
+\begin{itemize}
+\item CS231N (Deep Learning for Vision), CS330 (Meta-Learning), AA271A/B (Autonomy I \& II), AA273 (State Estimation).
+\item CS330 project: few-shot imitation learning; implemented RL\textsuperscript{2} and inverse soft Q-learning in Meta-World.
+\end{itemize}
+
+\section*{Technical Skills}
+\begin{tabular}{@{}p{0.9in}l}
+\textbf{Languages} & Python, C++, Swift, JavaScript / TypeScript \\
+\textbf{ML / RL} & PyTorch, TensorFlow, stable-baselines3, IsaacGym, OpenCV, CTC decoding \\
+\textbf{Deployment} & ONNX, Core ML, SwiftUI, Three.js \\
+\textbf{Robotics} & ROS, Gazebo, Unitree Go1, CPG gait control, Kalman filtering, Shared autonomy \\
+\textbf{Tools} & Docker, GitHub Actions CI, CUDA/multi-GPU \\
+\end{tabular}
+
+\section*{Publications}
+\begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=1pt]
+\item Shah, A., \textbf{Mehta, A.}, Wang, M., Neumann, N., McCalmont, T., Zakhor, A. ``Deep Learning Segmentation for Invasive Melanoma.'' \textit{SPIE Medical Imaging}, 2023.
+\item Neumann, N., Wang, M., \textbf{Mehta, A.}, et al. ``Quantifying Invasive Melanoma Volume by Deep Learning Segmentation at the Pixel-Level.'' \textit{USCAP Annual Meeting}, 2022.
+\end{enumerate}
+
+\end{document}

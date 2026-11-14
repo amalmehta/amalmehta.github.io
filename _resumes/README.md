@@ -22,4 +22,5 @@ Copy `general/` to `companies/<company>/`, tailor it to the posting, add a `cove
 | Company | Role | Folder | Made | Status |
 |---|---|---|---|---|
 | Anthropic | Research Engineer, RL and post-training | [`companies/anthropic/`](companies/anthropic/) | 2026-11-14 | Not sent |
+| Anthropic | [Research Scientist, Discovery (Engineering & Applied Sciences)](https://job-boards.greenhouse.io/anthropic/jobs/5468937008), ML researcher track | [`companies/anthropic-discovery/`](companies/anthropic-discovery/) | 2026-11-14 | Not sent |
 | Apple | Applied Research Engineer | [`companies/apple/`](companies/apple/) | 2026-11-14 | Not sent |
