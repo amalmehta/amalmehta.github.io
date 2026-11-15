@@ -113,10 +113,10 @@
             "position": 3,
             "item": {
                 "@type": "SoftwareSourceCode",
-                "name": "Post Training Lab",
-                "description": "A 59k-parameter transformer learns a maze by copying demonstrations (SFT), then two kinds of post-training, GRPO and DPO, lift held-out success from 70% to 80% and 81% over 3 seeds.",
-                "url": "https://amalmehta.com/PostTrainingLab/",
-                "codeRepository": "https://github.com/amalmehta/PostTrainingLab",
+                "name": "Replicate SOTA",
+                "description": "Qwen3.5-0.8B rebuilt from scratch matches the official model at every position on 8 test prompts; the largest score gap is 3.8×10⁻⁵.",
+                "url": "https://github.com/amalmehta/ReplicateSOTA",
+                "codeRepository": "https://github.com/amalmehta/ReplicateSOTA",
                 "author": {
                     "@type": "Person",
                     "name": "Amal Mehta",
@@ -338,15 +338,15 @@
         </div>
       </article>
 
-      <article class="project" id="post-training-lab">
-        <figure class="shot has-badge"><a class="shot-link" href="https://amalmehta.com/PostTrainingLab/" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="images/post-training-960.avif 960w, images/post-training-1200.avif 1200w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><source type="image/webp" srcset="images/post-training-960.webp 960w, images/post-training-1200.webp 1200w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><img src="images/post-training-960.webp" alt="Post Training Lab: results averaged over 3 seeds: held-out success from 70% to 80% with GRPO and to 81% with DPO, 63% to 74% on harder mazes, and 7% for the reward hacker" loading="lazy" width="960" height="778"></picture></a><a class="try-badge" href="https://amalmehta.com/PostTrainingLab/" tabindex="-1" aria-hidden="true">Try it live</a></figure>
+      <article class="project" id="replicate-sota">
+        <figure class="shot"><a class="shot-link" href="https://github.com/amalmehta/ReplicateSOTA" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="images/replicate-sota-960.avif 960w, images/replicate-sota-1456.avif 1456w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><source type="image/webp" srcset="images/replicate-sota-960.webp 960w, images/replicate-sota-1456.webp 1456w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><img src="images/replicate-sota-960.webp" alt="Replicate SOTA: Qwen3.5 rebuilt from scratch, with 8 of 8 prompts matching the official model, a largest score gap of 3.8×10⁻⁵, and recall at length 64 of 97.8% for Gated DeltaNet and 97.9% for linear attention" loading="lazy" width="960" height="600"></picture></a></figure>
         <div class="project-text">
-          <p class="card-when">2026 · toy maze, 3 seeds</p>
-          <h3>Post Training Lab</h3>
-          <p>A 59k-parameter transformer learns a maze by copying demonstrations (SFT), then two kinds of post-training, GRPO and DPO, lift held-out success from 70% to 80% and 81% over 3 seeds.</p>
-          <p class="card-miss"><span>What didn’t work</span> 150-level eval sets and 3 seeds can’t separate GRPO from DPO: one level is worth about 0.7 points.</p>
-          <p class="tags"><span class="chip">PyTorch</span> <span class="chip">SFT → GRPO</span> <span class="chip">DPO</span> <span class="chip">Transformers</span> <span class="chip">Reward hacking</span></p>
-          <p class="links"><a class="deep" href="project-post-training.html">Deep dive →</a> <a href="https://amalmehta.com/PostTrainingLab/">Live demo: race the checkpoints →</a> <a href="https://github.com/amalmehta/PostTrainingLab">Code and write-up on GitHub →</a></p>
+          <p class="card-when">2026 · Qwen3.5-0.8B, CPU, 3 seeds</p>
+          <h3>Replicate SOTA</h3>
+          <p>Qwen3.5-0.8B rebuilt from scratch matches the official model at every position on 8 test prompts; the largest score gap is 3.8×10⁻⁵.</p>
+          <p class="card-miss"><span>What didn’t work</span> Gated DeltaNet’s corrected memory tied plain linear attention at length 64, and at 128 runs of 1,500 steps were too all-or-nothing to tell.</p>
+          <p class="tags"><span class="chip">PyTorch</span> <span class="chip">Gated DeltaNet</span> <span class="chip">Linear attention</span> <span class="chip">Hugging Face</span> <span class="chip">Associative recall</span></p>
+          <p class="links"><a class="deep" href="project-replicate-sota.html">Deep dive →</a> <a href="https://github.com/amalmehta/ReplicateSOTA">Code and write-up on GitHub →</a></p>
         </div>
       </article>
 
@@ -549,6 +549,11 @@
           <h3>AlphaGo Lite <a class="try-badge inline" href="https://amalmehta.com/AlphaGoLite/">Play it</a></h3>
           <p>A 9×9 Go engine that taught itself by self-play on one laptop, beats GNU Go’s weakest level 4 games in 5, and shows which moves it’s weighing as you play.</p>
           <p class="links"><a href="project-alphago.html">Deep dive →</a> <a href="https://amalmehta.com/AlphaGoLite/">Demo →</a> <a href="https://github.com/amalmehta/AlphaGoLite">Code →</a></p>
+        </li>
+        <li class="mini" id="post-training-lab">
+          <h3>Post Training Lab <a class="try-badge inline" href="https://amalmehta.com/PostTrainingLab/">Try it</a></h3>
+          <p>A 59k-parameter transformer learns a maze by copying demonstrations (SFT), then GRPO and DPO lift held-out success from 70% to 80% and 81% over 3 seeds.</p>
+          <p class="links"><a href="project-post-training.html">Deep dive →</a> <a href="https://amalmehta.com/PostTrainingLab/">Demo →</a> <a href="https://github.com/amalmehta/PostTrainingLab">Code →</a></p>
         </li>
         <li class="mini" id="reward-shapes">
           <h3>Reward Shapes</h3>

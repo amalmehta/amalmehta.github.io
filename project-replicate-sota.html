@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Replicate SOTA · Amal Mehta</title>
+  <meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <meta name="description" content="Qwen3.5-0.8B rebuilt from scratch matches the official model at every position on 8 test prompts; the largest score gap is 3.8×10⁻⁵.">
+  <link rel="canonical" href="https://amalmehta.com/project-replicate-sota.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Amal Mehta">
+  <meta property="og:url" content="https://amalmehta.com/project-replicate-sota.html">
+  <meta property="og:title" content="Replicate SOTA · Amal Mehta">
+  <meta property="og:description" content="Qwen3.5-0.8B rebuilt from scratch matches the official model at every position on 8 test prompts; the largest score gap is 3.8×10⁻⁵.">
+  <meta property="og:image" content="https://amalmehta.com/images/og-project-replicate-sota.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Replicate SOTA: the deep dive, from the question to what didn’t work">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="Replicate SOTA: the deep dive, from the question to what didn’t work">
+  <link rel="preload" href="fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="email.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#top">Skip to content</a>
+  <header class="site-header">
+    <nav class="wrap nav">
+      <span class="nav-brand"><a class="nav-name" href="index.html">Amal Mehta</a><a class="nav-status" href="https://github.com/amalmehta/PortfolioWebsite/commits/main/" title="See every change on GitHub">Evolving site · <time datetime="2026-11">Nov 2026</time></a></span>
+      <div class="nav-links">
+        <a href="index.html">Profile</a>
+        <a href="index.html#featured" aria-current="true">Projects</a>
+        <a href="interests.html">Interests</a>
+        <a href="resume/amal-mehta-resume.pdf" type="application/pdf">Resume <span class="file">PDF</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Built by tools/make-case-studies.py; edit the content there, not here. -->
+  <main id="top" class="wrap page case">
+    <header class="page-head">
+      <p class="card-when">2026 · Qwen3.5-0.8B, CPU, 3 seeds</p>
+      <h1>Replicate SOTA</h1>
+      <p class="case-hook">Qwen3.5-0.8B rebuilt from scratch matches the official model at every position on 8 test prompts; the largest score gap is 3.8×10⁻⁵.</p>
+      <p class="links"><a href="https://github.com/amalmehta/ReplicateSOTA">Code and write-up on GitHub →</a></p>
+    </header>
+
+    <section class="case-part">
+      <h2 class="section-title">The question</h2>
+      <p>Can a current open-weights model be rebuilt from its paper and config alone, and shown to match the official one exactly? And does its key new idea hold up in a small test of its own?</p>
+      <p>Qwen3.5-0.8B (February 2026) uses ordinary attention in only 6 of its 24 layers. The other 18 are Gated DeltaNet, a linear-attention layer with a fixed-size memory that it corrects: it writes only the part of a new value the memory gets wrong, where plain linear attention adds every new value on top.</p>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">Setup</h2>
+      <p>The rebuild is plain PyTorch, written from scratch and loaded with the official weights. It is checked against the official transformers model on 8 prompts, from a single token to 4,534 tokens, in English, code, Chinese, emoji and repeated text. A match means every next-token score at every position is within 10⁻⁴ of the official one, a threshold fixed at 10⁻³ before the first run and tightened after.</p>
+      <p>The recall test is multi-query associative recall (MQAR, from Zoology): two-layer models of 0.17M parameters, width 64, 1,500 training steps on a CPU and 3 seeds per cell. The hypothesis, fixed before running: Gated DeltaNet beats plain linear attention at every length by more than the seed spread. Softmax attention is the upper baseline.</p>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">How it works</h2>
+      <ol class="flow">
+        <li>Read the paper and config</li>
+        <li>Rebuild in plain PyTorch</li>
+        <li>Load the official weights</li>
+        <li>Compare every score on 8 prompts</li>
+        <li>Recall test: three mixers, 3 seeds</li>
+        <li>Report against the fixed hypothesis</li>
+      </ol>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">Results</h2>
+      <div class="stats">
+        <div class="stat"><strong>8/8</strong><span>prompts match the official model</span></div>
+        <div class="stat"><strong>3.8×10⁻⁵</strong><span>largest score gap at any position</span></div>
+        <div class="stat"><strong>97.8% / 97.9%</strong><span>Gated DeltaNet / linear attention recall at length 64</span></div>
+        <div class="stat"><strong>1 of 3</strong><span>softmax seeds that learned length 128</span></div>
+      </div>
+      <p>The rebuild matches on all 8 prompts. The largest gap in any next-token score is 3.8×10⁻⁵ (on the 4,534-token prompt), the top token agrees at every position, and 32 tokens of greedy decoding come out the same. The official model ran on a newer PyTorch than the rebuild, so the match holds across versions.</p>
+      <p>At length 64, recall is a tie: Gated DeltaNet 97.8%, linear attention 97.9%, softmax 100%. Gated DeltaNet trails by 0.2 points, well inside the seed spread, so the hypothesis isn’t supported there.</p>
+      <figure class="case-figure">
+        <picture><source type="image/avif" srcset="images/case/replicate-sota.avif"><source type="image/webp" srcset="images/case/replicate-sota.webp"><img src="images/case/replicate-sota.webp" alt="Recall accuracy at lengths 64 and 128, one dot per seed: a tie at 64, and at 128 seeds that either learned the task or didn’t" loading="lazy" width="1200" height="713"></picture>
+        <figcaption>Recall accuracy at lengths 64 and 128, one dot per seed: a tie at 64, and at 128 seeds that either learned the task or didn’t.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">What didn’t work</h2>
+      <p>Length 128 is inconclusive. Softmax attention can solve the task, yet learned it on only 1 of 3 seeds. The runs are all-or-nothing within 1,500 steps, so the averages measure how fast training takes off, not how much the memory holds. The rule that a length counts only if softmax reaches 90% on every seed was added after seeing the results.</p>
+      <p>The models are tiny, with a single learning rate, and the task vocabulary is smaller than Zoology’s. Both linear layers needed Qwen’s short convolution to learn at all, added after a pilot. This is one claim on one toy task, not the papers’ benchmark.</p>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">What’s next</h2>
+      <p>Rerun length 128 with about 4,000 steps, then length 256.</p>
+    </section>
+
+    <nav class="case-nav" aria-label="Other projects">
+      <a href="project-bci.html">← BCI Projects</a>
+      <a href="index.html#replicate-sota">Back to the profile</a>
+      <a href="project-drone.html">Drone Autonomy →</a>
+    </nav>
+  </main>
+
+  <footer class="wrap footer">
+    <p>Amal Mehta · <a href="https://reachouts.me/?u=amal">Get in touch</a> · <a class="email" href="https://reachouts.me/?u=amal" data-u="amal.mehta" data-d="gmail.com">amal.mehta [at] gmail.com</a> · <a rel="me" href="https://www.linkedin.com/in/amal-mehta-264413a9/">LinkedIn</a> · <a rel="me" href="https://github.com/amalmehta">GitHub</a> · <a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
+    <p class="signoff">Thanks for stopping by.</p>
+    <!-- Saved for later, once beside the sign-off: <span class="secrets">There are eight secrets here.</span> -->
+    <!-- Saved for later, the footer notes: <p class="footer-note">No trackers, no cookies.</p> <p class="footer-note">Plain HTML and CSS, tested on every push. <a href="https://github.com/amalmehta/PortfolioWebsite">Source on GitHub</a>.</p> -->
+  </footer>
+</body>
+</html>
