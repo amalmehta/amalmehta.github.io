@@ -10,12 +10,12 @@
 @font-face { font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap; src: url("fonts/inter-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 
 :root {
-  --bg: #fafaf8;
-  --surface: #ffffff;
-  --text: #272624;
-  --muted: #5d5c58;
+  --bg: #f8f3ea;
+  --surface: #fffcf6;
+  --text: #29241f;
+  --muted: #615950;
   --faint: #706e69;
-  --line: #e4e3de;
+  --line: #e9e0d1;
   --accent: #2f5d8a;
   --accent-soft: #e7eef6;
   --warm: #9c5636;
@@ -30,12 +30,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #131414;
-    --surface: #1b1c1c;
-    --text: #e6e5e0;
-    --muted: #a6a59f;
+    --bg: #161412;
+    --surface: #1e1b18;
+    --text: #ece6dc;
+    --muted: #aca294;
     --faint: #8d8b85;
-    --line: #2c2c2b;
+    --line: #2f2a25;
     --accent: #8db6dd;
     --accent-soft: #1f2a35;
     --warm: #d9a07f;
@@ -124,13 +124,13 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* Sections */
 .section { padding-top: 5.5rem; padding-bottom: 2.6rem; }
 .section-title {
-  font-family: var(--sans); font-size: 0.82rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em; color: var(--warm);
+  font-family: var(--serif); font-size: 1.45rem; font-weight: 500; font-style: italic;
+  line-height: 1.3; color: var(--text);
   display: flex; align-items: center; gap: 0.6rem; position: relative;
-  margin: 0 0 2rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line);
+  margin: 0 0 2rem; padding-bottom: 0.5rem;
 }
-/* A short warm underline on the rule, still */
-.section-title::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 3.5rem; height: 4px; background: var(--warm); -webkit-mask: url("images/ink/brush.svg") no-repeat 0 0 / 100% 100%; mask: url("images/ink/brush.svg") no-repeat 0 0 / 100% 100%; }
+/* A short warm brush stroke under each title, like ink in a notebook */
+.section-title::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 4.5rem; height: 6px; background: var(--warm); -webkit-mask: url("images/ink/brush.svg") no-repeat 0 0 / 100% 100%; mask: url("images/ink/brush.svg") no-repeat 0 0 / 100% 100%; }
 /* Outside work: an elevation profile of five passes instead of the plain rule, drawn in on load */
 #outside .section-title { border-bottom: 0; padding-bottom: 0.2rem; margin-bottom: 0.3rem; }
 #outside .section-title::after { display: none; }
@@ -204,7 +204,7 @@ h3 { font-family: var(--serif); font-weight: 600; font-size: 1.55rem; line-heigh
   .apps > .app:last-child:nth-child(odd) { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.15fr) 64px minmax(0, 1fr); gap: 1.25rem; align-items: center; }
   .apps > .app:last-child:nth-child(odd) .app-shot { grid-column: 1; grid-row: 1; margin: 0; }
 }
-.app { display: grid; grid-template-columns: 64px 1fr; gap: 1rem; align-items: start; align-content: start; padding: 1.1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.app { display: grid; grid-template-columns: 64px 1fr; gap: 1rem; align-items: start; align-content: start; padding: 1.1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
 .app-icon { width: 64px; height: 64px; }
 .app .app-shot { grid-column: 1 / -1; margin: 0 0 0.2rem; }  /* a screenshot across the top of the card */
 .app h3 { font-size: 1.15rem; margin: 0.1rem 0 0.25rem; }
@@ -325,7 +325,7 @@ h3 { font-family: var(--serif); font-weight: 600; font-size: 1.55rem; line-heigh
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent);
 }
 main { overflow-x: clip; }
-.section-title::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--warm); }
+/* Saved for later, the warm dot before each title (the Ink look dropped it): .section-title::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--warm); } */
 .tags.pubs { display: block; }
 .chip { font-size: 0.78rem; line-height: 1.5; padding: 0.1rem 0.55rem; border-radius: 8px; background: var(--accent-soft); color: var(--accent); }
 .project .chip { background: var(--warm-soft); color: var(--warm); }
@@ -360,7 +360,7 @@ picture { display: contents; }
 /* Musings: short notes in three groups, side by side on wide screens */
 .musings { display: grid; gap: 1.25rem; }
 @media (min-width: 820px) { .musings { grid-template-columns: repeat(3, 1fr); } }
-.musing-group { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.25rem 1.25rem 0.4rem; }
+.musing-group { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem 1.25rem 0.4rem; }
 .musing-group h3 { font-size: 1.3rem; margin: 0 0 0.15rem; }
 .musing-blurb { margin: 0 0 0.9rem; font-size: 0.9rem; color: var(--muted); }
 .musing { border-top: 1px solid var(--line); padding: 0.9rem 0; }
@@ -442,7 +442,7 @@ picture { display: contents; }
 .now-list { margin: 0; padding-left: 1.2rem; }
 .now-list li { margin-bottom: 0.4rem; }
 .now-list a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-.now-sub { font-family: var(--sans); font-size: 0.92rem; font-weight: 600; margin: 2.8rem 0 0.6rem; }
+.now-sub { font-family: var(--serif); font-style: italic; font-size: 1rem; font-weight: 500; color: var(--muted); margin: 2.8rem 0 0.6rem; }
 .events { list-style: none; margin: 0; padding: 0; }
 .events li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
 .events strong { font-weight: 600; }
@@ -550,7 +550,7 @@ picture { display: contents; }
 /* How I work: Before, During and After side by side, the motto centred under them */
 .work-stages { display: grid; gap: 0.9rem; }
 @media (min-width: 720px) { .work-stages { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.work-stage { padding: 1.1rem 1.2rem 1.2rem; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid color-mix(in srgb, var(--warm) 55%, var(--surface)); border-radius: 10px; }
+.work-stage { padding: 1.1rem 1.2rem 1.2rem; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid color-mix(in srgb, var(--warm) 55%, var(--surface)); border-radius: 12px; }
 .work-stage h3 { margin: 0 0 0.7rem; font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm); }
 .work-stage ol { list-style: none; margin: 0; padding: 0; }
 .work-stage li { padding: 0.55rem 0; border-top: 1px solid var(--line); font-weight: 500; line-height: 1.4; color: var(--text); }
@@ -571,14 +571,15 @@ picture { display: contents; }
 #beliefs-predictions .inspo-item strong { font-style: normal; font-weight: 400; font-size: 1.1rem; line-height: 1.5; }
 .inspo-empty { padding: 1rem 0; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); color: var(--muted); font-style: italic; }
 .inspo + .section-title, .tiles + .section-title, .books + .section-title { margin-top: 3rem; }
-.tiles + .books, .photos + .books { margin-top: 3rem; }
+.tiles + .books, .photos + .books, .learn + .books { margin-top: 3rem; }
+.tiles + .learn { margin-top: 3rem; }
 /* Books (built from books.json by tools/make-books.py): Reading now, Read and Want to read,
    a card per book with a drawn cover, and stars and a short review once read */
-.book-group { margin: 1.75rem 0 0.75rem; font: 600 0.8rem/1.4 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.book-group { margin: 1.75rem 0 0.75rem; font: italic 500 1rem/1.4 var(--serif); color: var(--muted); }
 .book-group:first-of-type { margin-top: 0; }
 .book-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 .book-grid > .book:last-child:nth-child(odd) { grid-column: 1 / -1; }  /* a lone last book takes the whole row */
-.book { display: grid; grid-template-columns: 84px 1fr; gap: 1rem; padding: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.book { display: grid; grid-template-columns: 84px 1fr; gap: 1rem; padding: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
 .book:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.28); transform: translateY(-2px); }
 .book-cover { aspect-ratio: 2 / 3; border-radius: 4px 7px 7px 4px; padding: 0.5rem 0.35rem 0.5rem 0.55rem; display: flex; align-items: flex-end;
   background: linear-gradient(160deg, hsl(var(--hue, 210) 45% 46%), hsl(calc(var(--hue, 210) + 25) 50% 30%));
@@ -627,7 +628,7 @@ picture { display: contents; }
 .tile:hover .antenna, .tile.is-live .antenna { animation: tile-swing 1s ease-in-out infinite; }
 .tile:hover .eyes, .tile.is-live .eyes { animation: tile-blink 2.2s ease-in-out infinite; }
 @keyframes tile-blink { 0%, 44%, 52%, 100% { transform: scaleY(1); } 48% { transform: scaleY(0.1); } }
-.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem 1.1rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
 .tile:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.28); transform: translateY(-2px); }
 .tile-icon { display: block; width: 36px; height: 36px; padding: 7px; margin-bottom: 0.75rem; border-radius: 10px; background: var(--accent-soft); color: var(--accent);
   fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -828,7 +829,7 @@ picture { display: contents; }
 .featured .project:hover .shot { border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
   box-shadow: -10px 14px 34px -20px color-mix(in srgb, var(--accent) 70%, transparent), 10px 14px 34px -20px color-mix(in srgb, var(--warm) 70%, transparent), 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent); }
 
-/* Profile section titles: a small line icon instead of the dot */
+/* Saved for later, profile section titles with a small line icon instead of the dot (needs the dot rule back):
 #north-star .section-title::before, #featured .section-title::before, #apps .section-title::before, #research .section-title::before,
 #more-projects .section-title::before, #writeups .section-title::before, #skills .section-title::before, #outside .section-title::before, #musings .section-title::before {
   width: 0.95rem; height: 0.95rem; border-radius: 0; background: var(--warm);
@@ -841,7 +842,7 @@ picture { display: contents; }
 #writeups { --icon: url("images/icons/writeups.svg"); }
 #skills { --icon: url("images/icons/skills.svg"); }
 #outside { --icon: url("images/icons/outside.svg"); }
-#musings { --icon: url("images/icons/musings.svg"); }
+#musings { --icon: url("images/icons/musings.svg"); } */
 
 /* The name in the hero: ink that deepens towards terracotta, and a brush stroke drawn in under it */
 .hero h1 { background: linear-gradient(100deg, var(--text) 35%, color-mix(in srgb, var(--text) 72%, var(--warm))); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -945,7 +946,7 @@ body { hanging-punctuation: first last; }
 .nova-egg { width: 0.95rem; height: 0.95rem; padding: 0; border: 0; cursor: pointer; background: var(--warm);
   -webkit-mask: url("images/icons/north-star.svg") center / contain no-repeat; mask: url("images/icons/north-star.svg") center / contain no-repeat; transition: transform 0.4s; }
 .nova-egg:hover { transform: rotate(45deg) scale(1.25); }
-#north-star .section-title:has(.nova-egg:not([hidden]))::before { display: none; }
+/* Saved for later, with the title dot: #north-star .section-title:has(.nova-egg:not([hidden]))::before { display: none; } */
 .nova { width: min(800px, calc(100vw - 32px)); }
 .pong.nova canvas { cursor: default; aspect-ratio: 760 / 500; background: #04050c; }
 @media (prefers-reduced-motion: reduce) { .nova-egg { transition: none; } }
@@ -1049,7 +1050,7 @@ main:has(#grateful-for) { overflow-x: visible; }  /* main clips to its column, w
 html:has(#grateful-for), body:has(#grateful-for) { overflow-x: clip; }  /* 100vw counts the scrollbar; both, so body clips instead of handing it to the viewport */
 #grateful-for { margin: 4rem calc(50% - 50vw) 3rem; padding: 4.5rem max(16px, calc(50vw - 340px)) 15rem; color-scheme: dark; background: #141b3a url("images/inspiration/grateful-garden.svg") no-repeat center bottom / cover; }
 #grateful-for .section-title { justify-content: center; color: #f6e7c0; border-bottom: 0; font-size: 0.95rem; margin-bottom: 2.6rem; }
-#grateful-for .section-title::before { background: #ffcf70; box-shadow: 0 0 12px 4px rgb(255 207 112 / 0.6); }
+/* Saved for later, with the title dot: #grateful-for .section-title::before { background: #ffcf70; box-shadow: 0 0 12px 4px rgb(255 207 112 / 0.6); } */
 #grateful-for .section-title::after { display: none; }
 #grateful-for .inspo { display: grid; gap: 2.1rem 2.5rem; }
 #grateful-for .inspo-item { position: relative; display: flex; align-items: flex-start; gap: 1.1rem; padding: 0; border: 0; transition: opacity 1.4s ease; }
