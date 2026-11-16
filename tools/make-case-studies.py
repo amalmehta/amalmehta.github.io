@@ -109,7 +109,7 @@ PAGES = [
         ],
         "next": ["Rerun length 128 with about 4,000 steps, then length 256."],
         "figure": ("replicate-sota", 1200, 713, "Recall accuracy at lengths 64 and 128, one dot per seed: a tie at 64, and at 128 seeds that either learned the task or didn’t"),
-        "links": [("Code and write-up on GitHub", "https://github.com/amalmehta/ReplicateSOTA")],
+        "links": [("Live demo: the explainer", "https://amalmehta.com/ReplicateSOTA/"), ("Code and write-up on GitHub", "https://github.com/amalmehta/ReplicateSOTA")],
     },
     {
         "slug": "drone", "card": "drone-autonomy",

@@ -532,7 +532,7 @@ class ProjectsTest(unittest.TestCase):
                 dl = re.search(r'<a class="download" href="https://github\.com/amalmehta/([A-Za-z0-9_.-]+)/releases/latest(?:/download/[^"]+\.zip)?">Download for Mac · free</a>', app)
                 if dl:
                     self.assertIn(f'<a href="https://github.com/amalmehta/{dl.group(1)}">Code →</a>', app)
-                    self.assertIn('<p class="app-note apps-note">macOS will warn you because these apps aren’t notarized yet.', sec)
+                    self.assertIn('<p class="app-note apps-note">Not notarized yet: open it once from System Settings', sec)
                 else:
                     self.assertRegex(app, r'<span class="soon">Coming soon( · free)?</span>')
                 self.assertRegex(app, r'<p class="app-meta">(Mac · macOS \d+ or later|Web · coming soon)')
