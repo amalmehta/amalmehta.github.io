@@ -1249,6 +1249,76 @@ def hamming():
         body.append(f'<path d="M500 {632 + k * 12} L630 {620 + k * 12}" stroke="#7c7466" stroke-width="2" opacity="0.7"/>')
     return wrap(defs, body)
 
+def kobe():
+    """Kobe Bryant alone in a dark gym at 4 a.m., one row of lights on, rising into a jumper in
+    purple and gold, the wall clock reading 4:00."""
+    rng = random.Random(24)
+    defs = ('<radialGradient id="kcone" cx="0.5" cy="0" r="1">'
+            '<stop offset="0" stop-color="#fff1cf" stop-opacity="0.42"/><stop offset="1" stop-color="#fff1cf" stop-opacity="0"/></radialGradient>'
+            '<radialGradient id="kpool" cx="0.5" cy="0.5" r="0.5">'
+            '<stop offset="0" stop-color="#e2a663" stop-opacity="1"/><stop offset="1" stop-color="#e2a663" stop-opacity="0"/></radialGradient>'
+            '<linearGradient id="kfloor" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0" stop-color="#3c2a1d"/><stop offset="1" stop-color="#1c140e"/></linearGradient>')
+    body = [f'<rect width="{W}" height="{H}" fill="#121118"/>']
+    # Folded bleachers along the back wall, barely visible
+    for k in range(6):
+        body.append(f'<rect x="40" y="{300 + k * 34}" width="380" height="24" rx="3" fill="#1b1a23"/>')
+    # The floor, its boards running away from us, and the pool of light where it's lit
+    body.append(f'<rect y="520" width="{W}" height="{H - 520}" fill="url(#kfloor)"/>')
+    for k in range(-8, 26):
+        x0 = 600 + k * 60
+        body.append(f'<line x1="{600 + (x0 - 600) * 0.35:.0f}" y1="520" x2="{x0 + (x0 - 600) * 0.6:.0f}" y2="{H}" stroke="#120c08" stroke-width="2" opacity="0.6"/>')
+    body.append('<ellipse cx="640" cy="620" rx="430" ry="120" fill="url(#kpool)" opacity="0.55"/>')
+    # Court lines: the baseline and the edge of the lane under the hoop
+    body.append(f'<polygon points="{pts([(0, 548), (W, 536), (W, 541), (0, 553)])}" fill="#d9cfbf" opacity="0.5"/>')
+    body.append(f'<polyline points="{pts([(880, 540), (820, 640), (1160, 650), (1110, 538)])}" fill="none" stroke="#d9cfbf" stroke-width="4" opacity="0.45"/>')
+    # One row of ceiling lights on, and the cones of light they throw
+    for x in (420, 560, 700, 840):
+        body.append(f'<polygon points="{pts([(x - 12, 52), (x + 12, 52), (x + 170, 620), (x - 170, 620)])}" fill="url(#kcone)" opacity="0.5"/>')
+        body.append(f'<rect x="{x - 26}" y="40" width="52" height="12" rx="3" fill="#fff4d6"/>')
+    for x in (140, 280, 980, 1120):  # the rest are off
+        body.append(f'<rect x="{x - 26}" y="40" width="52" height="12" rx="3" fill="#2a2932"/>')
+    # The wall clock: 4:00
+    body.append('<circle cx="200" cy="170" r="44" fill="#e9e4d8" stroke="#2a2932" stroke-width="6"/>')
+    for h in range(12):
+        a = math.radians(h * 30)
+        body.append(f'<line x1="{200 + 34 * math.sin(a):.1f}" y1="{170 - 34 * math.cos(a):.1f}" x2="{200 + 39 * math.sin(a):.1f}" y2="{170 - 39 * math.cos(a):.1f}" stroke="#2a2932" stroke-width="3"/>')
+    a = math.radians(120)
+    body.append(f'<line x1="200" y1="170" x2="{200 + 22 * math.sin(a):.1f}" y2="{170 - 22 * math.cos(a):.1f}" stroke="#1c1b22" stroke-width="6" stroke-linecap="round"/>')
+    body.append('<line x1="200" y1="170" x2="200" y2="138" stroke="#1c1b22" stroke-width="4" stroke-linecap="round"/><circle cx="200" cy="170" r="4" fill="#1c1b22"/>')
+    # The hoop on the right: the arm from the wall, the backboard, the rim and the net
+    body.append('<rect x="1060" y="232" width="140" height="12" fill="#3a3944"/>')
+    body.append('<rect x="930" y="170" width="140" height="100" rx="4" fill="#d8dde2" opacity="0.92"/><rect x="975" y="212" width="50" height="38" fill="none" stroke="#c4542c" stroke-width="4"/>')
+    body.append('<ellipse cx="985" cy="282" rx="40" ry="8" fill="none" stroke="#e0622c" stroke-width="6"/>')
+    for k in range(6):
+        x = 948 + k * 15
+        body.append(f'<line x1="{x}" y1="284" x2="{965 + k * 8}" y2="336" stroke="#f0ede6" stroke-width="2" opacity="0.8"/>')
+    body.append('<line x1="963" y1="336" x2="1007" y2="336" stroke="#f0ede6" stroke-width="2" opacity="0.8"/>')
+    # The ball's path to the rim
+    body.append('<path d="M612 236 Q800 70 978 268" fill="none" stroke="#fff1cf" stroke-width="3" stroke-dasharray="4 12" opacity="0.6"/>')
+
+    skin, purple, gold = "#8a5a3c", "#552583", "#fdb927"
+    x = 520
+    body.append(f'<ellipse cx="{x + 10}" cy="618" rx="74" ry="12" fill="#0c0806" opacity="0.65"/>')
+    # Legs and shoes, off the floor
+    for leg in (((x - 8, 470), (x - 15, 520), (x - 22, 566)), ((x + 10, 470), (x + 20, 518), (x + 14, 562))):
+        body.append(f'<polyline points="{pts(leg)}" fill="none" stroke="{skin}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>')
+        fx, fy = leg[-1]
+        body.append(f'<rect x="{fx - 10}" y="{fy - 4}" width="30" height="13" rx="5" fill="#f2efe8"/>')
+    body.append(f'<rect x="{x - 25}" y="438" width="52" height="48" rx="8" fill="{purple}"/><rect x="{x - 25}" y="480" width="52" height="6" fill="{gold}"/>')
+    # Torso, number 24
+    body.append(f'<rect x="{x - 23}" y="340" width="48" height="108" rx="15" fill="{purple}"/>')
+    body.append(f'<text x="{x + 1}" y="412" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="34" fill="{gold}">24</text>')
+    # Arms up through the release, and the ball just leaving his hands
+    body.append(f'<polyline points="{pts([(x + 18, 352), (x + 44, 302), (x + 70, 256)])}" fill="none" stroke="{skin}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>')
+    body.append(f'<polyline points="{pts([(x - 14, 354), (x + 28, 308), (x + 58, 270)])}" fill="none" stroke="{skin}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>')
+    body.append(f'<circle cx="{x + 6}" cy="314" r="22" fill="{skin}"/><path d="M{x - 15} 306 q21 -26 42 0 q-21 -12 -42 0" fill="#2a1d15"/>')
+    bx, by = x + 88, 236
+    body.append(f'<circle cx="{bx}" cy="{by}" r="18" fill="#d8692c"/>'
+                f'<path d="M{bx - 18} {by} h36 M{bx} {by - 18} v36 M{bx - 12} {by - 13} q12 13 0 26 M{bx + 12} {by - 13} q-12 13 0 26" stroke="#2a1d15" stroke-width="2" fill="none"/>')
+    return wrap(defs, body)
+
+
 DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-blackboard": feynman,
             "kipchoge-vienna": kipchoge, "honnold-el-capitan": honnold, "alcaraz-wimbledon": alcaraz,
             "neuralink-chess": neuralink, "jobs-empty-room": jobs,
@@ -1257,7 +1327,7 @@ DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-bla
             "maps-earth": maps_earth, "grateful-garden": grateful_garden, "waymo-crosswalk": waymo,
             "zimmer-studio": zimmer, "nolan-folding-city": nolan,
             "finn-robot-arm": finn, "kalanithi-desk": kalanithi,
-            "langer-chip": langer, "hamming-chalkboard": hamming}
+            "langer-chip": langer, "hamming-chalkboard": hamming, "kobe-gym": kobe}
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
