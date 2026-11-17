@@ -24,3 +24,4 @@ Copy `general/` to `companies/<company>/`, tailor it to the posting, add a `cove
 | Anthropic | Research Engineer, RL and post-training | [`companies/anthropic/`](companies/anthropic/) | 2026-11-14 | Not sent |
 | Anthropic | [Research Scientist, Discovery (Engineering & Applied Sciences)](https://job-boards.greenhouse.io/anthropic/jobs/5468937008), ML researcher track | [`companies/anthropic-discovery/`](companies/anthropic-discovery/) | 2026-11-14 | Not sent |
 | Apple | Applied Research Engineer | [`companies/apple/`](companies/apple/) | 2026-11-14 | Not sent |
+| idler | [Research Engineer](https://jobs.ashbyhq.com/idler/cce9ab39-0ab0-489d-bbf9-4df74c2baeee) | [`companies/idler/`](companies/idler/) | 2026-11-17 | Not sent |
