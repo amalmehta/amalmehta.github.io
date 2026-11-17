@@ -572,6 +572,7 @@ picture { display: contents; }
 .inspo-empty { padding: 1rem 0; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); color: var(--muted); font-style: italic; }
 .inspo + .section-title, .tiles + .section-title, .books + .section-title { margin-top: 3rem; }
 .tiles + .books, .photos + .books, .learn + .books { margin-top: 3rem; }
+.books + .papers, .papers + .media { margin-top: 3rem; }
 .tiles + .learn { margin-top: 3rem; }
 /* Books (built from books.json by tools/make-books.py): Reading now, Read and Want to read,
    a card per book with a drawn cover, and stars and a short review once read */

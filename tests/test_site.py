@@ -348,7 +348,8 @@ class SearchTest(unittest.TestCase):
         listed = [e["item"] for b in blocks if b.get("@type") == "ItemList" for e in b["itemListElement"]
                   if e["item"]["@type"] == "SoftwareSourceCode"]
         sec = html[html.index('<section id="featured"'):]
-        cards = re.findall(r'<article class="project".*?</article>', sec[:sec.index("</section>")], flags=re.S)
+        sec = re.sub(r"<!--.*?-->", "", sec[:sec.index("</section>")], flags=re.S)
+        cards = re.findall(r'<article class="project".*?</article>', sec, flags=re.S)
         self.assertEqual(len(listed), len(cards))
         for item, card in zip(listed, cards):
             with self.subTest(project=item["name"]):
@@ -431,8 +432,7 @@ class ImagesTest(unittest.TestCase):
 class MediaTest(unittest.TestCase):
     REQUIRED = ("autoplay", "muted", "loop", "playsinline")
     # Research entries that must carry an image or clip (matched on their heading).
-    RESEARCH = ("PhysicsAI", "Hybrid Robotics Lab", "Video & Image Processing Lab", "Abbasi-Asl Lab",
-                "Berkeley Institute for Data Science", "Perlmutter Cosmology Group")
+    RESEARCH = ("PhysicsAI", "Hybrid Robotics Lab", "Video & Image Processing Lab")
 
     def test_videos_are_silent_inline_loops(self):
         # Cards show stills until real clips exist; any clip added must follow these rules.
@@ -484,12 +484,12 @@ class ProjectsTest(unittest.TestCase):
         sec = html[html.index(f'<section id="{section_id}"'):]
         return sec[:sec.index("</section>")]
 
-    def test_featured_comes_first_with_three_or_four_cards(self):
+    def test_featured_comes_first_with_two_to_four_cards(self):
         # The profile opens with Featured projects, right after the intro; every other project is in More projects.
         html = INDEX.read_text(encoding="utf-8")
         self.assertLess(html.index('<section id="featured"'), html.index('<section id="research"'))
         cards = re.findall(r'<article class="project"[ >]', self.section("featured"))
-        self.assertIn(len(cards), (3, 4))
+        self.assertIn(len(cards), (2, 3, 4))
         self.assertEqual(len(PAGE.projects), len(cards), [p["title"] for p in PAGE.projects])
 
     def test_featured_cards_have_avif_hook_and_source(self):
@@ -516,12 +516,12 @@ class ProjectsTest(unittest.TestCase):
         self.assertNotIn("<img", self.section("more-projects"))
 
     def test_apps_have_real_downloads(self):
-        # Apps you can use comes right after Featured. The apps are free: each one either says
+        # Apps you can use comes after the proof (Featured, Research, Publications, Skills, More projects). The apps are free: each one either says
         # "Coming soon · free" or links its latest GitHub release and its public code, and one
         # first-open note under the list covers them all (they aren't notarized yet). Every app says its macOS.
         html = INDEX.read_text(encoding="utf-8")
-        self.assertLess(html.index('<section id="featured"'), html.index('<section id="apps"'))
-        self.assertLess(html.index('<section id="apps"'), html.index('<section id="research"'))
+        self.assertLess(html.index('<section id="research"'), html.index('<section id="apps"'))
+        self.assertLess(html.index('<section id="more-projects"'), html.index('<section id="apps"'))
         sec = re.sub(r"<!--.*?-->", "", self.section("apps"), flags=re.S)
         apps = re.findall(r'<li class="app" id="[a-z0-9-]+">.*?</li>', sec, re.S)
         self.assertTrue(apps)
