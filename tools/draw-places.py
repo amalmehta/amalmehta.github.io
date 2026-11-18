@@ -1370,6 +1370,8 @@ def philadelphia():
         for wy in (base - h + 16, base - h + 44):
             for wx in range(x + 12, x + w - 16, 22):
                 city.append(f'<rect x="{wx}" y="{wy}" width="10" height="16" fill="#ffcf7a" opacity="0.85"/>')
+        if k == 0:
+            first_door = x + w / 2 - 13
         x += w + rng.randint(8, 18)
     for line in lights:
         for (x0, y0), (x1, y1) in zip(line, line[1:]):
@@ -1378,6 +1380,9 @@ def philadelphia():
                 t = i / n
                 city.append(f'<circle cx="{x0 + (x1 - x0) * t:.1f}" cy="{y0 + (y1 - y0) * t:.1f}" r="2.4" fill="#fff8e6"/>')
     b.extend(city)
+    # A113 on the first boathouse's door: the classroom number Pixar hides in its films
+    b.append(f'<rect x="{first_door:.0f}" y="{shore - 34}" width="26" height="34" fill="#5a4048" stroke="#fff8e6" stroke-width="1.5"/>'
+             f'<text x="{first_door + 13:.0f}" y="{shore - 20}" font-family="Inter, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#fff8e6" text-anchor="middle">A113</text>')
     # The Schuylkill, holding the lights
     b.append(f'<defs>{grad("philadelphia-river", "#4a5577", "#1e2438")}</defs>')
     b.append(f'<rect x="0" y="{shore}" width="{W}" height="{H - shore}" fill="url(#philadelphia-river)"/>')

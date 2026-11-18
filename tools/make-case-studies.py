@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds the Featured projects' deep-dive pages (project-*.html) from the content below.
 
-Each page: the question, the setup in plain words, how it works as a short numbered flow, the key
+Each page: the story in five or six beats (optional, Pixar's story spine), the question, the setup in plain words, how it works as a short numbered flow, the key
 numbers, the key figure, related work (optional; raw HTML, with references), what didn't work, and what's next. Every number comes from the project's
 own repo (results files, paper, write-up); change it there first, then here.
 Run from the repo root after editing: python3 tools/make-case-studies.py
@@ -18,6 +18,15 @@ PAGES = [
         "title": "Rewarding What You Can’t Verify",
         "when": "2026 · pilot, then 50 follow-ups, each predicted first · toy scale, on a laptop",
         "hook": "A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%; random audits stopped it in the pilot but only delayed it in follow-ups.",
+        "spine": [
+            ('Once upon a time,', 'code agents were trained on cheap checks: does it build, do the visible tests pass.'),
+            ('Every day,', 'my agent was rewarded when the visible tests passed.'),
+            ('One day,', 'it found that deleting code no test reaches scores as well as fixing it.'),
+            ('Because of that,', 'its pass rate climbed from 35% to 58% while real correctness fell from 31% to 2%.'),
+            ('Because of that,', 'random audits only delayed the hack.'),
+            ('Until finally,', 'choosing which episodes to audit held false success to 4%, against 24% at random.'),
+        ],
+        "storyboard": ("storyboard-rewarding", 1200, 780, "A storyboard in six panels: a small robot agent learns from a careless engineer, is paid only for visible tests, finds code no test reaches, deletes it, its test score climbs to 58% while true correctness falls to 2%, and auditing the right episodes holds false success to 4% against 24% at random"),
         "question": [
             "Code agents are often trained on cheap checks: does it build, do the visible tests pass. Those checks are narrower than what we actually want, which is a correct change, and an agent pushed hard on them can learn to exploit the gap, for example by deleting code no test reaches. The longer the horizon, the more the reward favours the hack.",
             "This project measures that gap in a setting small enough to run hundreds of times, then tests what closes it.",
@@ -67,6 +76,14 @@ PAGES = [
         "title": "BCI Projects",
         "when": "2026 · offline decoding on public data; closed loop simulated",
         "hook": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.72 on 17 of 19 held-out days up to day 138, against 0.42 for a Wiener filter.",
+        "spine": [
+            ('Once upon a time,', 'a cursor BCI was only as good as its worst day.'),
+            ('Every day,', 'the neurons an implant records drift a little, and a decoder trained once slowly stops working.'),
+            ('One day,', 'I re-centred each channel on the new day’s unlabelled spikes.'),
+            ('Because of that,', 'the decoder held R² 0.72 on 17 of 19 later days, against 0.42 for a linear decoder.'),
+            ('Until finally,', 'it reached day 138 with no new labels.'),
+            ('And ever since,', 'the weeks where it still fades are what I’m working on.'),
+        ],
         "question": [
             "A cursor brain–computer interface is only as useful as its worst day. The neurons an implant records drift from day to day, so a decoder trained once slowly stops working, and asking someone to recalibrate every morning is a real cost.",
             "These four projects work on public neural recordings to see how far careful decoding gets without new labels, and where it stops.",
@@ -246,6 +263,16 @@ def page(p, i):
     notes = ("\n      <ul class=\"case-notes\">\n" + "\n".join(f"        <li>{n}</li>" for n in p["notes"]) + "\n      </ul>") if p.get("notes") else ""
     flow_note = f'\n      <p class="flow-note">{e(p["flow_note"])}</p>' if p.get("flow_note") else ""
     links = " ".join(f'<a href="{u}">{e(t)} →</a>' for t, u in p["links"])
+    spine = ""
+    if p.get("spine"):
+        board = ""
+        if p.get("storyboard"):
+            bn, bw, bh, balt = p["storyboard"]
+            board = (f'      <figure class="case-figure storyboard">\n        <img src="images/case/{bn}.svg" alt="{e(balt)}" loading="lazy" width="{bw}" height="{bh}">\n'
+                     '        <figcaption>The storyboard: drawn for this page, numbers from the runs.</figcaption>\n      </figure>\n')
+        beats = "\n".join(f"        <li><strong>{e(a)}</strong> {e(b)}</li>" for a, b in p["spine"])
+        spine = ('\n    <section class="case-part story-spine" aria-labelledby="story-title">\n      <h2 class="section-title" id="story-title">The story</h2>\n'
+                 '      <ol class="spine">\n' + beats + '\n      </ol>\n' + board + '    </section>\n')
     related = ""
     if p.get("related"):
         refs = "\n".join(f"        <li>{r}</li>" for r in p.get("refs", []))
@@ -304,7 +331,7 @@ def page(p, i):
       <p class="case-hook">{e(p["hook"])}</p>
       <p class="links">{links}</p>
     </header>
-
+{spine}
     <section class="case-part">
       <h2 class="section-title">The question</h2>
 {paras(p["question"])}
@@ -353,7 +380,7 @@ def page(p, i):
 
   <footer class="wrap footer">
     <p>Amal Mehta · <a href="https://reachouts.me/?u=amal">Get in touch</a> · <a class="email" href="https://reachouts.me/?u=amal" data-u="amal.mehta" data-d="gmail.com">amal.mehta [at] gmail.com</a> · <a rel="me" href="https://www.linkedin.com/in/amal-mehta-264413a9/">LinkedIn</a> · <a rel="me" href="https://github.com/amalmehta">GitHub</a> · <a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
-    <p class="signoff">Thanks for stopping by.</p>
+    <dl class="credits" aria-label="Credits"><div><dt>Written and directed by</dt><dd>Amal Mehta</dd></div><div><dt>Drawings</dt><dd>tools/draw-places.py</dd></div><div><dt>Tested</dt><dd>on every push</dd></div></dl><!-- Saved for later, the sign-off before the credits: <p class="signoff">Thanks for stopping by.</p> -->
     <!-- Saved for later, once beside the sign-off: <span class="secrets">There are eight secrets here.</span> -->
     <!-- Saved for later, the footer notes: <p class="footer-note">No trackers, no cookies.</p> <p class="footer-note">Plain HTML and CSS, tested on every push. <a href="https://github.com/amalmehta/PortfolioWebsite">Source on GitHub</a>.</p> -->
   </footer>

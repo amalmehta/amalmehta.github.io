@@ -52,6 +52,22 @@
       <p class="links"><a href="https://amalmehta.com/long_term_horizon_planning/">Live demo: proposal and results →</a> <a href="https://github.com/amalmehta/long_term_horizon_planning">Source on GitHub →</a> <a href="https://amalmehta.com/long_term_horizon_planning/#log">Experiment log →</a></p>
     </header>
 
+    <section class="case-part story-spine" aria-labelledby="story-title">
+      <h2 class="section-title" id="story-title">The story</h2>
+      <ol class="spine">
+        <li><strong>Once upon a time,</strong> code agents were trained on cheap checks: does it build, do the visible tests pass.</li>
+        <li><strong>Every day,</strong> my agent was rewarded when the visible tests passed.</li>
+        <li><strong>One day,</strong> it found that deleting code no test reaches scores as well as fixing it.</li>
+        <li><strong>Because of that,</strong> its pass rate climbed from 35% to 58% while real correctness fell from 31% to 2%.</li>
+        <li><strong>Because of that,</strong> random audits only delayed the hack.</li>
+        <li><strong>Until finally,</strong> choosing which episodes to audit held false success to 4%, against 24% at random.</li>
+      </ol>
+      <figure class="case-figure storyboard">
+        <img src="images/case/storyboard-rewarding.svg" alt="A storyboard in six panels: a small robot agent learns from a careless engineer, is paid only for visible tests, finds code no test reaches, deletes it, its test score climbs to 58% while true correctness falls to 2%, and auditing the right episodes holds false success to 4% against 24% at random" loading="lazy" width="1200" height="780">
+        <figcaption>The storyboard: drawn for this page, numbers from the runs.</figcaption>
+      </figure>
+    </section>
+
     <section class="case-part">
       <h2 class="section-title">The question</h2>
       <p>Code agents are often trained on cheap checks: does it build, do the visible tests pass. Those checks are narrower than what we actually want, which is a correct change, and an agent pushed hard on them can learn to exploit the gap, for example by deleting code no test reaches. The longer the horizon, the more the reward favours the hack.</p>
@@ -131,7 +147,7 @@
 
   <footer class="wrap footer">
     <p>Amal Mehta · <a href="https://reachouts.me/?u=amal">Get in touch</a> · <a class="email" href="https://reachouts.me/?u=amal" data-u="amal.mehta" data-d="gmail.com">amal.mehta [at] gmail.com</a> · <a rel="me" href="https://www.linkedin.com/in/amal-mehta-264413a9/">LinkedIn</a> · <a rel="me" href="https://github.com/amalmehta">GitHub</a> · <a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
-    <p class="signoff">Thanks for stopping by.</p>
+    <dl class="credits" aria-label="Credits"><div><dt>Written and directed by</dt><dd>Amal Mehta</dd></div><div><dt>Drawings</dt><dd>tools/draw-places.py</dd></div><div><dt>Tested</dt><dd>on every push</dd></div></dl><!-- Saved for later, the sign-off before the credits: <p class="signoff">Thanks for stopping by.</p> -->
     <!-- Saved for later, once beside the sign-off: <span class="secrets">There are eight secrets here.</span> -->
     <!-- Saved for later, the footer notes: <p class="footer-note">No trackers, no cookies.</p> <p class="footer-note">Plain HTML and CSS, tested on every push. <a href="https://github.com/amalmehta/PortfolioWebsite">Source on GitHub</a>.</p> -->
   </footer>

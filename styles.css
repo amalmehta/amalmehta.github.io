@@ -435,6 +435,10 @@ picture { display: contents; }
 .photo figcaption strong { display: block; color: var(--text); font-weight: 600; }
 .photos-empty { grid-column: 1 / -1; margin: 0; padding: 1rem 0; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); color: var(--muted); font-style: italic; }
 .photo-log { margin-top: 3.5rem; }
+/* Travel's color script: one small frame of colour per trip, in date order, above the reel */
+.color-script { display: block; max-width: 100%; height: auto; margin: -1rem 0 1.25rem; }
+.color-script a rect { transition: opacity 0.2s; }
+.color-script a:hover rect, .color-script a:focus-visible rect { opacity: 0.8; }
 .wishlist-note { margin: -1.25rem 0 1.5rem; color: var(--muted); font-size: 0.92rem; }
 .wishlist + .wishlist { margin-top: 3rem; }
 /* Interests: Now, a few lines on what I'm doing this month */
@@ -791,6 +795,12 @@ picture { display: contents; }
 .minis-note, .thanks, .inspo-note { max-width: 68ch; margin: 1.4rem 0 0; color: var(--muted); }
 .thanks { font-family: var(--serif); font-style: italic; font-size: 1.05rem; }
 .minis-note a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+/* End credits: a short roll under the footer links, role on the left, name in serif italic */
+.footer .credits { margin: 1.6rem 0 0; display: grid; gap: 0.3rem; }
+.footer .credits > div { display: grid; grid-template-columns: 14rem 1fr; gap: 0.9rem; align-items: baseline; }
+.footer .credits dt { white-space: nowrap; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-align: right; }
+.footer .credits dd { margin: 0; font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--text); }
+@media (max-width: 480px) { .footer .credits > div { grid-template-columns: 1fr; gap: 0; } .footer .credits dt { text-align: left; } }
 .footer .signoff { margin-top: 1.4rem; font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--text); }
 /* A quiet privacy note under the sign-off */
 .footer .footer-note { margin-top: 0.5rem; font-size: 0.8rem; color: var(--faint); }
@@ -916,6 +926,13 @@ body { hanging-punctuation: first last; }
 .case .page-head .links { display: flex; flex-wrap: wrap; gap: 0.2rem 1.25rem; margin: 0; }
 .case-part { margin: 0 0 2.75rem; }
 .case-part p { max-width: 68ch; margin: 0 0 0.9rem; }
+/* The story: Pixar's story spine, one beat per line on a thin reel, the lead words in serif italic */
+.spine { list-style: none; padding: 0 0 0 1.4rem; margin: 0; position: relative; display: grid; gap: 0.85rem; }
+.spine::before { content: ""; position: absolute; left: 0.3rem; top: 0.5rem; bottom: 0.5rem; width: 2px; background: linear-gradient(var(--accent), var(--warm)); opacity: 0.5; border-radius: 2px; }
+.spine > li { position: relative; font-size: 1.02rem; line-height: 1.55; color: var(--text); }
+.spine > li::before { content: ""; position: absolute; left: -1.4rem; top: 0.55em; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: var(--surface); border: 2px solid color-mix(in srgb, var(--accent) 70%, var(--warm)); transform: translateX(-0.05rem); }
+.spine > li:last-child::before { background: var(--warm); border-color: var(--warm); }
+.spine > li strong { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1.12em; color: var(--warm); margin-right: 0.15em; }
 .flow { list-style: none; counter-reset: flow; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.6rem; padding: 0; margin: 0 0 0.9rem; }
 @media (max-width: 639px) { .flow > li:last-child:nth-child(odd) { grid-column: 1 / -1; } }
 @media (min-width: 640px) {  /* three steps a row, a last row of two or one spread to fill it */
