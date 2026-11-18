@@ -2,7 +2,7 @@
 """Builds the Featured projects' deep-dive pages (project-*.html) from the content below.
 
 Each page: the question, the setup in plain words, how it works as a short numbered flow, the key
-numbers, the key figure, what didn't work, and what's next. Every number comes from the project's
+numbers, the key figure, related work (optional; raw HTML, with references), what didn't work, and what's next. Every number comes from the project's
 own repo (results files, paper, write-up); change it there first, then here.
 Run from the repo root after editing: python3 tools/make-case-studies.py
 """
@@ -40,6 +40,18 @@ PAGES = [
             "<strong>E15, supported.</strong> With the same 10% budget, choosing which episodes to audit instead of picking them at random held false success to 0.04, against 0.24.",
             "<strong>E31, refuted.</strong> A small transformer that reads the whole program learned honest repair instead of hacking: 0.49 truly correct, against 0.12 for the small network (run at reduced scale, 2 seeds and 600 steps).",
         ],
+        "related": [
+            'Reward hacking, where a policy scores well on a proxy while failing the real task, is well documented. Amodei et al. (2016) name it and propose scalable oversight: checking only some episodes with the expensive signal. Skalse et al. (2022) define it formally. Gao et al. (2022) measure how true reward falls as a policy optimises a proxy harder. Baker et al. (2025) catch frontier reasoning models gaming tests in coding tasks. Choosing which examples to send for a costly check goes back to Christiano et al. (2017). GRPO is from Shao et al. (2024).',
+            '<strong>What’s new here:</strong> a setting small enough to run hundreds of times, where the gap between visible and true correctness is known exactly. In it, I compare choosing which episodes to audit against random audits at the same budget.',
+        ],
+        "refs": [
+            'Amodei, D., et al. <a href="https://arxiv.org/abs/1606.06565">Concrete Problems in AI Safety</a>. arXiv, 2016.',
+            'Christiano, P., et al. <a href="https://arxiv.org/abs/1706.03741">Deep Reinforcement Learning from Human Preferences</a>. NeurIPS, 2017.',
+            'Skalse, J., et al. <a href="https://arxiv.org/abs/2209.13085">Defining and Characterizing Reward Hacking</a>. NeurIPS, 2022.',
+            'Gao, L., Schulman, J., Hilton, J. <a href="https://arxiv.org/abs/2210.10760">Scaling Laws for Reward Model Overoptimization</a>. ICML, 2023.',
+            'Shao, Z., et al. <a href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a>. arXiv, 2024.',
+            'Baker, B., et al. <a href="https://arxiv.org/abs/2503.11926">Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation</a>. arXiv, 2025.',
+        ],
         "missed": [
             "RL never improved honest repair above the fine-tuned starting point when the agent picks its single best answer. The hidden check is a perfect oracle, which real code doesn’t have. At a horizon of 8 almost nothing passes, so the reward carries no signal.",
             "It’s toy scale, with 3 seeds per setting, and the error bars are spread across seeds, not confidence intervals. Two follow-ups (E40, E41) are deferred: too slow on a heavily shared machine.",
@@ -71,6 +83,19 @@ PAGES = [
         "results": [
             "Calibrated on 5 days (days 0–15) and tested on 19 held-out days from day 20 to day 138. On the 17 days without an electrode re-mapping, the re-centred decoder averages R² 0.718, against 0.662 for a plain GRU, 0.422 for a re-centred Wiener filter and −0.037 for a Wiener filter left as it was trained.",
             "Counting all 19 days, it’s 0.636 against 0.353.",
+        ],
+        "related": [
+            'Decoder drift is an old problem. Sussillo et al. (2016) train on many past days so a decoder survives future changes. Jarosiewicz et al. (2015) built a self-calibrating decoder that people with tetraplegia used to type. Farshchian et al. (2019) and Degenhart et al. (2020) align a new day’s activity to the original without labels, and Karpowicz et al. (2022) align latent dynamics. Wilson et al. (2023) find that distribution-matching recalibration fails over long timescales, while inferring the user’s targets holds up. The FALCON benchmark (Karpowicz et al., 2024) scores these methods on shared data.',
+            '<strong>What’s new here:</strong> not the method, since re-centring each channel is a simple step. It’s how far that step goes on this data: R² 0.72 to day 138, with unsupervised alignment on top adding nothing (0.706 against 0.718).',
+        ],
+        "refs": [
+            'Jarosiewicz, B., et al. <a href="https://doi.org/10.1126/scitranslmed.aac7328">Virtual typing by people with tetraplegia using a self-calibrating intracortical brain-computer interface</a>. <i>Science Translational Medicine</i>, 2015.',
+            'Sussillo, D., et al. <a href="https://doi.org/10.1038/ncomms13749">Making brain–machine interfaces robust to future neural variability</a>. <i>Nature Communications</i>, 2016.',
+            'Farshchian, A., et al. <a href="https://arxiv.org/abs/1810.00045">Adversarial Domain Adaptation for Stable Brain-Machine Interfaces</a>. ICLR, 2019.',
+            'Degenhart, A. D., et al. <a href="https://doi.org/10.1038/s41551-020-0542-9">Stabilization of a brain–computer interface via the alignment of low-dimensional spaces of neural activity</a>. <i>Nature Biomedical Engineering</i>, 2020.',
+            'Karpowicz, B. M., et al. <a href="https://doi.org/10.1101/2022.04.06.487388">Stabilizing brain-computer interfaces through alignment of latent dynamics</a>. bioRxiv, 2022.',
+            'Wilson, G. H., et al. <a href="https://doi.org/10.1101/2023.02.03.527022">Long-term unsupervised recalibration of cursor BCIs</a>. bioRxiv, 2023.',
+            'Karpowicz, B. M., et al. <a href="https://doi.org/10.1101/2024.09.15.613126">Few-shot Algorithms for Consistent Neural Decoding (FALCON) Benchmark</a>. bioRxiv, 2024.',
         ],
         "missed": [
             "Two held-out days (28 and 131), when the electrodes were re-mapped, break every re-centred decoder: R² near 0. Unsupervised alignment on top mostly didn’t help (0.706 against 0.718). Every bitrate is simulated, and it’s one animal, one arm, one array.",
@@ -221,6 +246,11 @@ def page(p, i):
     notes = ("\n      <ul class=\"case-notes\">\n" + "\n".join(f"        <li>{n}</li>" for n in p["notes"]) + "\n      </ul>") if p.get("notes") else ""
     flow_note = f'\n      <p class="flow-note">{e(p["flow_note"])}</p>' if p.get("flow_note") else ""
     links = " ".join(f'<a href="{u}">{e(t)} →</a>' for t, u in p["links"])
+    related = ""
+    if p.get("related"):
+        refs = "\n".join(f"        <li>{r}</li>" for r in p.get("refs", []))
+        related = ('\n    <section class="case-part" id="related-work">\n      <h2 class="section-title">Related work</h2>\n'
+                   + paras(p["related"]) + ('\n      <ol class="refs">\n' + refs + '\n      </ol>' if refs else '') + '\n    </section>\n')
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -303,7 +333,7 @@ def page(p, i):
         <figcaption>{e(alt)}.</figcaption>
       </figure>
     </section>
-
+{related}
     <section class="case-part">
       <h2 class="section-title">What didn’t work</h2>
 {paras(p["missed"])}

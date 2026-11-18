@@ -20,7 +20,8 @@ I = "    "
 # kind, label, latitude, longitude, card id. Soonest trips and favourites first.
 PINS = [
     ("expedition", "Climbing Cerro Torre, Argentina", -49.29, -73.10, "place-cerro-torre"),
-    ("going", "Lassen Volcanic, California", 40.54, -121.56, "place-lassen"),  # Manzanita Lake
+    ("going", "Philadelphia, Pennsylvania", 39.97, -75.19, "place-philadelphia"),  # Boathouse Row
+    # Saved for later, archived 2026-11-18: ("going", "Lassen Volcanic, California", 40.54, -121.56, "place-lassen"),  # Manzanita Lake
     ("going", "Chamonix, France", 45.92, 6.87, "place-chamonix"),
     ("want", "Lofoten, Norway", 67.93, 13.09, "place-lofoten"),
     ("want", "Patagonia, Chile", -50.94, -73.41, "place-patagonia"),

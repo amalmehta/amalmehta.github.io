@@ -1321,13 +1321,86 @@ def taipei():
     return svg("taipei", "".join(b), ("#3f4a7a", "#f2b28f"))
 
 
+# ---------------------------------------------------------------- Philadelphia: Boathouse Row at dusk on the Schuylkill
+def philadelphia():
+    rng = random.Random(1776)
+    b = []
+    b.append(glow(600, 470, 820, 230, "#ffc59a", 0.55))
+    b.append(clouds(rng, 3, 80, 200, colour="#f7c9b8", opacity=0.45))
+    shore = 520
+    city = []
+    # Center City behind the trees: Liberty Place's spire, the Comcast towers, a dusk haze of others
+    for x, w, h, col in ((150, 70, 170, "#5d6584"), (240, 56, 120, "#646c8a"), (330, 64, 210, "#58607f"), (820, 72, 190, "#5a6281"),
+                         (910, 60, 140, "#646c8a"), (1000, 84, 230, "#545c7b"), (1100, 58, 150, "#5f6786")):
+        city.append(f'<rect x="{x}" y="{shore - 60 - h}" width="{w}" height="{h + 60}" fill="{col}"/>')
+    city.append(poly([(560, shore), (560, shore - 330), (600, shore - 420), (640, shore - 330), (640, shore)], "#4c5474"))  # One Liberty Place
+    city.append(f'<rect x="598" y="{shore - 470}" width="4" height="54" fill="#4c5474"/>')
+    city.append(f'<rect x="680" y="{shore - 400}" width="96" height="400" fill="#47506f"/>')  # Comcast Center
+    city.append(poly([(680, shore - 400), (776, shore - 400), (776, shore - 418)], "#47506f"))
+    city.append(f'<rect x="420" y="{shore - 450}" width="88" height="450" fill="#424a69"/>')  # Comcast Technology Center
+    city.append(f'<rect x="430" y="{shore - 470}" width="68" height="22" fill="#3d4563"/>')
+    for x0, x1, top in ((420, 508, shore - 440), (680, 776, shore - 390), (560, 640, shore - 320)):
+        for y in range(top, shore - 80, 18):
+            for x in range(x0 + 8, x1 - 8, 14):
+                if rng.random() < 0.35:
+                    city.append(f'<rect x="{x}" y="{y}" width="6" height="8" fill="#ffd98e" opacity="0.8"/>')
+    # Dark trees on the bank in front of the city
+    for x in range(-10, W + 20, 30):
+        city.append(f'<circle cx="{x}" cy="{shore - 70 - rng.randint(0, 20)}" r="{rng.randint(26, 40)}" fill="{rng.choice(("#2a3240", "#2f3746", "#262d3a"))}"/>')
+    # Boathouse Row: gabled Victorian boathouses, every edge traced in white lights
+    lights = []
+    x = 40
+    for k in range(9):
+        w = rng.randint(96, 128)
+        h = rng.randint(70, 96)
+        roof = rng.randint(44, 70)
+        base = shore
+        col = rng.choice(("#3a2f36", "#43343a", "#35303c"))
+        city.append(f'<rect x="{x}" y="{base - h}" width="{w}" height="{h}" fill="{col}"/>')
+        peak = [(x - 6, base - h), (x + w / 2, base - h - roof), (x + w + 6, base - h)]
+        city.append(poly(peak + [(x + w + 6, base - h + 4), (x - 6, base - h + 4)], "#2b2329"))
+        if k % 3 == 1:  # a tower on some of them
+            tx = x + w * 0.72
+            city.append(f'<rect x="{tx - 12:.0f}" y="{base - h - roof - 26}" width="24" height="{roof + 26}" fill="{col}"/>')
+            city.append(poly([(tx - 16, base - h - roof - 26), (tx, base - h - roof - 58), (tx + 16, base - h - roof - 26)], "#2b2329"))
+            lights.append([(tx - 16, base - h - roof - 26), (tx, base - h - roof - 58), (tx + 16, base - h - roof - 26)])
+        lights.append(peak)
+        lights.append([(x, base - h), (x, base)])
+        lights.append([(x + w, base - h), (x + w, base)])
+        for wy in (base - h + 16, base - h + 44):
+            for wx in range(x + 12, x + w - 16, 22):
+                city.append(f'<rect x="{wx}" y="{wy}" width="10" height="16" fill="#ffcf7a" opacity="0.85"/>')
+        x += w + rng.randint(8, 18)
+    for line in lights:
+        for (x0, y0), (x1, y1) in zip(line, line[1:]):
+            n = max(2, int(math.hypot(x1 - x0, y1 - y0) / 9))
+            for i in range(n + 1):
+                t = i / n
+                city.append(f'<circle cx="{x0 + (x1 - x0) * t:.1f}" cy="{y0 + (y1 - y0) * t:.1f}" r="2.4" fill="#fff8e6"/>')
+    b.extend(city)
+    # The Schuylkill, holding the lights
+    b.append(f'<defs>{grad("philadelphia-river", "#4a5577", "#1e2438")}</defs>')
+    b.append(f'<rect x="0" y="{shore}" width="{W}" height="{H - shore}" fill="url(#philadelphia-river)"/>')
+    b.append(f'<g transform="translate(0,{2 * shore}) scale(1,-1)" opacity="0.32">{"".join(city)}</g>')
+    for _ in range(140):
+        x, y, w = rng.uniform(0, W), rng.uniform(shore + 6, H), rng.uniform(30, 140)
+        b.append(f'<line x1="{x:.0f}" y1="{y:.0f}" x2="{x + w:.0f}" y2="{y:.0f}" stroke="#ffe7c2" stroke-width="2" opacity="{rng.uniform(0.08, 0.25):.2f}"/>')
+    # A single rowing shell gliding past
+    b.append(poly([(700, 640), (980, 640), (968, 648), (712, 648)], "#d9d2c4"))
+    for k in range(4):
+        ox = 750 + k * 56
+        b.append(f'<line x1="{ox}" y1="640" x2="{ox - 40}" y2="664" stroke="#d9d2c4" stroke-width="3"/>')
+        b.append(f'<circle cx="{ox}" cy="630" r="7" fill="#1c1b22"/>')
+    return svg("philadelphia", "".join(b), ("#2f3a66", "#f0a982"))
+
+
 PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofoten), ("patagonia", patagonia),
           ("bhutan", bhutan), ("samarkand", samarkand), ("faroe-islands", faroe),
           ("chamonix", chamonix), ("garibaldi", garibaldi), ("glacier-national-park", glacier), ("moorea", moorea),
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:
