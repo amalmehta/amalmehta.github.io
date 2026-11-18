@@ -788,15 +788,16 @@ def grateful_garden():
     through the middle, where the lanterns and their lines sit."""
     rng = random.Random(31)
     defs = ('<linearGradient id="gsky" x1="0" y1="0" x2="0" y2="1">'
-            '<stop offset="0" stop-color="#141b3a"/><stop offset="0.55" stop-color="#2a2550"/>'
-            '<stop offset="0.8" stop-color="#5a3560"/><stop offset="1" stop-color="#a65a55"/></linearGradient>'
+            '<stop offset="0" stop-color="#2d3570"/><stop offset="0.55" stop-color="#4b4279"/>'
+            '<stop offset="0.8" stop-color="#80527c"/><stop offset="1" stop-color="#c9806c"/></linearGradient>'  # dusk; once midnight: #141b3a, #2a2550, #5a3560, #a65a55
             '<radialGradient id="gglow" cx="0.5" cy="0.5" r="0.5">'
             '<stop offset="0" stop-color="#ffd98a" stop-opacity="0.8"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>')
     body = ['<rect width="1200" height="800" fill="url(#gsky)"/>']
     for _ in range(120):
         x, y = rng.uniform(0, W), rng.uniform(0, 470)
         body.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{rng.uniform(0.6, 1.8):.1f}" fill="#f4efdc" opacity="{rng.uniform(0.25, 0.85):.2f}"/>')
-    body.append('<circle cx="1010" cy="96" r="30" fill="#f4e6bd" opacity="0.9"/><circle cx="1022" cy="88" r="27" fill="#1b2042"/>')  # a crescent moon
+    body.append('<mask id="gmoon"><rect width="1200" height="800" fill="#fff"/><circle cx="1022" cy="88" r="27" fill="#000"/></mask>'
+                '<circle cx="1010" cy="96" r="30" fill="#f4e6bd" opacity="0.9" mask="url(#gmoon)"/>')  # a crescent moon, cut out so any sky shows through
     # Hills, far to near
     body.append('<path d="M0 640 C160 590 330 610 520 640 C720 670 930 590 1200 625 V800 H0 Z" fill="#33284f"/>')
     body.append('<path d="M0 690 C220 640 420 680 620 700 C820 720 1010 660 1200 690 V800 H0 Z" fill="#231f3f"/>')

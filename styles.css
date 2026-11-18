@@ -1066,7 +1066,10 @@ body { hanging-punctuation: first last; }
 /* Grateful for: not a list but a lantern garden at dusk. The scene stays dark in both themes; haven.js lights the lanterns in turn. */
 main:has(#grateful-for) { overflow-x: visible; }  /* main clips to its column, which would crop the full-width scene */
 html:has(#grateful-for), body:has(#grateful-for) { overflow-x: clip; }  /* 100vw counts the scrollbar; both, so body clips instead of handing it to the viewport */
-#grateful-for { margin: 4rem calc(50% - 50vw) 3rem; padding: 4.5rem max(16px, calc(50vw - 340px)) 15rem; color-scheme: dark; background: #141b3a url("images/inspiration/grateful-garden.svg") no-repeat center bottom / cover; }
+#grateful-for { margin: 4rem calc(50% - 50vw) 3rem; position: relative; padding: 9rem max(16px, calc(50vw - 340px)) 15rem; color-scheme: dark; background: #2d3570 url("images/inspiration/grateful-garden.svg") no-repeat center bottom / cover; }
+/* The page fades into the dusk instead of meeting it at a hard edge */
+#grateful-for::before { content: ""; position: absolute; inset: 0 0 auto; height: 11rem; background: linear-gradient(var(--bg), color-mix(in srgb, var(--bg) 55%, transparent) 40%, transparent); pointer-events: none; }
+#grateful-for > * { position: relative; }
 #grateful-for .section-title { justify-content: center; color: #f6e7c0; border-bottom: 0; font-size: 0.95rem; margin-bottom: 2.6rem; }
 /* Saved for later, with the title dot: #grateful-for .section-title::before { background: #ffcf70; box-shadow: 0 0 12px 4px rgb(255 207 112 / 0.6); } */
 #grateful-for .section-title::after { display: none; }
