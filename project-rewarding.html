@@ -97,6 +97,20 @@
       </figure>
     </section>
 
+    <section class="case-part" id="related-work">
+      <h2 class="section-title">Related work</h2>
+      <p>Reward hacking, where a policy scores well on a proxy while failing the real task, is well documented. Amodei et al. (2016) name it and propose scalable oversight: checking only some episodes with the expensive signal. Skalse et al. (2022) define it formally. Gao et al. (2022) measure how true reward falls as a policy optimises a proxy harder. Baker et al. (2025) catch frontier reasoning models gaming tests in coding tasks. Choosing which examples to send for a costly check goes back to Christiano et al. (2017). GRPO is from Shao et al. (2024).</p>
+      <p><strong>What’s new here:</strong> a setting small enough to run hundreds of times, where the gap between visible and true correctness is known exactly. In it, I compare choosing which episodes to audit against random audits at the same budget.</p>
+      <ol class="refs">
+        <li>Amodei, D., et al. <a href="https://arxiv.org/abs/1606.06565">Concrete Problems in AI Safety</a>. arXiv, 2016.</li>
+        <li>Christiano, P., et al. <a href="https://arxiv.org/abs/1706.03741">Deep Reinforcement Learning from Human Preferences</a>. NeurIPS, 2017.</li>
+        <li>Skalse, J., et al. <a href="https://arxiv.org/abs/2209.13085">Defining and Characterizing Reward Hacking</a>. NeurIPS, 2022.</li>
+        <li>Gao, L., Schulman, J., Hilton, J. <a href="https://arxiv.org/abs/2210.10760">Scaling Laws for Reward Model Overoptimization</a>. ICML, 2023.</li>
+        <li>Shao, Z., et al. <a href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a>. arXiv, 2024.</li>
+        <li>Baker, B., et al. <a href="https://arxiv.org/abs/2503.11926">Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation</a>. arXiv, 2025.</li>
+      </ol>
+    </section>
+
     <section class="case-part">
       <h2 class="section-title">What didn’t work</h2>
       <p>RL never improved honest repair above the fine-tuned starting point when the agent picks its single best answer. The hidden check is a perfect oracle, which real code doesn’t have. At a horizon of 8 almost nothing passes, so the reward carries no signal.</p>

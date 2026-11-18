@@ -221,8 +221,8 @@
       <a class="status-chip" href="#open-to"><span class="status-dot open" aria-hidden="true"></span><span>Open to new roles →</span></a>
       </div>
       <h1>Amal Mehta</h1>
-      <p class="lede">Independent research engineer in <span class="nowrap"><span class="maze-plain">reinforcement learning</span><button type="button" class="maze-egg" data-script="maze.js" aria-label="reinforcement learning (opens an agent learning a maze)" hidden>reinforcement learning</button>.</span> I work on how RL post-training goes wrong when rewards can’t be checked, on robot learning in simulation and how it transfers to hardware, and on decoding movement from neural recordings. The question I can’t put down is how intelligence learns from experience, in brains and machines.</p>
-      <p class="hero-sub">Deep learning research since 2020 at Berkeley AI Research, Berkeley’s Hybrid Robotics Lab and a DARPA-funded RL team.<!-- Saved for later, cut 2026-11-16: UCSF was listed after Hybrid Robotics Lab. --> <!-- once: My focus now is RL post-training. Before that: My focus is learning from little data and adapting quickly to new settings. -->Based in the San Francisco Bay Area. I love making things from scratch, and I’m a storyteller at heart.<!-- Saved for later, once ended the line above: , and in my spare time I build fictional worlds and write stories set in them. --></p>
+      <p class="lede">Independent <span class="maze-plain">ML</span><button type="button" class="maze-egg" data-script="maze.js" aria-label="ML (opens an agent learning a maze)" hidden>ML</button> engineer, filmmaker, storyteller, photographer, traveler. My question: how does a learner improve when the true signal can’t be checked? I work on it in RL post-training, when the reward is easier to satisfy than the task; in robots trained only in simulation, then run on hardware; and in decoding movement from neural recordings, without new labels.</p><!-- Saved for later, the lede before the 2026-11-18 spine: I work on how RL post-training goes wrong when rewards can’t be checked, on robot learning in simulation and how it transfers to hardware, and on decoding movement from neural recordings. The question I can’t put down is how intelligence learns from experience, in brains and machines. -->
+      <p class="hero-sub">Deep learning research since 2020 at Berkeley AI Research, Berkeley’s Hybrid Robotics Lab and a DARPA-funded RL team.<!-- Saved for later, cut 2026-11-16: UCSF was listed after Hybrid Robotics Lab. --> <!-- once: My focus now is RL post-training. Before that: My focus is learning from little data and adapting quickly to new settings. -->Based in the San Francisco Bay Area. I love making things from scratch.<!-- Saved for later, cut 2026-11-18, once ended the line above: , and I’m a storyteller at heart --><!-- Saved for later, once ended the line above: , and in my spare time I build fictional worlds and write stories set in them. --></p><!-- Saved for later, the lede's first sentence before 2026-11-18: Independent research engineer in reinforcement learning. -->
       <p class="hello">If you’d like to talk, <a href="https://reachouts.me/?u=amal">get in touch →</a><!-- once: Hi! I’d love to hear from you. --></p>
       <!-- Saved for later: <p class="hello-more">If you’re getting into RL, robotics or brain–computer interfaces, student or not, I’m happy to chat. A line on what you’re working on, or stuck on, is plenty.</p> -->
       <!-- once: <p class="hello-more">If you need help, with anything at all, please reach out!</p> -->
@@ -235,6 +235,46 @@
       </div>
     </section>
 
+    <section id="writeups" class="wrap section">
+      <h2 class="section-title">Publications &amp; reports</h2>
+      <article class="role" id="spie-2023">
+        <p class="when">2023</p>
+        <div>
+          <h3>Deep Learning Segmentation for Invasive Melanoma</h3>
+          <p class="where">SPIE Medical Imaging · peer-reviewed paper · with A. Shah, M. Wang, N. Neumann, T. McCalmont and A. Zakhor</p>
+          <p class="links"><a href="https://doi.org/10.1117/12.2654672">Paper (SPIE Digital Library) →</a></p>
+        </div>
+      </article>
+
+      <!-- Saved for later:
+      <article class="role" id="few-shot-imitation">
+        <p class="when">2021</p>
+        <div>
+          <h3>Few-Shot Imitation Learning for Robotic Manipulation</h3>
+          <p class="where">Class report · CS330 Meta-Learning, Stanford · with Sebastian Kochman and Soham Sinha</p>
+          <p>Teaching a robot arm a new Meta-World task from a single expert demonstration. We paired inverse soft Q-learning with implicit MAML and tried a recurrent RL² variant. Both were compared with a MAML baseline trained by behavioural cloning.</p>
+          <p class="tags"><span class="chip">Meta-learning</span> <span class="chip">Imitation learning</span> <span class="chip">iMAML</span> <span class="chip">RL²</span> <span class="chip">Meta-World</span></p>
+          <p class="links"><a href="papers/cs330-few-shot-imitation-learning.pdf" type="application/pdf">Report (PDF, 445 KB) →</a></p>
+        </div>
+      </article>
+      -->
+
+
+      <!-- Saved for later:
+      <article class="role" id="defensive-retraining">
+        <p class="when">2020</p>
+        <div>
+          <h3>Defensive Iterative Retraining</h3>
+          <p class="where">Class report · CS285 Deep Reinforcement Learning, UC Berkeley · with Aman Shah and Srikar Boinapally</p>
+          <p>Training agents to resist adversarial policies by mixing past selves and freshly trained adversaries into the opponent pool, instead of plain self-play. In SumoAnts it slightly beat self-play; in the harder SumoHumans it fell behind, because the interruptions came before the agent had learned to stay on its feet.</p>
+          <p class="tags"><span class="chip">Multi-agent RL</span> <span class="chip">Adversarial policies</span> <span class="chip">PPO</span></p>
+          <p class="links"><a href="papers/cs285-defensive-iterative-retraining.pdf" type="application/pdf">Report (PDF, 200 KB) →</a></p>
+        </div>
+      </article>
+      -->
+      <!-- Saved for later: <p class="thanks">Thank you to Prof. Koushil Sreenath, Prof. Avideh Zakhor and Prof. Reza Abbasi-Asl, who took a chance on me early and taught me how research is done.</p> -->
+    </section>
+
     <section id="featured" class="wrap section">
       <h2 class="section-title">Featured projects</h2>
       <div class="featured">
@@ -244,9 +284,9 @@
           <p class="card-when">2026 · pilot, then 50 follow-ups</p>
           <h3>Rewarding What You Can’t Verify</h3>
           <p>A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%.</p>
-          <p class="card-results">50 follow-ups: 21 supported, 15 refuted, 12 mixed, 2 deferred</p>
-          <p class="card-miss"><span>What didn’t work</span> RL never improved honest repair above where supervised fine-tuning (SFT) left it, when the agent picks its single best answer.</p><!-- Saved for later, after "left it": , and 25% audits only delayed the hack -->
-          <p class="tags"><span class="chip">Python</span> <span class="chip">GRPO</span> <span class="chip">Reward hacking</span> <span class="chip">Code agents</span> <span class="chip">Predictions written first</span></p>
+          <!-- Saved for later, cut 2026-11-17: <p class="card-results">50 follow-ups: 21 supported, 15 refuted, 12 mixed, 2 deferred</p> -->
+          <!-- Saved for later, cut 2026-11-17: <p class="card-miss"><span>What didn’t work</span> RL never improved honest repair above where supervised fine-tuning (SFT) left it, when the agent picks its single best answer.</p> --><!-- Saved for later, after "left it": , and 25% audits only delayed the hack -->
+          <p class="tags"><span class="chip">Python</span> <span class="chip">GRPO</span> <span class="chip">Reward hacking</span></p><!-- Saved for later, chips cut 2026-11-17: Code agents, Predictions written first -->
           <p class="links"><a class="deep" href="project-rewarding.html">Deep dive →</a> <a href="https://amalmehta.com/long_term_horizon_planning/">Live demo: proposal and results →</a> <a href="https://github.com/amalmehta/long_term_horizon_planning">Source on GitHub →</a></p>
         </div>
       </article>
@@ -257,8 +297,8 @@
           <p class="card-when">2026 · offline decoding on public data; closed loop simulated</p>
           <h3>BCI Projects</h3>
           <p>Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.72 on 17 of 19 later days, against 0.42 for the classic linear decoder.</p>
-          <p class="card-miss"><span>What didn’t work</span> Adaptation still fades three to four weeks out: R² 0.21 and 0.15, against 0.42–0.45 on earlier days (Neuro Falcon).</p>
-          <p class="tags"><span class="chip">PyTorch</span> <span class="chip">Neural decoding</span> <span class="chip">Shared autonomy</span> <span class="chip">Closed-loop simulation</span> <span class="chip">Public neural data</span></p>
+          <!-- Saved for later, cut 2026-11-17: <p class="card-miss"><span>What didn’t work</span> Adaptation still fades three to four weeks out: R² 0.21 and 0.15, against 0.42–0.45 on earlier days (Neuro Falcon).</p> -->
+          <p class="tags"><span class="chip">PyTorch</span> <span class="chip">Neural decoding</span> <span class="chip">Shared autonomy</span></p><!-- Saved for later, chips cut 2026-11-17: Closed-loop simulation, Public neural data -->
           <p class="links"><a class="deep" href="project-bci.html">Deep dive →</a> <a href="https://github.com/amalmehta/BCIProjects">Code and write-ups on GitHub →</a></p>
         </div>
       </article>
@@ -298,22 +338,32 @@
       <h2 class="section-title">Research &amp; work</h2>
       <!-- Saved for later, the intro once under the heading: I started on brains: aligning brain scans at UCSF, then outlining melanoma in tissue images at Berkeley. That pulled me toward systems that learn: RL agents tuning an image generator for DARPA-funded work, a robot dog that learned to kick a ball in simulation, and now research on what agents learn when their rewards can’t be checked. -->
 
-      <p class="section-intro">I started in medical imaging, outlining melanoma at Berkeley.<!-- Saved for later, the opening once: I started in physics and brains: finding supernovae, classifying particle interactions, aligning brain scans at UCSF, then outlining melanoma at Berkeley. --> That pulled me toward systems that learn: RL agents tuning an image generator for DARPA-funded work, a robot dog that learned to kick a ball in simulation, and now research on what agents learn when their rewards can’t be checked.</p>
+      <!-- Saved for later, cut 2026-11-17 (~~ marks an old inner comment): <p class="section-intro">I started in medical imaging, outlining melanoma at Berkeley.<!~~ Saved for later, the opening once: I started in physics and brains: finding supernovae, classifying particle interactions, aligning brain scans at UCSF, then outlining melanoma at Berkeley. ~~> That pulled me toward systems that learn: RL agents tuning an image generator for DARPA-funded work, a robot dog that learned to kick a ball in simulation, and now research on what agents learn when their rewards can’t be checked.</p> -->
       <article class="role" id="independent-research">
         <p class="when">2025 – now</p>
         <div>
           <h3>Independent ML &amp; Robotics Research</h3>
-          <!-- Saved for later: <p class="where">San Francisco Bay Area</p> -->
+          <!-- Saved for later, the fuller text before the 2026-11-17 recruiter pass (~~ marks an old inner comment):
+          <!~~ Saved for later: <p class="where">San Francisco Bay Area</p> ~~>
           <p>My focus is RL post-training when rewards can’t be checked. The result that hooked me: trained only on visible tests, a code agent’s pass rate went up while its real correctness fell to 2%, because it learned to delete the code no test reaches.</p>
           <p>I wrote down a prediction before each of 50 follow-ups. Random audits only delayed the hack, while choosing which episodes to audit held it off. RL never beat the fine-tuned starting point at its single best answer.</p>
           <p>Alongside it: a brain–computer interface decoder that keeps working on most later days without new labels, and a learned controller that halves a simulated quadrotor’s tracking error.</p>
-          <!-- Saved for later, the fuller version with every number (the resume keeps them):
+          <!~~ Saved for later, the fuller version with every number (the resume keeps them):
           <p>The result that hooked me: in a toy repair task, GRPO on visible tests raised the pass rate from 35% to 58% while true correctness fell from 31% to 2%, because the agent learned to delete 98% of the branches no test reaches. My focus is RL post-training when rewards can’t be checked.</p>[once: Running four research programs end to end on my own: decoding hand movement from motor-cortex spikes, post-training a small transformer with GRPO and DPO, testing sim-to-real transfer of meta-learned drone control, and training a Go engine from scratch by self-play.]
           <p>I wrote down a prediction before each of 50 follow-ups, and 15 were refuted. Auditing a random 25% of episodes delayed the hack rather than preventing it; choosing which 10% to audit held false success to 0.04, against 0.24 at random. RL still never beat the fine-tuned starting point on honest repair when the agent picks its single best answer.</p>
           <p>Alongside it: re-centring each channel on a new day’s unlabelled spikes keeps a cursor decoder at R² 0.72 on 17 of 19 later days, against 0.42 for a linear decoder, though the two days the electrodes were re-mapped break it. In simulation, a learned residual cuts quadrotor tracking error from adaptive control’s 14.0 cm to 7.3 cm, and meta-learning adds little to it.</p>[Saved for later, once also: a 9×9 Go engine trained by self-play.]
-          -->
+          ~~>
           <p>Member of the Sensorimotor AI journal club at Berkeley’s Redwood Center for Theoretical Neuroscience, and mentor to undergraduate scholars from UC Berkeley.</p>
-          <p class="tags"><span class="chip">Neural decoding</span> <span class="chip">GRPO</span> <span class="chip">Sim-to-real</span> <span class="chip">Meta-learning</span></p>
+          -->
+          <!-- Saved for later, the short text from 2026-11-17 to 2026-11-18:
+          <p>Trained only on visible tests, a code agent’s pass rate went up while its real correctness fell to 2%: it learned to delete the code no test reaches. Choosing which episodes to audit held the hack off; random audits only delayed it.</p>
+          <p>Also: a brain–computer interface decoder that keeps working on most later days without new labels.</p>
+          -->
+          <p>I run my own research on one question: what does a learning system actually learn when you can’t fully check its work?</p>
+          <p><strong>Code agents.</strong> I trained a small coding agent with reinforcement learning (GRPO), rewarding it whenever the tests it could see passed. Its pass rate rose from 35% to 58%, but the share of programs that were actually correct fell from 31% to 2%: it had learned to delete the code no test checks. Spot-checking a random sample of its work with a hidden, complete check only slowed this down. Choosing which attempts to check held it off: 4% false passes, against 24% for random checks on the same budget.</p>
+          <p><strong>Brain–computer interfaces.</strong> The signals an implant records drift from day to day, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.72 (1.0 is perfect) on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder.</p>
+          <p>Both are small-scale experiments; I wrote down a prediction before each run.</p>
+          <p class="tags"><span class="chip">GRPO</span> <span class="chip">Neural decoding</span> <span class="chip">Sim-to-real</span></p><!-- Saved for later, chips cut 2026-11-17: Meta-learning -->
         </div>
       </article>
 
@@ -322,12 +372,20 @@
         <div>
           <h3>Deep Learning Scientist · PhysicsAI</h3>
           <p class="where">DARPA-funded · remote</p>
-          <p>Turned synthetic-data generation into a closed RL loop: agents (TD3, PPO, DDPG) set an image generator’s parameters, a spatiotemporal object detector retrained on what it produced, and the detector’s accuracy on real drone imagery came back as the reward.<!-- once: Real-world performance, not hand-tuned rendering, drove every iteration. --></p>
-          <!-- Saved for later, the sentence once ended: …drove every iteration and closed the sim-to-real gap. -->
-          <p>Built the meta-RL codebase and ran its multi-week GPU training: a PEARL agent over TD3 that learns a probabilistic embedding of each generator task, so it adapts to a new one in a few tries, and it was also applied to a fighter-jet simulation.<!-- once: Owned the meta-RL codebase: …in a few tries, and that was also applied to a fighter-jet simulation. Ran and monitored its multi-week GPU training runs. --></p>
+          <!-- Saved for later, the fuller text before the 2026-11-17 recruiter pass (~~ marks an old inner comment):
+          <p>Turned synthetic-data generation into a closed RL loop: agents (TD3, PPO, DDPG) set an image generator’s parameters, a spatiotemporal object detector retrained on what it produced, and the detector’s accuracy on real drone imagery came back as the reward.<!~~ once: Real-world performance, not hand-tuned rendering, drove every iteration. ~~></p>
+          <!~~ Saved for later, the sentence once ended: …drove every iteration and closed the sim-to-real gap. ~~>
+          <p>Built the meta-RL codebase and ran its multi-week GPU training: a PEARL agent over TD3 that learns a probabilistic embedding of each generator task, so it adapts to a new one in a few tries, and it was also applied to a fighter-jet simulation.<!~~ once: Owned the meta-RL codebase: …in a few tries, and that was also applied to a fighter-jet simulation. Ran and monitored its multi-week GPU training runs. ~~></p>
           <p>Also implemented domain adaptation from scratch to hold the detector’s accuracy with scarce real labels and mostly synthetic data (10–15 GB datasets), and built and benchmarked the GAN pipelines (DCGAN, InfoGAN, FineGAN) that produced its training images.</p>
+          -->
+          <!-- Saved for later, the short text from 2026-11-17 to 2026-11-18:
+          <p>Built an RL loop where agents (TD3, PPO, DDPG) tuned a synthetic image generator, rewarded by a detector’s accuracy on real drone imagery.</p>
+          <p>Built the meta-RL codebase (PEARL over TD3) so the agent adapts to a new generator task in a few tries.</p>
+          -->
+          <p>Detectors that spot objects such as cars from a drone need many labelled images, and real ones are scarce, so we generated synthetic ones. I turned tuning the image generator into a reinforcement learning problem: an agent chose the generator’s settings, a detector trained on the images it produced, and the detector’s accuracy on real drone footage came back as the agent’s reward. Real-world accuracy, not hand-tuning, decided what the generator made.</p>
+          <p>I also built the meta-learning code that lets the agent adapt to a new generator task in a few tries instead of starting from scratch, and ran its multi-week GPU training; it was also applied to a fighter-jet simulation. To keep the detector accurate with few real labels, I implemented domain adaptation from scratch on 10–15 GB of mostly synthetic data.</p>
           <figure class="shot"><img src="images/physicsai.svg" alt="Drawing: a drone’s camera looks down on a city block with cars boxed by a detector, beside the generator settings an RL agent tunes and its rising reward" loading="lazy" width="1280" height="720"></figure>
-          <p class="tags"><span class="chip">TD3</span> <span class="chip">PPO</span> <span class="chip">DDPG</span> <span class="chip">PEARL meta-RL</span> <span class="chip">Domain adaptation</span> <span class="chip">GANs</span></p>
+          <p class="tags"><span class="chip">PPO</span> <span class="chip">PEARL meta-RL</span> <span class="chip">Domain adaptation</span></p><!-- Saved for later, chips cut 2026-11-17: TD3, DDPG, GANs -->
           <!-- Saved for later, cut 2026-11-16: <p>Our team was recognized as the top group in the nation for its reinforcement-learning work.</p> -->
         </div>
       </article>
@@ -337,10 +395,15 @@
         <div>
           <h3>Deep RL Researcher · Hybrid Robotics Lab</h3>
           <p class="where">UC Berkeley · Prof. Koushil Sreenath</p>
-          <p>Trained one RL policy that runs a Unitree Go1 robot dog through a whole soccer task (walk to the ball, kick it at a target, stay balanced) with no real-world training, and it hit the target about 60% of the time on the real robot. It replaced the multi-policy hierarchical framework used in prior work.<!-- Saved for later, cut: It learned entirely in simulation, which can’t fully reproduce the ball’s friction on the ground, how it deforms when kicked, or sensor noise. --><!-- once: Took graduate classes in RL and control theory alongside. --></p>
-          <p>The policy is PPO, trained in IsaacGym on a three-stage reward: reach the ball, kick it, then wait to see whether it scores. A reward gradient, a stage flag and masked inputs (the ball and goal positions are zeroed until they matter) let one network move between stages smoothly, and CPG-based gait tracking kept its walking steady.</p><!-- Saved for later, cut: Also prototyped RLPD, SAC that learns from prior data, to fine-tune the simulation-trained policy on real robot runs and narrow the gap to hardware. -->
+          <!-- Saved for later, the fuller text before the 2026-11-17 recruiter pass (~~ marks an old inner comment):
+          <p>Trained one RL policy that runs a Unitree Go1 robot dog through a whole soccer task (walk to the ball, kick it at a target, stay balanced) with no real-world training, and it hit the target about 60% of the time on the real robot. It replaced the multi-policy hierarchical framework used in prior work.<!~~ Saved for later, cut: It learned entirely in simulation, which can’t fully reproduce the ball’s friction on the ground, how it deforms when kicked, or sensor noise. ~~><!~~ once: Took graduate classes in RL and control theory alongside. ~~></p>
+          <p>The policy is PPO, trained in IsaacGym on a three-stage reward: reach the ball, kick it, then wait to see whether it scores. A reward gradient, a stage flag and masked inputs (the ball and goal positions are zeroed until they matter) let one network move between stages smoothly, and CPG-based gait tracking kept its walking steady.</p><!~~ Saved for later, cut: Also prototyped RLPD, SAC that learns from prior data, to fine-tune the simulation-trained policy on real robot runs and narrow the gap to hardware. ~~>
+          -->
+          <!-- Saved for later, the short text from 2026-11-17 to 2026-11-18: <p>One RL policy runs a Unitree Go1 through a whole soccer task with no real-world training, hitting the target about 60% of the time on the real robot.</p> -->
+          <p>I trained a four-legged robot dog (a Unitree Go1) to do a soccer task: walk to the ball, kick it at a target, and stay balanced. It learned entirely in simulation with reinforcement learning (PPO), then ran on the real robot with no extra training, hitting the target about 60% of the time.</p>
+          <p>Earlier work used a separate policy for each step; I trained one. Its reward came in three stages (reach the ball, kick it, then wait to see whether it scores), and the ball and goal positions were hidden from it until each stage needed them, so one network could move smoothly from walking to kicking.</p>
           <figure class="shot"><img src="images/robot-soccer.svg" alt="Drawing: a four-legged robot dog kicks a soccer ball along an arc into a target in a goal, on a simulation grid" loading="lazy" width="1280" height="720"></figure>
-          <p class="tags"><span class="chip">PPO</span> <span class="chip">IsaacGym</span> <span class="chip">Multi-stage rewards</span> <span class="chip">Sim-to-real</span> <span class="chip">RLPD</span> <span class="chip">ROS</span> <span class="chip">OpenCV</span> <span class="chip">RealSense</span></p>
+          <p class="tags"><span class="chip">PPO</span> <span class="chip">IsaacGym</span> <span class="chip">Sim-to-real</span></p><!-- Saved for later, chips cut 2026-11-17: Multi-stage rewards, RLPD, ROS, OpenCV, RealSense -->
           <p class="links"><a href="papers/robot-soccer-thesis.pdf" type="application/pdf">Report (PDF, 330 KB) →</a></p>
         </div>
       </article>
@@ -350,9 +413,12 @@
         <div>
           <h3>Research Assistant · Video &amp; Image Processing Lab</h3>
           <p class="where">BAIR, UC Berkeley · Prof. Avideh Zakhor</p>
+          <!-- Saved for later, the fuller text before the 2026-11-17 recruiter pass (~~ marks an old inner comment):
           <p>Built a deep-learning pipeline that outlines invasive melanoma pixel by pixel in very large tissue images, to help pathologists measure how far a cancer has spread.</p>
           <p>Invasive and in-situ melanoma look alike under the microscope; what matters is whether the tumour has crossed below the epidermis. So the pipeline segments the epidermis and the melanoma separately, at four magnifications, and keeps the melanoma outside the epidermis. Trained on slides from 57 UCSF patients outlined by two pathologists, it more than tripled F1 on invasive melanoma over the previous best, from 0.14 to 0.44.</p>
-          <!-- Saved for later: Most of the work was engineering around the slides: cutting very large images into patches that fit on two GPUs, dropping empty ones, removing glue stains, and rebalancing rare classes with flips and rotations. HRNet+OCR started from Cityscapes weights and was benchmarked against HookNet, U-Net and the earlier published model. -->
+          <!~~ Saved for later: Most of the work was engineering around the slides: cutting very large images into patches that fit on two GPUs, dropping empty ones, removing glue stains, and rebalancing rare classes with flips and rotations. HRNet+OCR started from Cityscapes weights and was benchmarked against HookNet, U-Net and the earlier published model. ~~>
+          -->
+          <p>Built a pipeline that outlines invasive melanoma in very large tissue images; it more than tripled F1 over the previous best, from 0.14 to 0.44.</p>
           <figure class="shot"><img src="images/vip-lab.svg" alt="Drawing: a whole-slide tissue image with the predicted melanoma region outlined, and a zoomed-in square showing the tumour boundary cell by cell" loading="lazy" width="1280" height="720"></figure>
           <p class="tags pubs">Published: <em>SPIE Medical Imaging</em> 2023 · <em>USCAP</em> 2022, Stowell-Orbison Award Poster Session</p>
           <p class="links"><a href="https://doi.org/10.1117/12.2654672">Paper (SPIE Digital Library) →</a></p>
@@ -400,46 +466,6 @@
       <p class="more">B.A. in Computer Science from UC Berkeley, focused on robotics and linear system theory, with Regents, merit and leadership awards. Graduate coursework at Stanford in autonomous systems and AI, including CS231N, CS330, AA271A/B and AA273.</p><!-- Saved for later, once ended the line above: Education is in the <a href="resume/amal-mehta-resume.pdf" type="application/pdf">resume (PDF, 93 KB)</a>, and an up-to-date list of skills is below. -->
     </section>
 
-    <section id="writeups" class="wrap section">
-      <h2 class="section-title">Publications &amp; reports</h2>
-      <article class="role" id="spie-2023">
-        <p class="when">2023</p>
-        <div>
-          <h3>Deep Learning Segmentation for Invasive Melanoma</h3>
-          <p class="where">SPIE Medical Imaging · peer-reviewed paper · with A. Shah, M. Wang, N. Neumann, T. McCalmont and A. Zakhor</p>
-          <p class="links"><a href="https://doi.org/10.1117/12.2654672">Paper (SPIE Digital Library) →</a></p>
-        </div>
-      </article>
-
-      <!-- Saved for later:
-      <article class="role" id="few-shot-imitation">
-        <p class="when">2021</p>
-        <div>
-          <h3>Few-Shot Imitation Learning for Robotic Manipulation</h3>
-          <p class="where">Class report · CS330 Meta-Learning, Stanford · with Sebastian Kochman and Soham Sinha</p>
-          <p>Teaching a robot arm a new Meta-World task from a single expert demonstration. We paired inverse soft Q-learning with implicit MAML and tried a recurrent RL² variant. Both were compared with a MAML baseline trained by behavioural cloning.</p>
-          <p class="tags"><span class="chip">Meta-learning</span> <span class="chip">Imitation learning</span> <span class="chip">iMAML</span> <span class="chip">RL²</span> <span class="chip">Meta-World</span></p>
-          <p class="links"><a href="papers/cs330-few-shot-imitation-learning.pdf" type="application/pdf">Report (PDF, 445 KB) →</a></p>
-        </div>
-      </article>
-      -->
-
-
-      <!-- Saved for later:
-      <article class="role" id="defensive-retraining">
-        <p class="when">2020</p>
-        <div>
-          <h3>Defensive Iterative Retraining</h3>
-          <p class="where">Class report · CS285 Deep Reinforcement Learning, UC Berkeley · with Aman Shah and Srikar Boinapally</p>
-          <p>Training agents to resist adversarial policies by mixing past selves and freshly trained adversaries into the opponent pool, instead of plain self-play. In SumoAnts it slightly beat self-play; in the harder SumoHumans it fell behind, because the interruptions came before the agent had learned to stay on its feet.</p>
-          <p class="tags"><span class="chip">Multi-agent RL</span> <span class="chip">Adversarial policies</span> <span class="chip">PPO</span></p>
-          <p class="links"><a href="papers/cs285-defensive-iterative-retraining.pdf" type="application/pdf">Report (PDF, 200 KB) →</a></p>
-        </div>
-      </article>
-      -->
-      <!-- Saved for later: <p class="thanks">Thank you to Prof. Koushil Sreenath, Prof. Avideh Zakhor and Prof. Reza Abbasi-Asl, who took a chance on me early and taught me how research is done.</p> -->
-    </section>
-
     <!-- Always shown; the master list the resume's Technical Skills must match (the tests check it). -->
     <section id="skills" class="wrap section">
       <h2 class="section-title">Skills</h2>
@@ -479,26 +505,32 @@
       <!-- One line each, for builds with public code that back up the work above.
            Featured is for the most vetted research: real evaluation, a write-up and public source. -->
       <ul class="minis">
+        <!-- Saved for later, cut 2026-11-16 as a toy project:
         <li class="mini" id="replicate-sota">
           <h3>Replicate SOTA <a class="try-badge inline" href="https://amalmehta.com/ReplicateSOTA/">Try it</a></h3>
           <p>Qwen3.5-0.8B rebuilt from scratch matches the official model at every position on 8 test prompts; the largest score gap is 3.8×10⁻⁵.</p>
           <p class="links"><a href="project-replicate-sota.html">Deep dive →</a> <a href="https://amalmehta.com/ReplicateSOTA/">Demo →</a> <a href="https://github.com/amalmehta/ReplicateSOTA">Code →</a></p>
         </li>
+        -->
         <li class="mini" id="drone-autonomy">
           <h3>Drone Autonomy <a class="try-badge inline" href="https://amalmehta.com/DroneAutonomy/">Try it</a></h3>
           <p>A simulated quadrotor that maps unknown rooms, plans paths with A* and adapts to payload, wind and worn motors; a learned residual roughly halves tuned adaptive control’s error on held-out tasks.</p>
           <p class="links"><a href="project-drone.html">Deep dive →</a> <a href="https://amalmehta.com/DroneAutonomy/">Demo →</a> <a href="https://github.com/amalmehta/DroneAutonomy">Code →</a></p>
         </li>
+        <!-- Saved for later, cut 2026-11-16 as a toy project:
         <li class="mini" id="alphago-lite">
           <h3>AlphaGo Lite <a class="try-badge inline" href="https://amalmehta.com/AlphaGoLite/">Play it</a></h3>
           <p>A 9×9 Go engine that taught itself by self-play on one laptop, beats GNU Go’s weakest level 4 games in 5, and shows which moves it’s weighing as you play.</p>
           <p class="links"><a href="project-alphago.html">Deep dive →</a> <a href="https://amalmehta.com/AlphaGoLite/">Demo →</a> <a href="https://github.com/amalmehta/AlphaGoLite">Code →</a></p>
         </li>
+        -->
+        <!-- Saved for later, cut 2026-11-16 as a toy project:
         <li class="mini" id="post-training-lab">
           <h3>Post Training Lab <a class="try-badge inline" href="https://amalmehta.com/PostTrainingLab/">Try it</a></h3>
           <p>A 59k-parameter transformer learns a maze by copying demonstrations (SFT), then GRPO and DPO lift held-out success from 70% to 80% and 81% over 3 seeds.</p>
           <p class="links"><a href="project-post-training.html">Deep dive →</a> <a href="https://amalmehta.com/PostTrainingLab/">Demo →</a> <a href="https://github.com/amalmehta/PostTrainingLab">Code →</a></p>
         </li>
+        -->
         <!-- Saved for later, cut 2026-11-16:
         <li class="mini" id="reward-shapes">
           <h3>Reward Shapes</h3>
@@ -506,11 +538,13 @@
           <p class="links"><a href="https://amalmehta.com/RewardModeling/">Website →</a> <a href="https://github.com/amalmehta/RewardModeling">Code →</a></p>
         </li>
         -->
+        <!-- Saved for later, cut 2026-11-16 as a toy project:
         <li class="mini" id="rl-init-stability">
           <h3>RL Init and Stability</h3>
           <p>A review of 68 papers on how weight initialization and network health shape training stability in deep RL, with a live lab that trains PPO agents in your browser.</p>
           <p class="links"><a href="https://amalmehta.com/RLInitStability/">Review and live lab →</a> <a href="https://github.com/amalmehta/RLInitStability">Code →</a></p>
         </li>
+        -->
         <!-- Saved for later:
         <li class="mini" id="recruiting-platform-project">
           <h3>Recruiting Platform</h3>

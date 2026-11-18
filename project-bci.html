@@ -92,6 +92,21 @@
       </figure>
     </section>
 
+    <section class="case-part" id="related-work">
+      <h2 class="section-title">Related work</h2>
+      <p>Decoder drift is an old problem. Sussillo et al. (2016) train on many past days so a decoder survives future changes. Jarosiewicz et al. (2015) built a self-calibrating decoder that people with tetraplegia used to type. Farshchian et al. (2019) and Degenhart et al. (2020) align a new day’s activity to the original without labels, and Karpowicz et al. (2022) align latent dynamics. Wilson et al. (2023) find that distribution-matching recalibration fails over long timescales, while inferring the user’s targets holds up. The FALCON benchmark (Karpowicz et al., 2024) scores these methods on shared data.</p>
+      <p><strong>What’s new here:</strong> not the method, since re-centring each channel is a simple step. It’s how far that step goes on this data: R² 0.72 to day 138, with unsupervised alignment on top adding nothing (0.706 against 0.718).</p>
+      <ol class="refs">
+        <li>Jarosiewicz, B., et al. <a href="https://doi.org/10.1126/scitranslmed.aac7328">Virtual typing by people with tetraplegia using a self-calibrating intracortical brain-computer interface</a>. <i>Science Translational Medicine</i>, 2015.</li>
+        <li>Sussillo, D., et al. <a href="https://doi.org/10.1038/ncomms13749">Making brain–machine interfaces robust to future neural variability</a>. <i>Nature Communications</i>, 2016.</li>
+        <li>Farshchian, A., et al. <a href="https://arxiv.org/abs/1810.00045">Adversarial Domain Adaptation for Stable Brain-Machine Interfaces</a>. ICLR, 2019.</li>
+        <li>Degenhart, A. D., et al. <a href="https://doi.org/10.1038/s41551-020-0542-9">Stabilization of a brain–computer interface via the alignment of low-dimensional spaces of neural activity</a>. <i>Nature Biomedical Engineering</i>, 2020.</li>
+        <li>Karpowicz, B. M., et al. <a href="https://doi.org/10.1101/2022.04.06.487388">Stabilizing brain-computer interfaces through alignment of latent dynamics</a>. bioRxiv, 2022.</li>
+        <li>Wilson, G. H., et al. <a href="https://doi.org/10.1101/2023.02.03.527022">Long-term unsupervised recalibration of cursor BCIs</a>. bioRxiv, 2023.</li>
+        <li>Karpowicz, B. M., et al. <a href="https://doi.org/10.1101/2024.09.15.613126">Few-shot Algorithms for Consistent Neural Decoding (FALCON) Benchmark</a>. bioRxiv, 2024.</li>
+      </ol>
+    </section>
+
     <section class="case-part">
       <h2 class="section-title">What didn’t work</h2>
       <p>Two held-out days (28 and 131), when the electrodes were re-mapped, break every re-centred decoder: R² near 0. Unsupervised alignment on top mostly didn’t help (0.706 against 0.718). Every bitrate is simulated, and it’s one animal, one arm, one array.</p>
