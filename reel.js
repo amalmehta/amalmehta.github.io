@@ -8,6 +8,17 @@
   const today = new Date().toLocaleDateString("en-CA");
   const lastDay = card => [...card.querySelectorAll("time[datetime]")].pop()?.getAttribute("datetime") ?? "";
   for (const card of reel.children) if (lastDay(card) && lastDay(card) < today) card.classList.add("past");
+  // The next trip says how far off it is: "in 5 days", "tomorrow", or "happening now" while it's on
+  const upcoming = [...reel.children].find(card => lastDay(card) >= today);
+  const firstDay = upcoming?.querySelector("time[datetime]")?.getAttribute("datetime");
+  if (firstDay && /^\d{4}-\d{2}-\d{2}$/.test(firstDay)) {
+    const days = Math.round((Date.parse(firstDay) - Date.parse(today)) / 86400000);
+    const tag = document.createElement("span");
+    tag.className = "trip-countdown";
+    tag.textContent = days <= 0 ? "Happening now" : days === 1 ? "Tomorrow" : `In ${days} days`;
+    upcoming.querySelector(".trip-dates")?.prepend(tag);
+    upcoming.classList.add("next");
+  }
   if (reel.children.length < 2 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   if (getComputedStyle(reel).display !== "flex") return;  // an older cached stylesheet: leave the plain grid alone
   const SPEED = 28, HOLD = 6000, REST = 2500, EDGE = 24;  // pixels a second; milliseconds; milliseconds; the edge fade's width

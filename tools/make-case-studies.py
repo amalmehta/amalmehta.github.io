@@ -308,6 +308,7 @@ def page(p, i):
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script src="email.js" defer></script>
+  <script src="updated.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#top">Skip to content</a>

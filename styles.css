@@ -490,6 +490,11 @@ path.map-been { fill: color-mix(in srgb, var(--been) 55%, var(--surface)); strok
 .map-route-end { fill: var(--warm); stroke: var(--surface); stroke-width: 2; }
 @keyframes ride-draw { to { stroke-dashoffset: 0; } }
 @media (prefers-reduced-motion: reduce) { .map-route-reveal { animation: none; stroke-dashoffset: 0; } }
+/* map.js: pins drop in west to east the first time the map is seen, and the routes wait for them */
+.travel-map.pins-wait .pin { opacity: 0; }
+.travel-map.pins-wait .map-route-reveal { animation-play-state: paused; }
+.travel-map.pins-in .pin { animation: pin-drop 0.55s cubic-bezier(0.2, 1.5, 0.4, 1) both; }
+@keyframes pin-drop { from { opacity: 0; transform: translateY(-16px); } }
 .map-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; margin-top: 0.7rem; font-size: 0.88rem; color: var(--muted); }
 .key::before { content: ""; display: inline-block; width: 0.65rem; height: 0.65rem; margin-right: 0.4rem; border-radius: 50%; background: var(--pin); vertical-align: 0.02em; }
 .key-ride::before { width: 18px; height: 0; border-radius: 0; background: none; border-top: 3px dashed var(--warm); }
@@ -1057,6 +1062,9 @@ body { hanging-punctuation: first last; }
 /* Travel: a trip's stops as a timeline. timeline.js draws the line down and lights each stop in turn. */
 .photo.past img { filter: saturate(0.55); opacity: 0.85; }  /* a trip that's over stays on the timeline, quieter */
 .photo.past .trip-dates::before { content: "Past · "; }
+.trip-countdown { display: inline-block; margin-right: 0.45rem; padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--warm); background: var(--warm-soft); animation: countdown-glow 2.4s ease-in-out infinite; }  /* the next trip, counting down */
+@keyframes countdown-glow { 50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--warm) 18%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .trip-countdown { animation: none; } }
 .trip-stops > summary { margin-top: 0.8rem; font-size: 0.88rem; color: var(--accent); cursor: pointer; width: fit-content; }
 .trip-stops > summary:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .trip-timeline { --dot: 0.7rem; position: relative; list-style: none; margin: 1rem 0 0; padding: 0 0 0 1.6rem; font-size: 0.9rem; line-height: 1.45; color: var(--muted); }
