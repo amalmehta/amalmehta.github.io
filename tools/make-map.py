@@ -27,6 +27,7 @@ PINS = [
     ("want", "Patagonia, Chile", -50.94, -73.41, "place-patagonia"),
     ("want", "Bhutan", 27.49, 89.36, "place-bhutan"),
     ("want", "Samarkand, Uzbekistan", 39.65, 66.96, "place-samarkand"),
+    ("want", "Pamir Highway, Tajikistan", 37.49, 71.55, "place-pamir-highway"),  # Khorog
     ("want", "Faroe Islands", 62.11, -7.43, "place-faroe-islands"),
     ("want", "Garibaldi, British Columbia", 49.93, -123.03, "place-garibaldi"),
     ("want", "Glacier National Park, Montana", 48.68, -113.60, "place-glacier-national-park"),

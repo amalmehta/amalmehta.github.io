@@ -1400,8 +1400,54 @@ def philadelphia():
     return svg("philadelphia", "".join(b), ("#2f3a66", "#f0a982"))
 
 
+# ---------------------------------------------------------------- Pamir Highway, Tajikistan: the dirt road along the Panj, Afghanistan across the river
+def pamir_highway():
+    rng = random.Random(41)
+    b = []
+    b.append(clouds(rng, 3, 50, 140, opacity=0.5))
+    # The Hindu Kush across the river: high, uneven snow peaks in Afghanistan
+    far = ridge(-20, 1220, 430, rng, [(0.06, 0.05, 0.7), (0.2, 0.06, 0.95), (0.33, 0.04, 0.78), (0.47, 0.07, 1.0), (0.6, 0.04, 0.72),
+                                      (0.73, 0.06, 0.9), (0.86, 0.05, 0.8), (0.97, 0.05, 0.66)], 290, jag=12, step=14)
+    b.append(poly(far, "#9fb0c4"))
+    b.append(poly([(x, y) for x, y in far], "#7f93ab", opacity="0.35", transform="translate(18,0)"))
+    # Snow above a ragged snowline, with grey rock ribs showing through
+    line = [(x, 300 + 38 * math.sin(x / 47) + rng.uniform(-18, 18)) for x in range(-20, 1240, 30)]
+    b.append(f'<defs><clipPath id="pamir-snow"><polygon points="-20,0 {pts(line)} 1240,0"/></clipPath></defs>')
+    b.append(f'<g clip-path="url(#pamir-snow)">{poly(far, "#f4f7fa")}</g>')
+    for x, y in far[2:-2:5]:
+        if y < 290:
+            b.append(f'<path d="M{x:.0f},{y + 10:.0f} l{rng.uniform(-30, 30):.0f},{rng.uniform(50, 110):.0f}" stroke="#9fb0c4" stroke-width="{rng.uniform(4, 8):.0f}" stroke-linecap="round" opacity="0.7"/>')
+    b.append(f'<rect x="0" y="420" width="{W}" height="400" fill="#8f7357"/>')  # the valley behind everything nearer
+    # Bare, dusty valley walls on both banks
+    b.append(poly(ridge(-20, 700, 560, rng, [(0.15, 0.25, 1.0), (0.6, 0.2, 0.7)], 220, jag=6), "#a88b6c"))
+    b.append(poly(ridge(500, 1220, 560, rng, [(0.5, 0.25, 0.9), (0.9, 0.2, 1.0)], 200, jag=6), "#9a7d60"))
+    b.append(poly(ridge(-20, 1220, 600, rng, [(0.1, 0.2, 0.8), (0.85, 0.2, 0.6)], 120, jag=4), "#8a6e53", opacity="0.85"))
+    # The Panj river, grey-turquoise, winding down the valley
+    b.append('<path d="M1220,560 C1000,575 860,585 760,600 S520,640 380,650 S120,660 -20,690 L-20,720 C140,700 360,690 520,676 S900,622 1220,590 Z" fill="#7fb0b3"/>')
+    b.append('<path d="M1200,572 C1000,586 820,604 640,630 S300,668 0,700" fill="none" stroke="#c9e2df" stroke-width="3" stroke-dasharray="40 30" opacity="0.7"/>')
+    # A village on the far bank: poplars and green fields
+    b.append(f'<path d="M600,612 C680,598 780,592 880,590 L880,600 C780,604 690,612 600,622 Z" fill="#8aa356"/>')
+    for x in (640, 662, 690, 760, 782, 840, 862):
+        h = rng.uniform(60, 90)
+        b.append(f'<ellipse cx="{x}" cy="{604 - h / 2:.0f}" rx="{h * 0.09:.0f}" ry="{h / 2:.0f}" fill="{rng.choice(("#6f9a45", "#86ad52", "#d9a93f"))}"/>')
+    for x in (710, 730, 810):
+        b.append(f'<rect x="{x}" y="590" width="16" height="11" fill="#e6dccb"/><rect x="{x - 2}" y="587" width="20" height="4" fill="#b59c7c"/>')
+    # The near bank and the dirt highway along it
+    b.append('<path d="M-20,700 C200,690 420,690 620,670 S980,620 1220,600 L1220,820 L-20,820 Z" fill="#b89a74"/>')
+    road = "M-40,800 C200,770 420,740 600,712 S960,650 1240,628"
+    b.append(f'<path d="{road}" fill="none" stroke="#d8c3a0" stroke-width="70" stroke-linecap="round"/>')
+    b.append(f'<path d="{road}" fill="none" stroke="#c4ab86" stroke-width="3" stroke-dasharray="6 16" transform="translate(0,-14)"/>')
+    b.append(f'<path d="{road}" fill="none" stroke="#c4ab86" stroke-width="3" stroke-dasharray="6 16" transform="translate(0,14)"/>')
+    # Rocks along the river, and a white kilometre stone
+    for _ in range(18):
+        x, y = rng.uniform(0, 1200), rng.uniform(690, 790)
+        b.append(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{rng.uniform(5, 14):.0f}" ry="{rng.uniform(3, 7):.0f}" fill="{rng.choice(("#8a7258", "#9c8569", "#7a634c"))}"/>')
+    b.append('<path d="M330,742 L330,712 Q338,702 346,712 L346,742 Z" fill="#f1ede4"/><rect x="330" y="724" width="16" height="7" fill="#c0392b"/>')
+    return svg("pamir-highway", "".join(b), ("#4f86c6", "#dce9f4"))
+
+
 PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofoten), ("patagonia", patagonia),
-          ("bhutan", bhutan), ("samarkand", samarkand), ("faroe-islands", faroe),
+          ("bhutan", bhutan), ("samarkand", samarkand), ("pamir-highway", pamir_highway), ("faroe-islands", faroe),
           ("chamonix", chamonix), ("garibaldi", garibaldi), ("glacier-national-park", glacier), ("moorea", moorea),
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),

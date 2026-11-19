@@ -504,6 +504,9 @@ picture { display: contents; }
 .writing h2 { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; line-height: 1.3; margin: 0 0 0.4rem; }
 .writing p { margin: 0 0 0.6rem; }
 .writing .when { margin: 0; font-size: 0.85rem; }
+.writing-photo { margin: 1rem 0 0.4rem; }
+.writing-photo img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.writing-photo figcaption { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); font-style: italic; }
 .writings-empty { margin: 0; padding: 0 0 1rem; border-bottom: 1px dashed var(--line); color: var(--muted); font-style: italic; }
 
 /* Values & inspiration: its own page (values.html), linked from the footer */
