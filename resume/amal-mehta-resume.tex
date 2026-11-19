@@ -1,4 +1,4 @@
-% Resume linked from the website: the Meta Simulation CV/ML version (from _resumes/companies/meta-simulation, 2026-11-19). The one before is in _resumes/site-previous/.
+% Resume linked from the website: the general resume (from _resumes/general). The Meta version is in _resumes/companies/meta-simulation.
 \documentclass[10pt]{article}
 \usepackage[margin=0.5in,vmargin=0.36in]{geometry}
 \usepackage{fontspec}\setmainfont{Times New Roman}
@@ -13,7 +13,7 @@
 \setlist[itemize]{leftmargin=1.2em,itemsep=0.2pt,topsep=1pt,parsep=0pt}
 \newcommand{\role}[4]{\textbf{#1}\hfill\textbf{#2}\\\textit{#3}\hfill\textit{#4}}
 
-\begin{document}\fontsize{9.8}{11.0}\selectfont
+\begin{document}\fontsize{9.8}{10.7}\selectfont
 
 \begin{center}
 {\LARGE\bfseries Amal Mehta}\\[3pt]
@@ -21,24 +21,26 @@ SF Bay Area \quad$\cdot$\quad \href{mailto:amal.mehta@gmail.com}{amal.mehta@gmai
 % Saved for later, cut 2026-11-17, once ended the line above: \quad$\cdot$\quad \href{https://www.linkedin.com/in/amal-mehta-264413a9/}{LinkedIn} \quad$\cdot$\quad \href{https://github.com/amalmehta}{GitHub}
 \end{center}
 
-Software engineer for ML, simulation and computer vision, with six years building synthetic-data and training pipelines end to end, from generating synthetic imagery for drone object detection to training and evaluating the detectors on it.
+Research engineer with six years of applied deep learning and reinforcement learning, from generative models and vision to RL post-training and robot learning. I build each study end to end in PyTorch, from environment and training loop to held-out evals, seeds and a live demo.
 
 \section*{Experience}
 
 \role{Independent ML \& Robotics Research}{Sept 2025 -- Present}{Self-directed projects; details at \href{https://amalmehta.com/}{amalmehta.com}}{San Francisco Bay Area}
 \begin{itemize}
-\item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Quadrotor simulator:}} batched simulator modelled on a Holybro X500 V2 (500\,Hz, PX4-style thrust and body-rate commands), randomizing payload, motor wear, drag, wind and latency; a learned residual cut held-out tracking error to 7.3\,cm vs.\ 14.0\,cm for tuned L1 adaptive control.
-\item \href{https://amalmehta.com/AlphaGoLite/}{\textbf{AlphaGo Lite:}} AlphaZero-style 9$\times$9 Go engine (17,120 self-play games); 32 of 40 wins against GNU Go level 1. Exported to ONNX and Core ML for a browser app and a Mac app; the browser port matches the Python rules on 3,000 random positions.
-\item \href{https://amalmehta.com/long_term_horizon_planning/}{\textbf{Code-repair RL environment:}} built an environment with visible tests and a hidden verifier; GRPO raised pass rate 35\%\,$\to$\,58\% while true correctness fell 31\%\,$\to$\,2\%, and targeted audits held false success to 4\% vs.\ 24\% for random ones.
-% Saved for later, cut 2026-11-19: \item \textbf{Software:} \href{https://amalmehta.com/}{amalmehta.com}, hand-built, with tests on every push in GitHub Actions.
+\item \href{https://amalmehta.com/long_term_horizon_planning/}{\textbf{Reward hacking in RL-trained code agents:}} GRPO on visible tests raised pass rate 35\%\,$\to$\,58\% while true correctness fell 31\%\,$\to$\,2\%, as the agent deleted 98\% of untested branches. Ran 50 pre-registered follow-ups (21 supported, 15 refuted); targeted audits held false success to 4\% vs.\ 24\% for random audits at the same 10\% budget.
+\item \href{https://github.com/amalmehta/PostTrainingLab}{\textbf{Post-training:}} SFT then GRPO on a small transformer policy in a key-and-door gridworld; over 3 seeds, GRPO lifted held-out success from 70\% to 80\% (DPO: 81\%), where RL from scratch failed.
+\item \href{https://amalmehta.com/AlphaGoLite/}{\textbf{AlphaGo Lite:}} AlphaZero-style 9$\times$9 Go from scratch on one laptop CPU (107 generations, 17,120 self-play games); went from 0 to 32 wins in 40 games against GNU Go level 1. Runs in the browser (ONNX) and a Mac app (Core ML).
+\item \href{https://github.com/amalmehta/BCIProjects}{\textbf{Brain--computer interfaces:}} on public neural data, label-free decoding held R\textsuperscript{2} 0.72 on held-out days to day 138 (Wiener 0.42).
+% Saved for later, cut 2026-11-19: \item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Meta-RL for a quadrotor:}} seven meta-learning methods compared on adapting to payload, wind and motor wear.
+% Saved for later, cut 2026-11-19: \item \textbf{Tools:} \href{https://amalmehta.com/LLMUnderstander/}{LLM Understander}, an interactive \href{https://github.com/amalmehta/LLMUnderstander/releases/latest}{Mac app} on how LLMs are trained; \href{https://github.com/amalmehta/researcher_pal}{Researcher Pal}, Claude Code skills for research papers.
 \end{itemize}
 
 \role{Deep Learning Scientist}{Sept 2021 -- Aug 2025}{PhysicsAI (DARPA-funded)}{Pacifica, CA (remote)}
 \begin{itemize}
-\item Built a closed loop that generated synthetic training images for drone perception and tuned them from model performance: RL policies (TD3, PPO, DDPG) set the generator's parameters, and a detector's accuracy on real drone imagery was the reward.
+\item Turned synthetic-data generation for drone perception into a closed RL loop: policies (TD3, PPO, DDPG) set an image generator's parameters, a spatiotemporal detector retrained on its images, and its accuracy on real drone imagery was the reward.
 \item Built the PEARL meta-RL codebase (probabilistic task embeddings over TD3) so the agent adapts to a new generator task in a few tries; ran its multi-week GPU training, and the method was also applied to a fighter-jet simulation.
-\item Implemented domain adaptation from scratch to hold detector accuracy with few real labels (10--15\,GB, mostly synthetic data).
-\item Built and benchmarked GAN pipelines (DCGAN, InfoGAN, FineGAN) that generated the detectors' training data.
+\item Implemented gradient-reversal domain adaptation from scratch to hold detector accuracy with scarce real labels (10--15\,GB, mostly synthetic).
+\item Built and benchmarked GAN synthesis pipelines (DCGAN, InfoGAN, FineGAN) that produced the detectors' training data.
 \end{itemize}
 
 \role{Deep RL Researcher}{Aug 2023 -- Mar 2024}{Hybrid Robotics Lab, UC Berkeley --- adv.\ Prof.\ Koushil Sreenath}{Berkeley, CA}
@@ -61,25 +63,27 @@ Software engineer for ML, simulation and computer vision, with six years buildin
 
 \role{Researcher}{June 2020 -- Aug 2020}{Abbasi-Asl Lab, UCSF --- adv.\ Prof.\ Reza Abbasi-Asl}{San Francisco, CA}
 \begin{itemize}
-\item Built image-registration pipelines (empirical mode decomposition) to align 2D and 3D brain scans across visits and to a common template.
+\item Built empirical mode decomposition (EMD) pipelines to align 2D and 3D brain scans across visits and to a common template.
 \end{itemize}
 
 \section*{Education}
 
 \role{University of California, Berkeley}{2021}{B.A.\ Computer Science --- Regents Scholar}{Berkeley, CA}
+% Saved for later, cut 2026-11-19: \item CS285 (Deep RL) project: iterative retraining of PPO agents against adversarial policies.
 
 \role{Stanford University}{Aug 2021 -- May 2023}{Graduate coursework --- Autonomous Systems \& Artificial Intelligence}{}
 \begin{itemize}
 \item CS231N (Deep Learning for Vision), CS330 (Meta-Learning), AA271A/B (Autonomy I \& II), AA273 (State Estimation).
+% Saved for later, cut 2026-11-19: \item CS330 project: few-shot imitation learning; implemented RL\textsuperscript{2} and inverse soft Q-learning in Meta-World.
 \end{itemize}
 
 \section*{Technical Skills}
 \begin{tabular}{@{}p{0.9in}l}
 \textbf{Languages} & Python, C++, Swift, JavaScript / TypeScript \\
-\textbf{ML / CV} & PyTorch, TensorFlow, OpenCV, Object detection, Segmentation, GANs, Domain adaptation \\
-\textbf{Simulation} & Synthetic data generation, IsaacGym, Gazebo, Batched physics simulation, stable-baselines3 \\
-\textbf{Engineering} & Git, Docker, GitHub Actions CI, CUDA/multi-GPU, ONNX, Core ML \\
-\textbf{Robotics} & ROS, Unitree Go1, Kalman filtering \\
+\textbf{ML / RL} & PyTorch, TensorFlow, stable-baselines3, IsaacGym, OpenCV \\
+% Saved for later, cut 2026-11-19 from the end of the ML / RL row to match the site's Skills: , CTC decoding
+\textbf{Robotics} & ROS, Gazebo, Unitree Go1, CPG gait control, Kalman filtering, Shared autonomy \\
+\textbf{Tools} & Docker, GitHub Actions CI, CUDA/multi-GPU, ONNX, Core ML, SwiftUI, Three.js \\
 \end{tabular}
 
 \section*{Publications}
