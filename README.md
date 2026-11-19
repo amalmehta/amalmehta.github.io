@@ -19,3 +19,7 @@ My personal website. The profile has a North star, its four most vetted research
 ## Credits
 
 The handshake icon between the Hans Zimmer and Chris Nolan cards on What I try to live by is from [Lucide](https://lucide.dev), under the ISC licence.
+
+## How it was built
+
+How this was built and how it works, with diagrams: [docs/HOW-IT-WAS-BUILT.md](docs/HOW-IT-WAS-BUILT.md)
