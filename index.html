@@ -197,6 +197,7 @@
   <script src="hero.js" defer></script>
   <script src="reveal.js" defer></script>
   <script src="rotate.js" defer></script>
+  <script src="ink.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#top">Skip to content</a>
@@ -207,6 +208,7 @@
         <a href="#featured">Projects</a>
         <a href="#research">Research</a>
         <a href="interests.html">Interests</a>
+        <a href="writings.html">Writings</a>
         <a href="resume/amal-mehta-resume.pdf" type="application/pdf">Resume <span class="file">PDF</span></a>
       </div>
     </nav>
@@ -221,8 +223,8 @@
       <a class="status-chip" href="#open-to"><span class="status-dot open" aria-hidden="true"></span><span>Open to new roles →</span></a>
       </div>
       <h1>Amal Mehta</h1>
-      <p class="lede">Independent <span class="maze-plain">ML</span><button type="button" class="maze-egg" data-script="maze.js" aria-label="ML (opens an agent learning a maze)" hidden>ML</button> engineer, filmmaker, storyteller, photographer, traveler. My question: how does a learner improve when the true signal can’t be checked? I work on it in RL post-training, when the reward is easier to satisfy than the task; in robots trained only in simulation, then run on hardware; and in decoding movement from neural recordings, without new labels.</p><!-- Saved for later, the lede before the 2026-11-18 spine: I work on how RL post-training goes wrong when rewards can’t be checked, on robot learning in simulation and how it transfers to hardware, and on decoding movement from neural recordings. The question I can’t put down is how intelligence learns from experience, in brains and machines. -->
-      <p class="hero-sub">Deep learning research since 2020 at Berkeley AI Research, Berkeley’s Hybrid Robotics Lab and a DARPA-funded RL team.<!-- Saved for later, cut 2026-11-16: UCSF was listed after Hybrid Robotics Lab. --> <!-- once: My focus now is RL post-training. Before that: My focus is learning from little data and adapting quickly to new settings. -->Based in the San Francisco Bay Area. I love making things from scratch.<!-- Saved for later, cut 2026-11-18, once ended the line above: , and I’m a storyteller at heart --><!-- Saved for later, once ended the line above: , and in my spare time I build fictional worlds and write stories set in them. --></p><!-- Saved for later, the lede's first sentence before 2026-11-18: Independent research engineer in reinforcement learning. -->
+      <p class="lede">Independent <span class="maze-plain">ML</span><button type="button" class="maze-egg" data-script="maze.js" aria-label="ML (opens an agent learning a maze)" hidden>ML</button> engineer.<!-- Saved for later, cut 2026-11-19, once after "engineer": , filmmaker, storyteller, photographer, traveler --> My question: how does a learner improve when the true signal can’t be checked? I work on it in RL post-training, when the reward is easier to satisfy than the task; in robots trained only in simulation, then run on hardware; and in decoding movement from neural recordings, without new labels.</p><!-- Saved for later, the lede before the 2026-11-18 spine: I work on how RL post-training goes wrong when rewards can’t be checked, on robot learning in simulation and how it transfers to hardware, and on decoding movement from neural recordings. The question I can’t put down is how intelligence learns from experience, in brains and machines. -->
+      <p class="hero-sub">Deep learning research since 2020 at Berkeley AI Research, Berkeley’s Hybrid Robotics Lab and a DARPA-funded RL team.<!-- Saved for later, cut 2026-11-16: UCSF was listed after Hybrid Robotics Lab. --> <!-- once: My focus now is RL post-training. Before that: My focus is learning from little data and adapting quickly to new settings. -->Based in the San Francisco Bay Area.<!-- Saved for later, cut 2026-11-19: I love making things from scratch. --><!-- Saved for later, cut 2026-11-18, once ended the line above: , and I’m a storyteller at heart --><!-- Saved for later, once ended the line above: , and in my spare time I build fictional worlds and write stories set in them. --></p><!-- Saved for later, the lede's first sentence before 2026-11-18: Independent research engineer in reinforcement learning. -->
       <p class="hello">If you’d like to talk, <a href="https://reachouts.me/?u=amal">get in touch →</a><!-- once: Hi! I’d love to hear from you. --></p>
       <!-- Saved for later: <p class="hello-more">If you’re getting into RL, robotics or brain–computer interfaces, student or not, I’m happy to chat. A line on what you’re working on, or stuck on, is plenty.</p> -->
       <!-- once: <p class="hello-more">If you need help, with anything at all, please reach out!</p> -->
@@ -230,7 +232,7 @@
         <li><a class="email" href="https://reachouts.me/?u=amal" data-u="amal.mehta" data-d="gmail.com">amal.mehta [at] gmail.com</a></li>
         <li><a rel="me" href="https://www.linkedin.com/in/amal-mehta-264413a9/">LinkedIn</a></li>
         <li><a rel="me" href="https://github.com/amalmehta">GitHub</a></li>
-        <li><a href="resume/amal-mehta-resume.pdf" type="application/pdf">Resume (PDF, 93 KB)</a></li>
+        <li><a href="resume/amal-mehta-resume.pdf" type="application/pdf">Resume (PDF, 94 KB)</a></li>
       </ul>
       </div>
     </section>
@@ -278,7 +280,7 @@
     <section id="featured" class="wrap section">
       <h2 class="section-title">Featured projects</h2>
       <div class="featured">
-      <article class="project" id="unverifiable-rewards">
+      <article class="project" id="unverifiable-rewards" data-ink-note="2%|the hack" data-ink-live="35,58,31,2">
         <figure class="shot has-badge"><a class="shot-link" href="https://amalmehta.com/long_term_horizon_planning/" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="images/unverifiable-rewards-960.avif 960w, images/unverifiable-rewards-1600.avif 1600w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><source type="image/webp" srcset="images/unverifiable-rewards-960.webp 960w, images/unverifiable-rewards-1600.webp 1600w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><img src="images/unverifiable-rewards-960.webp" alt="Rewarding What You Can’t Verify, Figure 1: during GRPO the share of programs passing the visible checks climbs to 58% while the share actually correct falls to 2%, with the gap shaded as false success" loading="lazy" width="960" height="604"></picture></a><a class="try-badge" href="https://amalmehta.com/long_term_horizon_planning/" tabindex="-1" aria-hidden="true">Try it live</a></figure>
         <div class="project-text">
           <p class="card-when">2026 · pilot, then 50 follow-ups</p>
@@ -291,7 +293,7 @@
         </div>
       </article>
 
-      <article class="project" id="bci-projects">
+      <article class="project" id="bci-projects" data-ink-note="R² 0.72|no new labels">
         <figure class="shot"><a class="shot-link" href="https://github.com/amalmehta/BCIProjects" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="images/bci-projects-960.avif 960w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><source type="image/webp" srcset="images/bci-projects-960.webp 960w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><img src="images/bci-projects-960.webp" alt="BCI Projects: four cards with headline results: cursor decoding R² 0.72, attempted speech at 38.8% phoneme error, simulated grasp success from 2% to 100%, and stimulation fidelity SSIM 0.84 vs 0.73" loading="lazy" width="960" height="607"></picture></a></figure>
         <div class="project-text">
           <p class="card-when">2026 · offline decoding on public data; closed loop simulated</p>
@@ -359,10 +361,10 @@
           <p>Trained only on visible tests, a code agent’s pass rate went up while its real correctness fell to 2%: it learned to delete the code no test reaches. Choosing which episodes to audit held the hack off; random audits only delayed it.</p>
           <p>Also: a brain–computer interface decoder that keeps working on most later days without new labels.</p>
           -->
-          <p>I run my own research on one question: what does a learning system actually learn when you can’t fully check its work?</p>
+          <!-- Saved for later, cut 2026-11-19: <p>I run my own research on one question: what does a learning system actually learn when you can’t fully check its work?</p> -->
           <p><strong>Code agents.</strong> I trained a small coding agent with reinforcement learning (GRPO), rewarding it whenever the tests it could see passed. Its pass rate rose from 35% to 58%, but the share of programs that were actually correct fell from 31% to 2%: it had learned to delete the code no test checks. Spot-checking a random sample of its work with a hidden, complete check only slowed this down. Choosing which attempts to check held it off: 4% false passes, against 24% for random checks on the same budget.</p>
-          <p><strong>Brain–computer interfaces.</strong> The signals an implant records drift from day to day, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.72 (1.0 is perfect) on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder.</p>
-          <p>Both are small-scale experiments; I wrote down a prediction before each run.</p>
+          <p><strong>Brain–computer interfaces.</strong> The signals an implant records drift from day to day, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.72<!-- Saved for later, cut 2026-11-19: (1.0 is perfect) --> on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder.</p>
+          <!-- Saved for later, cut 2026-11-19: <p>Both are small-scale experiments; I wrote down a prediction before each run.</p> -->
           <p class="tags"><span class="chip">GRPO</span> <span class="chip">Neural decoding</span> <span class="chip">Sim-to-real</span></p><!-- Saved for later, chips cut 2026-11-17: Meta-learning -->
         </div>
       </article>
@@ -463,7 +465,7 @@
       </article>
       -->
 
-      <p class="more">B.A. in Computer Science from UC Berkeley, focused on robotics and linear system theory, with Regents, merit and leadership awards. Graduate coursework at Stanford in autonomous systems and AI, including CS231N, CS330, AA271A/B and AA273.</p><!-- Saved for later, once ended the line above: Education is in the <a href="resume/amal-mehta-resume.pdf" type="application/pdf">resume (PDF, 93 KB)</a>, and an up-to-date list of skills is below. -->
+      <p class="more">B.A. in Computer Science from UC Berkeley, focused on robotics and linear system theory, with Regents, merit and leadership awards. Graduate coursework at Stanford in autonomous systems and AI, including CS231N, CS330, AA271A/B and AA273.</p><!-- Saved for later, once ended the line above: Education is in the <a href="resume/amal-mehta-resume.pdf" type="application/pdf">resume (PDF, 94 KB)</a>, and an up-to-date list of skills is below. -->
     </section>
 
     <!-- Always shown; the master list the resume's Technical Skills must match (the tests check it). -->
@@ -646,15 +648,15 @@
       <h2 class="section-title">Outside work</h2>
       <svg class="ridge" viewBox="0 0 1000 56" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 53.5L4 52.9L8 52.4L12 51.9L16 51.5L20 51.1L24 50.8L28 50.5L32 50.3L36 50.0L40 49.7L44 49.3L48 48.7L52 48.0L56 47.1L60 46.1L64 44.9L68 43.5L72 42.0L76 40.4L80 38.8L84 37.1L88 35.4L92 33.6L96 31.7L100 29.6L104 32.0L108 34.2L112 36.2L116 38.0L120 39.5L124 40.8L128 41.9L132 42.7L136 43.4L140 44.0L144 44.4L148 44.8L152 45.2L156 45.6L160 46.0L164 46.4L168 46.9L172 47.3L176 47.7L180 48.0L184 48.1L188 48.2L192 48.0L196 47.7L200 47.3L204 46.7L208 45.9L212 45.1L216 44.2L220 43.3L224 42.3L228 41.3L232 40.4L236 39.3L240 38.3L244 37.1L248 35.8L252 34.2L256 32.5L260 30.4L264 28.1L268 25.4L272 22.4L276 19.1L280 15.4L284 18.5L288 21.4L292 24.1L296 26.6L300 29.0L304 31.2L308 33.4L312 35.4L316 37.3L320 39.0L324 40.5L328 41.8L332 42.9L336 43.8L340 44.5L344 45.0L348 45.4L352 45.7L356 46.0L360 46.2L364 46.4L368 46.7L372 46.9L376 47.2L380 47.5L384 47.8L388 48.0L392 48.1L396 48.0L400 47.8L404 47.5L408 46.9L412 46.2L416 45.4L420 44.4L424 43.4L428 42.3L432 41.1L436 40.0L440 38.8L444 37.6L448 36.3L452 34.9L456 33.3L460 31.6L464 29.6L468 27.3L472 27.3L476 29.6L480 31.6L484 33.4L488 34.9L492 36.3L496 37.5L500 38.6L504 39.7L508 40.8L512 41.8L516 42.8L520 43.8L524 44.7L528 45.5L532 46.2L536 46.7L540 47.1L544 47.3L548 47.3L552 47.2L556 46.9L560 46.5L564 46.1L568 45.6L572 45.1L576 44.7L580 44.2L584 43.8L588 43.3L592 42.8L596 42.2L600 41.4L604 40.5L608 39.4L612 38.0L616 36.4L620 34.5L624 32.4L628 30.1L632 27.5L636 24.8L640 21.8L644 18.7L648 15.4L652 11.9L656 8.1L660 4.0L664 8.6L668 12.9L672 16.7L676 20.2L680 23.3L684 26.0L688 28.4L692 30.5L696 32.3L700 33.9L704 35.4L708 36.7L712 38.0L716 39.2L720 40.4L724 41.5L728 42.7L732 43.7L736 44.7L740 45.5L744 46.2L748 46.8L752 47.1L756 47.3L760 47.3L764 47.2L768 47.0L772 46.7L776 46.3L780 46.0L784 45.6L788 45.3L792 45.0L796 44.7L800 44.4L804 44.0L808 43.4L812 42.8L816 41.9L820 40.9L824 39.6L828 38.1L832 36.3L836 34.4L840 32.2L844 29.9L848 27.4L852 24.8L856 22.1L860 19.1L864 22.4L868 25.5L872 28.3L876 31.0L880 33.4L884 35.6L888 37.5L892 39.2L896 40.6L900 41.8L904 42.8L908 43.7L912 44.5L916 45.3L920 46.0L924 46.8L928 47.5L932 48.3L936 49.2L940 50.0L944 50.8L948 51.5L952 52.2L956 52.7L960 53.1L964 53.4L968 53.6L972 53.6L976 53.6L980 53.6L984 53.6L988 53.6L992 53.6L996 53.8L1000 54.0"/></svg>
       <!-- Saved for later, the race list once after "outdoors": I’ve finished Ironman-distance triathlons, the Lake Tahoe Marathon, the San Francisco Ultra and the Death Ride, competed in soccer tournaments and climbed Kilimanjaro. I’ve also led trips to Half Dome and the Channel Islands, and a team in the Lake Tahoe relay. -->
-      <p>The summer after my freshman year at Berkeley, I biked from Seattle to DC with a group of fellow Eagle Scouts. I hadn’t trained at all, so I learned on the road, and it became a habit: start before you’re ready and adapt as you go.</p>
+      <p>The summer after my freshman year at Berkeley, I biked from Seattle to DC with a group of fellow Eagle Scouts. I hadn’t trained at all, so I learned on the road.</p><!-- Saved for later, cut 2026-11-18, once ended the line above: , and it became a habit: start before you’re ready and adapt as you go -->
       <!-- Saved for later, cut from the paragraphs above:
            Get in touch: Ask me about RL and post-training, brain–computer interfaces, doing research outside a lab, or endurance races and trips.
            Apps: Unzip one, drag it to Applications, and it’s yours.
            Independent research: Some of these projects are featured above, and the rest are below.
            Seattle to DC: The lesson I took from it: you don’t have to be perfectly ready to start. -->
-      <p>It’s how I ran a sub-5-minute mile with no training and an Ironman with very little. Since then I’ve raced a half Ironman, track, the Lake Tahoe Marathon, the San Francisco Ultra and the Death Ride, and played in semi-professional <span class="messi-plain">soccer tournaments</span><button type="button" class="messi-egg" data-script="messi.js" aria-label="soccer tournaments (opens a replay of Messi’s goal)" hidden>soccer tournaments</button>.</p>
-      <p>The same pull takes me up mountains and under water. I’ve summited Kilimanjaro, trekked the Salkantay trail to Machu Picchu, and led trips to Half Dome and the Channel Islands. I’ve dived caves, shipwrecks and past 130 feet in Palau, Sipadan, Monterey and off the coast of Africa. In winter I ski and climb frozen waterfalls. Someday, <a href="photos.html#place-cerro-torre">Cerro Torre</a>.</p>
-      <p>I travel for the history, art, architecture, food and people, so far across <a href="photos.html">Europe, Asia, Africa and the Americas</a>.</p>
+      <p>I’ve raced a half Ironman, track, the Lake Tahoe Marathon, the San Francisco Ultra and the Death Ride, and played in semi-professional <span class="messi-plain">soccer tournaments</span><button type="button" class="messi-egg" data-script="messi.js" aria-label="soccer tournaments (opens a replay of Messi’s goal)" hidden>soccer tournaments</button>. Later, I ran a sub-5-minute mile with no training and an Ironman with very little.</p><!-- Saved for later, the order once: I later ran a sub-5-minute mile with no training and an Ironman with very little. Since then I’ve raced a half Ironman, track, … -->
+      <p><!-- Saved for later, cut 2026-11-19: The same pull takes me up mountains and under water. -->I’ve summited Kilimanjaro, trekked the Salkantay trail to Machu Picchu, and led trips to Half Dome, Zion and the Channel Islands. I’ve dived caves, shipwrecks and past 130 feet in Palau, Sipadan, Monterey and off the coast of Africa. In winter I ski and climb frozen waterfalls. Someday, <a href="photos.html#place-cerro-torre">Cerro Torre</a>.</p>
+      <!-- Saved for later, cut 2026-11-19: <p>I travel for the history, art, architecture, food and people, so far across <a href="photos.html">Europe, Asia, Africa and the Americas</a>.</p> -->
       <!-- Saved for later, cut 2026-11-16: <p>For the love of the game.</p> (once: For the love of the games.) -->
     </section>
 
@@ -665,10 +667,10 @@
         <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.5a3 3 0 00-3 3 3 3 0 00-1.5 5.5A3 3 0 007.5 18a2.5 2.5 0 004.5 1V5.5A2 2 0 009 4.5z"/><path d="M15 4.5a3 3 0 013 3 3 3 0 011.5 5.5 3 3 0 01-3 5 2.5 2.5 0 01-4.5 1"/><path d="M12 12h3l1.5-2 1.5 4 1-2h1.5"/></svg><strong>Brain–computer interface research</strong></li>
         <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8.5" cy="12" r="4.5"/><circle cx="15.5" cy="12" r="4.5"/></svg><strong>Research collaborations</strong></li>
         <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="7.5" r="2.5"/><path d="M3.5 19a4.5 4.5 0 019 0"/><path d="M16.5 4.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/><path d="M14 19a3 3 0 015-2.2"/></svg><strong>Mentoring people getting into RL, robotics or BCIs</strong></li>
-        <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4"/><path d="M6 5h11l-2.5 4 2.5 4H6"/></svg><strong>Starting a company</strong></li>
-        <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg><strong>Talking to folks with strong ideas</strong></li>
+        <!-- Saved for later, cut 2026-11-19: <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V4"/><path d="M6 5h11l-2.5 4 2.5 4H6"/></svg><strong>Starting a company</strong></li> -->
+        <!-- Saved for later, cut 2026-11-19: <li class="inspo-item"><svg class="skill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg><strong>Talking to folks with strong ideas</strong></li> -->
       </ul>
-      <p class="more">Teams of 20–50, in person 3–5 days a week, moving fast on hard technical problems.</p>
+      <!-- Saved for later, cut 2026-11-19: <p class="more">Teams of 20–50, in person 3–5 days a week, moving fast on hard technical problems.</p> -->
       <!-- Saved for later: <p class="more">Products that have a beneficial impact on the broader world.</p> -->
     </section>
 
@@ -686,7 +688,7 @@
         </div>
         <div class="ns-line">
           <p class="ns-kind">Belief</p>
-          <p class="ns-text" data-lines="[&quot;Learning rate is a higher quality signal than experience.&quot;, &quot;Autodidactism is the highest quality form of learning.&quot;, &quot;Understand from first principles, but do from accumulated skill.&quot;, &quot;Intuition over analysis.&quot;, &quot;The world is a malleable place.&quot;, &quot;Adventure is the antidote.&quot;]">Learning rate is a higher quality signal than experience.</p>
+          <p class="ns-text" data-lines="[&quot;Understand from first principles, but do from accumulated skill.&quot;, &quot;Intuition over analysis.&quot;, &quot;The world is a malleable place.&quot;, &quot;Adventure is the antidote.&quot;]">Understand from first principles, but do from accumulated skill.</p>
         </div>
       </div>
       <p class="more"><a href="values.html">What I try to live by, and who inspires me →</a></p>
@@ -769,7 +771,7 @@
 
   <footer class="wrap footer">
     <p>Amal Mehta · <a href="https://reachouts.me/?u=amal">Get in touch</a> · <a class="email" href="https://reachouts.me/?u=amal" data-u="amal.mehta" data-d="gmail.com">amal.mehta [at] gmail.com</a> · <a rel="me" href="https://www.linkedin.com/in/amal-mehta-264413a9/">LinkedIn</a> · <a rel="me" href="https://github.com/amalmehta">GitHub</a></p>
-    <p class="footer-pages"><a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
+    <p class="footer-pages"><a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="writings.html">Writings</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
     <dl class="credits" aria-label="Credits"><div><dt>Written and directed by</dt><dd>Amal Mehta</dd></div><div><dt>Drawings</dt><dd>tools/draw-places.py</dd></div><div><dt>Tested</dt><dd>on every push</dd></div></dl><!-- Saved for later, the sign-off before the credits: <p class="signoff">Thanks for stopping by.</p> -->
     <!-- Saved for later, once beside the sign-off: <span class="secrets">There are eight secrets here.</span> -->
     <!-- Saved for later, the footer notes: <p class="footer-note">No trackers, no cookies.</p> <p class="footer-note">Plain HTML and CSS, tested on every push. <a href="https://github.com/amalmehta/PortfolioWebsite">Source on GitHub</a>.</p> -->

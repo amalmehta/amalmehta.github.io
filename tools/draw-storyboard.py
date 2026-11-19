@@ -6,6 +6,7 @@ Every number in it comes from the project (tools/make-case-studies.py); change i
 Run from the repo root after changing a panel: python3 tools/draw-storyboard.py
 """
 import pathlib
+from bike import sign  # the Seattle-to-DC bike, signed into the corner of every drawing
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "images/case/storyboard-rewarding.svg"
@@ -109,6 +110,6 @@ PANELS = [
 ]
 
 body = "".join(panel(i, t, b) for i, (t, b) in enumerate(PANELS))
-OUT.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">'
-               f'<rect width="{W}" height="{H}" fill="{PAPER}"/>{body}</svg>', encoding="utf-8")
+OUT.write_text(sign(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">'
+               f'<rect width="{W}" height="{H}" fill="{PAPER}"/>{body}</svg>', W, H, on="paper", size=0.8), encoding="utf-8")
 print("wrote", OUT.relative_to(ROOT))

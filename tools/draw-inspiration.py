@@ -5,6 +5,7 @@ photograph. Run from the repo root after changing a drawing:
   python3 tools/draw-inspiration.py
 """
 import math, os, random, sys
+from bike import sign  # the Seattle-to-DC bike, signed into the corner of every drawing
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "images/inspiration"
 W, H = 1200, 800
@@ -1334,5 +1335,5 @@ if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     for name, draw in DRAWINGS.items():
         with open(os.path.join(OUT, name + ".svg"), "w", encoding="utf-8") as f:
-            f.write(draw())
+            f.write(sign(draw(), W, H))
         print(os.path.join(OUT, name + ".svg"))

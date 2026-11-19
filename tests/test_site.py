@@ -868,7 +868,8 @@ class ContactTest(unittest.TestCase):
 class HeaderTest(unittest.TestCase):
     # Each page marks its own header link, or the one for the page it belongs to.
     CURRENT = {"interests.html": ("interests.html", "page"), "thinking.html": ("interests.html", "true"),
-               "photos.html": ("interests.html", "true"), "values.html": ("index.html", "true")}
+               "photos.html": ("interests.html", "true"), "values.html": ("index.html", "true"),
+               "writings.html": ("writings.html", "page")}
 
     def test_current_page_is_marked(self):
         for name in ("index.html", "interests.html", "photos.html", "thinking.html", "values.html", "writings.html", "404.html"):

@@ -5,6 +5,7 @@ Run from the repo root after changing a drawing:
   python3 tools/draw-research-art.py
 """
 import math, random, sys, os
+from bike import sign  # the Seattle-to-DC bike, signed into the corner of every drawing
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "images"
 W, H = 1280, 720
@@ -528,5 +529,5 @@ DRAWINGS = (("robot-soccer", robot_soccer), ("physicsai", physicsai), ("vip-lab"
 os.makedirs(OUT, exist_ok=True)
 for name, fn in DRAWINGS:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:
-        f.write(fn())
+        f.write(sign(fn(), W, H, on="paper"))
 print("wrote", ", ".join(n + ".svg" for n, _ in DRAWINGS), "to", OUT)

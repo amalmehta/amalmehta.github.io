@@ -5,6 +5,7 @@ repo root after changing a drawing:
   python3 tools/draw-places.py
 """
 import math, os, random, sys
+from bike import sign  # the Seattle-to-DC bike, signed into the corner of every drawing
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "images/places"
 W, H = 1200, 800
@@ -1409,5 +1410,5 @@ PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofot
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:
-        f.write(fn())
+        f.write(sign(fn(), W, H))
 print("wrote", ", ".join(n + ".svg" for n, _ in PLACES), "to", OUT)

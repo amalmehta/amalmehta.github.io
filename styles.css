@@ -375,6 +375,8 @@ picture { display: contents; }
 @media (max-width: 600px) {
   .nav-links { gap: 0.8rem; }
   .nav-links a[href$="#featured"], .nav-links .file { display: none; }
+  .nav-links a[href$="writings.html"]:not([aria-current]) { display: none; }  /* Writings is in every footer; its header link shows only on its own page */
+  .nav-links:has(a[href$="writings.html"][aria-current]) a[href$="interests.html"] { display: none; }  /* on Writings itself, Interests gives way to keep three links */
 }
 @media (max-width: 380px) { .nav-links { gap: 0.6rem; } }
 @media (max-width: 360px) { .nav-name { font-size: 1.02rem; } .nav-links { gap: 0.5rem; font-size: 0.86rem; } }  /* 320 px phones */
@@ -1092,3 +1094,32 @@ html:has(#grateful-for), body:has(#grateful-for) { overflow-x: clip; }  /* 100vw
 }
 @keyframes lantern-breathe { 50% { filter: brightness(1.14); box-shadow: 0 -0.32rem 0 -0.42rem #000, 0 0 22px 7px rgb(255 190 95 / 0.8), 0 0 60px 22px rgb(255 170 80 / 0.3); } }
 @media print { #grateful-for { margin: 1rem 0; padding: 0; background: none; } #grateful-for .section-title, #grateful-for .inspo-item strong { color: #000; text-shadow: none; } #grateful-for .inspo-item::before, #grateful-for .inspo-item::after { display: none; } #grateful-for .inspo-item.unlit { opacity: 1; } }
+
+/* Ink (ink.js): margin notes on the Featured cards, the Rewarding result drawn live, and a pen line down the margin */
+.featured .project-text { position: relative; }
+.ink-mark { position: relative; white-space: nowrap; }
+.ink-ring { position: absolute; left: -0.45em; top: -0.32em; width: calc(100% + 0.9em); height: calc(100% + 0.62em); overflow: visible; pointer-events: none; }
+.ink-ring path, .ink-arrow path, .ink-live-chart path, .ink-thread path { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.ink-ring path { stroke: var(--warm); stroke-width: 2; vector-effect: non-scaling-stroke; transition: stroke-dashoffset 0.9s cubic-bezier(.6,.1,.3,1) 0.15s; }
+.ink-note { position: absolute; top: -0.2rem; right: 0.1rem; font-family: var(--serif); font-style: italic; font-size: 1.02rem; color: var(--warm); transform: rotate(-5deg); opacity: 0; transition: opacity 0.6s ease 0.9s; pointer-events: none; }
+.ink-note.below { transform: rotate(-3deg); }
+.ink-arrow { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.ink-arrow path { stroke: var(--warm); stroke-width: 1.5; opacity: 0.85; transition: stroke-dashoffset 0.8s ease 1.1s; }
+.ink-arrow .ink-head { transition-delay: 1.8s; transition-duration: 0.25s; }
+.inked .ink-ring path, .inked .ink-arrow path { stroke-dashoffset: 0; }
+.inked .ink-note { opacity: 1; }
+.ink-live { margin: 0.2rem 0 0.4rem; }
+.ink-live-chart { display: block; width: 100%; max-width: 340px; height: auto; overflow: visible; }
+.ink-live-chart .ink-axis { stroke: var(--line); stroke-width: 1.5; }
+.ink-live-chart path { stroke-width: 3.2; transition: stroke-dashoffset 1.6s cubic-bezier(.45,.05,.35,1); }
+.ink-live-chart .ink-pass { stroke: var(--accent); }
+.ink-live-chart .ink-true { stroke: var(--warm); }
+.ink-live.drawn path { stroke-dashoffset: 0; }
+.ink-live figcaption { display: flex; flex-wrap: wrap; gap: 0.2rem 1.4rem; font-size: 0.86rem; color: var(--muted); }
+.ink-live figcaption b { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; margin-right: 0.25rem; font-variant-numeric: tabular-nums; }
+.ink-pass-key b { color: var(--accent); }
+.ink-true-key b { color: var(--warm); }
+.ink-thread { position: absolute; left: 0; width: 100%; pointer-events: none; z-index: 0; overflow: visible; }
+.ink-thread path { stroke: var(--warm); stroke-width: 1.6; opacity: 0.38; }
+@media (prefers-reduced-motion: reduce) { .ink-ring path, .ink-arrow path, .ink-live-chart path { transition: none; } .ink-note { transition: none; } }
+@media print { .ink-thread, .ink-arrow, .ink-note, .ink-live { display: none; } }

@@ -6,28 +6,24 @@
   <meta name="color-scheme" content="light dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <title>Writings · Amal Mehta</title>
-  <!-- Unlinked and kept out of search until the first piece is in. Then: remove noindex,
-       give it its own preview image in place of og-default.png (see docs/INSTRUCTIONS.md),
-       and put Writings in every header and footer. The tests check these stay in step. -->
-  <meta name="robots" content="noindex">
   <meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <meta name="description" content="Writing by Amal Mehta.">
+  <meta name="description" content="Writing by Amal Mehta, starting with A hard day, from the ride from Seattle to DC.">
   <link rel="canonical" href="https://amalmehta.com/writings.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Amal Mehta">
   <meta property="og:url" content="https://amalmehta.com/writings.html">
   <meta property="og:title" content="Writings · Amal Mehta">
-  <meta property="og:description" content="Writing by Amal Mehta.">
-  <meta property="og:image" content="https://amalmehta.com/images/og-default.png">
+  <meta property="og:description" content="Writing by Amal Mehta, starting with A hard day, from the ride from Seattle to DC.">
+  <meta property="og:image" content="https://amalmehta.com/images/og-writings.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Amal Mehta: research engineer in RL and robotics">
+  <meta property="og:image:alt" content="Writings: A hard day, a bonk on the ride from Seattle to DC">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image:alt" content="Amal Mehta: research engineer in RL and robotics">
+  <meta name="twitter:image:alt" content="Writings: A hard day, a bonk on the ride from Seattle to DC">
   <link rel="preload" href="fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
@@ -42,6 +38,7 @@
         <a href="index.html">Profile</a>
         <a href="index.html#featured">Projects</a>
         <a href="interests.html">Interests</a>
+        <a href="writings.html" aria-current="page">Writings</a>
         <a href="resume/amal-mehta-resume.pdf" type="application/pdf">Resume <span class="file">PDF</span></a>
       </div>
     </nav>
@@ -68,15 +65,21 @@
         <p>A line or two on what it's about.</p>
       </article>
       Delete the "coming soon" line below once the first one is in. -->
-      <p class="writings-empty">First piece coming soon.</p>
+      <article class="writing" id="a-hard-day">
+        <h2>A hard day</h2>
+        <p class="when"><time datetime="2026-11-19">November 19, 2026</time></p>
+        <p>My legs burned. I felt hollow. Empty. Eaten up by the road, the rain, and the heat. Lack of sleep gave me searing intermittent headaches. After grabbing a Honey Oats Granola Crunch bar from my saddle bag reserves, I trudged on. This shouldn’t be that hard, I thought. It’s biking. The previous night I only ate a 2000 calorie meal: 500 from a rice and chicken Thai dinner, and the rest from chocolate milks, ice cream, and pizza that I bought at the KOA in Sheridan, WY. I was burning 6500+ that day, riding 120 miles, and climbing 6000 feet. The problem was damn obvious.</p>
+        <p>There is a term in cycling called bonking. When you bonk, someone can look into your eyes and stare right through you. A paper-thin shell of yourself resides where your body once stood. Nausea, headaches, and muscle pain are common symptoms. It’s a bad feeling.</p>
+        <p>Riding the last three miles was brutal. Normally, a three-mile ride would have been nothing. I could do it in under nine minutes if I was feeling good. The short 9% grade hill near the end killed me. I ate some sugar tablets to keep moving. Ultimately I made it to our stay for the night, but I didn’t even feel like I was there.</p>
+      </article>
     </div>
 
-    <p class="more"><a href="index.html">← Back to the profile</a></p>
+    <!-- Saved for later, cut 2026-11-19: <p class="more"><a href="index.html">← Back to the profile</a></p> -->
   </main>
 
   <footer class="wrap footer">
     <p>Amal Mehta · <a href="https://reachouts.me/?u=amal">Get in touch</a> · <a class="email" href="https://reachouts.me/?u=amal" data-u="amal.mehta" data-d="gmail.com">amal.mehta [at] gmail.com</a> · <a rel="me" href="https://www.linkedin.com/in/amal-mehta-264413a9/">LinkedIn</a> · <a rel="me" href="https://github.com/amalmehta">GitHub</a></p>
-    <p class="footer-pages"><a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
+    <p class="footer-pages"><a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="writings.html">Writings</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
     <dl class="credits" aria-label="Credits"><div><dt>Written and directed by</dt><dd>Amal Mehta</dd></div><div><dt>Drawings</dt><dd>tools/draw-places.py</dd></div><div><dt>Tested</dt><dd>on every push</dd></div></dl><!-- Saved for later, the sign-off before the credits: <p class="signoff">Thanks for stopping by.</p> -->
     <!-- Saved for later, once beside the sign-off: <span class="secrets">There are eight secrets here.</span> -->
     <!-- Saved for later, the footer notes: <p class="footer-note">No trackers, no cookies.</p> <p class="footer-note">Plain HTML and CSS, tested on every push. <a href="https://github.com/amalmehta/PortfolioWebsite">Source on GitHub</a>.</p> -->

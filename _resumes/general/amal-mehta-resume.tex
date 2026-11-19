@@ -1,6 +1,6 @@
 % General resume for any applied scientist, research engineer or ML engineer role. Not served on the website.
 \documentclass[10pt]{article}
-\usepackage[margin=0.5in,vmargin=0.4in]{geometry}
+\usepackage[margin=0.5in,vmargin=0.36in]{geometry}
 \usepackage{fontspec}\setmainfont{Times New Roman}
 \usepackage{enumitem}
 \usepackage{titlesec}
@@ -30,23 +30,28 @@ Research engineer with six years of applied deep learning and reinforcement lear
 \item \href{https://amalmehta.com/long_term_horizon_planning/}{\textbf{Reward hacking in RL-trained code agents:}} GRPO on visible tests raised pass rate 35\%\,$\to$\,58\% while true correctness fell 31\%\,$\to$\,2\%, as the agent deleted 98\% of untested branches. Ran 50 pre-registered follow-ups (21 supported, 15 refuted); targeted audits held false success to 4\% vs.\ 24\% for random audits at the same 10\% budget.
 \item \href{https://github.com/amalmehta/PostTrainingLab}{\textbf{Post-training:}} SFT then GRPO on a small transformer policy in a key-and-door gridworld; over 3 seeds, GRPO lifted held-out success from 70\% to 80\% (DPO: 81\%), where RL from scratch failed.
 \item \href{https://amalmehta.com/AlphaGoLite/}{\textbf{AlphaGo Lite:}} AlphaZero-style 9$\times$9 Go from scratch on one laptop CPU (107 generations, 17,120 self-play games); went from 0 to 32 wins in 40 games against GNU Go level 1. Runs in the browser (ONNX) and a Mac app (Core ML).
-\item \href{https://github.com/amalmehta/BCIProjects}{\textbf{Brain--computer interfaces:}} four projects on public neural data; label-free decoding averaged R\textsuperscript{2} 0.72 on 17 of 19 held-out days to day 138 (Wiener 0.42).
-\item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Meta-RL for a quadrotor:}} seven meta-learning methods compared on adapting to payload, wind and motor wear.
-\item \textbf{Tools:} \href{https://amalmehta.com/LLMUnderstander/}{LLM Understander}, an interactive \href{https://github.com/amalmehta/LLMUnderstander/releases/latest}{Mac app} on how LLMs are trained; \href{https://github.com/amalmehta/researcher_pal}{Researcher Pal}, Claude Code skills for research papers.
+\item \href{https://github.com/amalmehta/BCIProjects}{\textbf{Brain--computer interfaces:}} on public neural data, label-free decoding held R\textsuperscript{2} 0.72 on held-out days to day 138 (Wiener 0.42).
+% Saved for later, cut 2026-11-19: \item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Meta-RL for a quadrotor:}} seven meta-learning methods compared on adapting to payload, wind and motor wear.
+% Saved for later, cut 2026-11-19: \item \textbf{Tools:} \href{https://amalmehta.com/LLMUnderstander/}{LLM Understander}, an interactive \href{https://github.com/amalmehta/LLMUnderstander/releases/latest}{Mac app} on how LLMs are trained; \href{https://github.com/amalmehta/researcher_pal}{Researcher Pal}, Claude Code skills for research papers.
 \end{itemize}
 
 \role{Deep Learning Scientist}{Sept 2021 -- Aug 2025}{PhysicsAI (DARPA-funded)}{Pacifica, CA (remote)}
 \begin{itemize}
-\item Formulated synthetic-data generation as RL: policies (TD3, PPO, DDPG) set image-generator parameters, rewarded by detector performance on real drone imagery, without hand-tuned rendering.
-\item Built the PEARL meta-RL codebase (task embeddings over TD3) and ran its multi-week GPU training, for few-shot generator adaptation.
-\item Implemented domain adaptation from scratch to hold detector accuracy with scarce real labels, on 10--15\,GB mostly synthetic datasets.
-\item Built GAN-based synthesis pipelines (DCGAN, InfoGAN, FineGAN) producing training data for downstream detection models.
+\item Turned synthetic-data generation for drone perception into a closed RL loop: policies (TD3, PPO, DDPG) set an image generator's parameters, a spatiotemporal detector retrained on its images, and its accuracy on real drone imagery was the reward.
+\item Built the PEARL meta-RL codebase (probabilistic task embeddings over TD3) so the agent adapts to a new generator task in a few tries; ran its multi-week GPU training, and the method was also applied to a fighter-jet simulation.
+\item Implemented gradient-reversal domain adaptation from scratch to hold detector accuracy with scarce real labels (10--15\,GB, mostly synthetic).
+\item Built and benchmarked GAN synthesis pipelines (DCGAN, InfoGAN, FineGAN) that produced the detectors' training data.
 \end{itemize}
 
 \role{Deep RL Researcher}{Aug 2023 -- Mar 2024}{Hybrid Robotics Lab, UC Berkeley --- adv.\ Prof.\ Koushil Sreenath}{Berkeley, CA}
 \begin{itemize}
 \item Trained a single multi-stage PPO policy in IsaacGym for a Unitree Go1 quadruped to track, approach, and shoot a soccer ball at a target, replacing the multi-policy hierarchical framework used in prior work; $\sim$60\% kicking accuracy on hardware.
 \item Designed the three-stage reward and CPG-based gait tracking; prototyped RLPD to fine-tune on real robot data.
+\end{itemize}
+
+\role{Research Intern}{May 2021 -- Aug 2021}{IBM Research}{Almaden, CA}
+\begin{itemize}
+\item Built an NLP pipeline (Watson NLP, human in the loop) that extracts terms from unstructured contracts and checks them against invoices to catch spend leakage, with a web app that reports the mismatches; patent submitted.
 \end{itemize}
 
 \role{Research Assistant}{June 2020 -- Dec 2022}{Video \& Image Processing Lab, BAIR --- adv.\ Prof.\ Avideh Zakhor}{UC Berkeley}
@@ -62,29 +67,27 @@ Research engineer with six years of applied deep learning and reinforcement lear
 \section*{Education}
 
 \role{University of California, Berkeley}{2021}{B.A.\ Computer Science --- Regents Scholar}{Berkeley, CA}
-\begin{itemize}
-\item CS285 (Deep RL) project: iterative retraining of PPO agents against adversarial policies.
-\end{itemize}
+% Saved for later, cut 2026-11-19: \item CS285 (Deep RL) project: iterative retraining of PPO agents against adversarial policies.
 
 \role{Stanford University}{Aug 2021 -- May 2023}{Graduate coursework --- Autonomous Systems \& Artificial Intelligence}{}
 \begin{itemize}
 \item CS231N (Deep Learning for Vision), CS330 (Meta-Learning), AA271A/B (Autonomy I \& II), AA273 (State Estimation).
-\item CS330 project: few-shot imitation learning; implemented RL\textsuperscript{2} and inverse soft Q-learning in Meta-World.
+% Saved for later, cut 2026-11-19: \item CS330 project: few-shot imitation learning; implemented RL\textsuperscript{2} and inverse soft Q-learning in Meta-World.
 \end{itemize}
 
 \section*{Technical Skills}
 \begin{tabular}{@{}p{0.9in}l}
 \textbf{Languages} & Python, C++, Swift, JavaScript / TypeScript \\
 \textbf{ML / RL} & PyTorch, TensorFlow, stable-baselines3, IsaacGym, OpenCV, CTC decoding \\
-\textbf{Deployment} & ONNX, Core ML, SwiftUI, Three.js \\
 \textbf{Robotics} & ROS, Gazebo, Unitree Go1, CPG gait control, Kalman filtering, Shared autonomy \\
-\textbf{Tools} & Docker, GitHub Actions CI, CUDA/multi-GPU \\
+\textbf{Tools} & Docker, GitHub Actions CI, CUDA/multi-GPU, ONNX, Core ML, SwiftUI, Three.js \\
 \end{tabular}
 
 \section*{Publications}
 \begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=1pt]
 \item Shah, A., \textbf{Mehta, A.}, Wang, M., Neumann, N., McCalmont, T., Zakhor, A. ``Deep Learning Segmentation for Invasive Melanoma.'' \textit{SPIE Medical Imaging}, 2023.
 \item Neumann, N., Wang, M., \textbf{Mehta, A.}, et al. ``Quantifying Invasive Melanoma Volume by Deep Learning Segmentation at the Pixel-Level.'' \textit{USCAP Annual Meeting}, 2022.
+\item \textbf{Mehta, A.}, et al. ``Contract Information Extraction Using Watson NLP and Human-in-the-Loop.'' \textit{INFORMS Annual Meeting}, 2021.
 \end{enumerate}
 
 \end{document}
