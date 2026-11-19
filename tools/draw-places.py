@@ -1446,13 +1446,57 @@ def pamir_highway():
     return svg("pamir-highway", "".join(b), ("#4f86c6", "#dce9f4"))
 
 
+# ---------------------------------------------------------------- Death Valley: Zabriskie's badlands, Badwater's salt flat and the Mesquite dunes at sunset
+def death_valley():
+    rng = random.Random(53)
+    b = []
+    b.append(glow(820, 330, 520, 140, "#ffd7a1", 0.6))
+    # The Panamint Range far behind, Telescope Peak dusted with snow
+    pan = ridge(-20, 1220, 400, rng, [(0.2, 0.15, 0.6), (0.45, 0.08, 1.0), (0.7, 0.18, 0.7), (0.95, 0.12, 0.5)], 180, jag=5, step=16)
+    b.append(poly(pan, "#8d7ba3"))
+    top = min(y for _, y in pan)
+    tp = [(x, y) for x, y in pan if y < top + 22]
+    b.append(f'<polyline points="{pts(tp)}" fill="none" stroke="#f3eef5" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"/>')
+    b.append(f'<rect x="0" y="395" width="{W}" height="420" fill="#cfa77a"/>')  # the valley floor behind everything nearer
+    # Zabriskie's golden badlands on the left, with Manly Beacon's peak
+    bad = [(-20, 520), (-20, 330), (60, 350), (110, 300), (150, 330), (205, 250), (232, 236), (250, 262), (300, 340), (360, 330), (420, 380), (500, 400), (560, 450), (600, 520)]
+    b.append(poly(bad, "#d9a456"))
+    for k in range(4):  # banded layers in the eroded rock
+        y = 330 + k * 28
+        b.append(f'<path d="M-20,{y + 10} C80,{y - 10} 160,{y + 16} 260,{y} S420,{y + 30} {520 + k * 20},{y + 46}" fill="none" stroke="#b8803e" stroke-width="5" opacity="0.5"/>')
+    b.append(poly([(205, 250), (232, 236), (250, 262), (300, 340), (230, 380), (180, 360)], "#8a5a2e", opacity="0.6"))
+    b.append(poly([(-20, 420), (80, 400), (200, 430), (320, 440), (460, 470), (600, 520), (-20, 520)], "#c47f3c", opacity="0.75"))
+    # Badwater: the white salt flat, its crust cracked into hexagons
+    b.append('<path d="M-20,500 C300,470 700,440 1220,450 L1220,700 L-20,700 Z" fill="#efe9de"/>')
+    for row in range(5):
+        y = 470 + row * 26
+        sz = 10 + row * 8
+        x = -20 + (row % 2) * sz
+        while x < 1220:
+            b.append(f'<path d="M{x:.0f},{y:.0f} l{sz:.0f},{-sz * 0.25:.0f} l{sz:.0f},{sz * 0.25:.0f} l{-sz * 0.2:.0f},{sz * 0.4:.0f} l{-sz * 1.6:.0f},0 Z" fill="none" stroke="#cfc5b3" stroke-width="{1 + row * 0.5:.1f}"/>')
+            x += sz * 2.2
+    b.append('<ellipse cx="760" cy="520" rx="200" ry="10" fill="#b9d3e6" opacity="0.55"/>')  # a thin sheet of water
+    # The Mesquite Flat dunes in front: a gentle sunlit side, a sharp crest and a shadowed slip face
+    b.append('<path d="M-20,660 C300,630 800,640 1220,620 L1220,820 L-20,820 Z" fill="#dcaa66"/>')
+    for x0, x1, base, h, cf in ((-80, 640, 800, 220, 0.62), (420, 1280, 800, 270, 0.55), (180, 760, 820, 130, 0.6)):
+        w = x1 - x0; cx, cy = x0 + w * cf, base - h
+        b.append(f'<path d="M{x0},{base} C{x0 + w * 0.3:.0f},{base - h * 0.35:.0f} {cx - w * 0.2:.0f},{cy:.0f} {cx:.0f},{cy:.0f} '
+                 f'C{cx + w * 0.12:.0f},{cy + h * 0.25:.0f} {x1 - w * 0.12:.0f},{base - h * 0.15:.0f} {x1},{base} Z" fill="#e8b66f"/>')
+        b.append(f'<path d="M{cx:.0f},{cy:.0f} C{cx + w * 0.12:.0f},{cy + h * 0.25:.0f} {x1 - w * 0.12:.0f},{base - h * 0.15:.0f} {x1},{base} '
+                 f'L{cx + w * 0.06:.0f},{base} C{cx + w * 0.02:.0f},{cy + h * 0.6:.0f} {cx + w * 0.03:.0f},{cy + h * 0.3:.0f} {cx:.0f},{cy:.0f} Z" fill="#b5713b" opacity="0.85"/>')
+        for r in range(4):
+            yy = cy + h * (0.25 + r * 0.17)
+            b.append(f'<path d="M{x0 + w * (0.12 + r * 0.05):.0f},{yy + 24:.0f} Q{cx - w * 0.22:.0f},{yy - 8:.0f} {cx - 4:.0f},{yy:.0f}" fill="none" stroke="#cf9450" stroke-width="2.5" opacity="0.7"/>')
+    return svg("death-valley", "".join(b), ("#5e6ba8", "#f6c48f"))
+
+
 PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofoten), ("patagonia", patagonia),
           ("bhutan", bhutan), ("samarkand", samarkand), ("pamir-highway", pamir_highway), ("faroe-islands", faroe),
           ("chamonix", chamonix), ("garibaldi", garibaldi), ("glacier-national-park", glacier), ("moorea", moorea),
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:
