@@ -1,0 +1,68 @@
+/* The Writings editor (write/index.html): the post looks as it will on the site, with the editing
+   controls kept quiet around it. Colours and type come from the site's own styles.css. */
+.write-app { min-height: 100vh; background: var(--bg); }
+.write-app [hidden] { display: none !important; }  /* the layout rules below must never un-hide anything */
+.write-bar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 1rem; padding: 0.7rem 1rem; background: var(--bg); border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+.write-brand { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+.write-brand span { color: var(--muted); font-weight: 400; }
+.write-status { flex: 1; color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.write-status.ok { color: var(--been); }
+.write-status.bad { color: var(--warm); }
+.write-actions { display: flex; gap: 0.8rem; align-items: center; }
+.write-app button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--text); padding: 0.45rem 0.9rem; }
+.write-app button:disabled { opacity: 0.5; cursor: default; }
+.write-app .write-primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; }
+.write-app .write-quiet { background: none; border-color: transparent; color: var(--muted); padding-inline: 0.4rem; }
+.write-app .write-quiet:hover { color: var(--text); }
+
+/* Signed out */
+.write-gate { max-width: 30rem; margin: 12vh auto 0; padding: 0 16px; display: grid; gap: 0.6rem; }
+.write-gate h1 { font-family: var(--serif); font-size: 2rem; margin: 0; }
+.write-gate p { margin: 0; color: var(--muted); }
+.write-gate label { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+.write-gate input[type="password"] { font: inherit; padding: 0.6rem 0.7rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--text); }
+.write-check { display: flex; gap: 0.4rem; align-items: center; }
+.write-error { color: var(--warm) !important; min-height: 1.2em; }
+.write-help { font-size: 0.85rem; color: var(--muted); }
+.write-help p { margin-top: 0.5rem; }
+
+/* Signed in */
+.write-desk { display: grid; grid-template-columns: 15rem 1fr; min-height: calc(100vh - 3rem); }
+.write-list { border-right: 1px solid var(--line); padding: 1rem; }
+.write-new { width: 100%; }
+.write-list ul { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.2rem; }
+.write-list li button { width: 100%; text-align: left; border: 0; background: none; padding: 0.5rem 0.6rem; }
+.write-list li button[aria-current="true"] { background: var(--surface); box-shadow: inset 2px 0 0 var(--warm); }
+.write-list li small { display: block; color: var(--muted); font-size: 0.78rem; }
+.write-page { max-width: 44rem; width: 100%; margin: 0 auto; padding: 2.5rem 24px 6rem; position: relative; }
+.write-draft-note { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.2rem; padding: 0.6rem 0.8rem; border-radius: 8px; background: var(--warm-soft); font-size: 0.88rem; }
+
+/* The sheet: the post as it will read on Writings, a little larger for writing */
+.write-sheet { border: 0; padding: 0; }
+.write-title { font-size: 2.1rem !important; outline: none; margin-bottom: 0.8rem !important; }
+.write-when { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-bottom: 0.35rem !important; }
+.write-when input { font: inherit; color: inherit; background: none; border: 0; border-bottom: 1px dashed currentColor; padding: 0 0.1rem; }
+.write-when input[type="text"] { flex: 1; min-width: 12rem; }
+.write-when input::placeholder { color: var(--faint); opacity: 0.8; }
+.write-body { margin-top: 1.6rem; font-family: var(--serif); font-size: 1.2rem; line-height: 1.7; outline: none; min-height: 40vh; }
+.write-body p { margin: 0 0 1em; }
+.write-body a { color: var(--accent); }
+.write-body .write-block { margin: 1.2rem 0; padding: 0.4rem; border: 1px dashed var(--line); border-radius: 10px; user-select: none; }
+.write-body .write-block img { max-width: 100%; height: auto; border-radius: 8px; display: block; }
+.write-body .write-block figcaption { font-size: 0.85rem; color: var(--muted); font-style: italic; font-family: var(--sans); }
+[data-placeholder]:empty::before { content: attr(data-placeholder); color: var(--faint); opacity: 0.7; }
+
+/* The floating format bar over a selection */
+.write-tools { position: absolute; z-index: 6; display: flex; gap: 2px; padding: 3px; border-radius: 8px; background: var(--text); box-shadow: 0 4px 16px rgb(0 0 0 / 0.2); }
+.write-app .write-tools button { background: none; border: 0; color: var(--bg); padding: 0.3rem 0.6rem; font-size: 0.9rem; }
+.write-foot { position: sticky; bottom: 0; display: flex; gap: 0.8rem; align-items: center; justify-content: flex-end; padding: 0.8rem 0; margin-top: 2rem; background: var(--bg); border-top: 1px solid var(--line); }
+.write-foot span { margin-right: auto; color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 760px) {
+  .write-desk { grid-template-columns: 1fr; }
+  .write-list { border-right: 0; border-bottom: 1px solid var(--line); }
+  .write-list ul { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; }
+  .write-page { padding-top: 1.5rem; }
+  .write-title { font-size: 1.7rem !important; }
+  .write-body { font-size: 1.1rem; }
+}

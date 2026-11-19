@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <!-- The editor for Writings. Unlinked and kept out of search; it can do nothing without a GitHub token,
+       which stays in the browser that holds it and is only ever sent to api.github.com. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' https://amalmehta.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Write · Amal Mehta</title>
+  <meta name="description" content="A private editor for Amal Mehta’s Writings page.">
+  <link rel="canonical" href="https://amalmehta.com/write/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Amal Mehta">
+  <meta property="og:url" content="https://amalmehta.com/write/">
+  <meta property="og:title" content="Write · Amal Mehta">
+  <meta property="og:description" content="A private editor for Amal Mehta’s Writings page.">
+  <meta property="og:image" content="https://amalmehta.com/images/og-writings.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Writings by Amal Mehta">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="write.css">
+  <script src="feed.js" defer></script>
+  <script src="write.js" defer></script>
+</head>
+<body class="write-app">
+  <header class="write-bar">
+    <a class="write-brand" href="../writings.html">Amal Mehta <span>· Write</span></a>
+    <span class="write-status" id="status" role="status" aria-live="polite"></span>
+    <span class="write-actions" id="actions" hidden>
+      <a id="view-live" href="../writings.html" target="_blank" rel="noopener">View live</a>
+      <button type="button" id="sign-out" class="write-quiet">Sign out</button>
+    </span>
+  </header>
+
+  <!-- Signed out: the only thing a visitor ever sees -->
+  <main class="write-gate" id="gate">
+    <h1>Write</h1>
+    <p>This page edits amalmehta.com’s Writings. It needs a GitHub token that can write to the site’s repository.</p>
+    <label for="token">GitHub token</label>
+    <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+    <label class="write-check"><input id="remember" type="checkbox"> Remember on this device</label>
+    <button type="button" id="sign-in" class="write-primary">Sign in</button>
+    <p class="write-error" id="gate-error" role="alert"></p>
+    <details class="write-help">
+      <summary>Making a token</summary>
+      <p>On GitHub: Settings › Developer settings › Fine-grained personal access tokens › Generate new token. Repository access: only <strong>amalmehta/amalmehta.github.io</strong>. Permissions: <strong>Contents: Read and write</strong>, nothing else. Pick an expiry.</p>
+      <p>Without “Remember”, the token is forgotten when you close the tab.</p>
+    </details>
+  </main>
+
+  <!-- Signed in -->
+  <div class="write-desk" id="desk" hidden>
+    <nav class="write-list" aria-label="Posts">
+      <button type="button" id="new-post" class="write-primary write-new">New post</button>
+      <ul id="posts"></ul>
+    </nav>
+    <main class="write-page">
+      <div class="write-draft-note" id="draft-note" hidden>
+        <span>You have unpublished changes from before.</span>
+        <button type="button" id="draft-restore">Restore them</button>
+        <button type="button" id="draft-discard" class="write-quiet">Discard</button>
+      </div>
+      <article class="writing write-sheet" id="sheet">
+        <h2 id="title" class="write-title" contenteditable="plaintext-only" data-placeholder="Title" spellcheck="true"></h2>
+        <p class="when written write-when">
+          Written in <input id="written" type="month" aria-label="Month written">
+          <input id="written-note" type="text" placeholder="optional: after biking from Seattle to DC that summer" aria-label="When or where it was written">
+        </p>
+        <p class="when posted write-when">Posted <input id="posted" type="date" aria-label="Day posted"></p>
+        <div id="body" class="write-body" contenteditable="true" data-placeholder="Tell your story…" spellcheck="true"></div>
+      </article>
+      <div class="write-tools" id="tools" hidden>
+        <button type="button" data-cmd="bold" aria-label="Bold"><b>B</b></button>
+        <button type="button" data-cmd="italic" aria-label="Italic"><i>I</i></button>
+        <button type="button" data-cmd="link" aria-label="Link">Link</button>
+      </div>
+      <footer class="write-foot">
+        <span id="count"></span>
+        <button type="button" id="archive" class="write-quiet">Save for later (take down)</button>
+        <button type="button" id="publish" class="write-primary">Publish</button>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1214,3 +1214,27 @@ class TestSuiteTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WriteEditorTest(unittest.TestCase):
+    """write/: the private Writings editor. It rebuilds feed.xml in the browser when it publishes, so its
+    feed.js has to build exactly what tools/make-feed.py builds, and the page must stay locked down."""
+
+    def test_browser_feed_matches_python(self):
+        import shutil, subprocess, importlib.util
+        if not shutil.which("node"):
+            self.skipTest("node isn't installed")
+        spec = importlib.util.spec_from_file_location("make_feed", ROOT / "tools/make-feed.py")
+        make_feed = importlib.util.module_from_spec(spec); spec.loader.exec_module(make_feed)
+        js = ('const {build}=require("./write/feed.js"),fs=require("fs");'
+              'process.stdout.write(build(fs.readFileSync("thinking.html","utf8"),fs.readFileSync("writings.html","utf8")))')
+        out = subprocess.run(["node", "-e", js], cwd=ROOT, capture_output=True, text=True, check=True).stdout
+        self.assertEqual(out, make_feed.build(), "write/feed.js and tools/make-feed.py build different feeds: change both")
+
+    def test_locked_down(self):
+        html = (ROOT / "write" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('<meta name="robots" content="noindex, nofollow">', html)
+        self.assertIn("connect-src 'self' https://api.github.com;", html)
+        self.assertNotRegex(re.sub(r"<!--.*?-->", "", html, flags=re.S), r'<script(?![^>]*\bsrc=)|\sstyle="|<style\b|\son[a-z]+="')
+        for page in ROOT.glob("*.html"):  # nothing on the site links to it
+            self.assertNotIn("write/", page.read_text(encoding="utf-8"), page.name)
