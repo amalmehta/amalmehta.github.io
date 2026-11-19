@@ -8,6 +8,9 @@
 // of search, and every edit is rebuilt from a small whitelist (paragraphs, bold, italic, safe links) before
 // it is written, so nothing typed or pasted can add scripts or styles to the site.
 //
+// Photos are resized in the browser (at most 1600px wide) and re-encoded as JPEG, plus WebP where the browser
+// can, which also drops their EXIF data (camera, GPS). They go into images/writings/ in the same commit as the post.
+//
 // On localhost, /write/?local edits the working copy instead: nothing is sent anywhere, and Publish leaves the
 // result in window.__writeOut for checking.
 (() => {
@@ -153,6 +156,8 @@
   let current = null;      // the post being edited (null id = new)
   const raws = [];         // raw blocks (figures and the like), kept exactly as written
   let saved = "";          // the serialized form when opened, to know when something changed
+  const pending = new Map();  // photos added but not yet published: path -> { url, b64 }
+  const shown = new Map();    // published photos, still shown from memory until the site has deployed them
 
   const body = $("body");
   try { document.execCommand("defaultParagraphSeparator", false, "p"); } catch (e) { /* older browsers use div; both are handled */ }
@@ -167,11 +172,7 @@
     raws.length = 0;
     for (const b of post.blocks) {
       if (b.type === "p") { const p = document.createElement("p"); p.innerHTML = b.html; body.append(p); continue; }
-      const box = document.createElement("div");
-      box.className = "write-block"; box.contentEditable = "false"; box.dataset.raw = String(raws.length);
-      raws.push(b.html);
-      box.innerHTML = b.html.replace(/(src|srcset)="(?!https?:|\/)/g, '$1="../');  // shown from /write/, kept as written
-      body.append(box);
+      body.append(rawBlock(b.html));
     }
     if (!post.blocks.length) body.append(document.createElement("p"));
     saved = serialize(collect());
@@ -179,6 +180,25 @@
     $("archive").hidden = !post.id;
     count();
     checkDraft();
+  }
+
+
+  function rawBlock(html) {
+    const box = document.createElement("div");
+    box.className = "write-block"; box.contentEditable = "false"; box.dataset.raw = String(raws.length);
+    raws.push(html);
+    // Shown from /write/, so site paths get ../ (and photos not yet published come from memory); kept as written
+    box.innerHTML = html.replace(/(src|srcset)="([^"]+)"/g, (m, a, v) => {
+      const p = pending.get(v.replace(/\.webp$/, ".jpg")) || shown.get(v.replace(/\.webp$/, ".jpg"));
+      if (p) return `${a}="${v.endsWith(".webp") ? p.webpUrl || p.url : p.url}"`;
+      return /^(https?:|\/)/.test(v) ? m : `${a}="../${v}"`;
+    });
+    if ([...pending.keys()].some((k) => html.includes(k))) box.classList.add("write-new-photo");
+    const rm = document.createElement("button");
+    rm.type = "button"; rm.className = "write-remove"; rm.textContent = "Remove";
+    rm.addEventListener("click", () => { box.remove(); count(); saveDraft(); });
+    box.append(rm);
+    return box;
   }
 
   function collect() {
@@ -202,13 +222,17 @@
   const draftKey = () => "write-draft:" + (current.id || "new");
 
   function count() {
-    const words = (body.textContent.trim().match(/\S+/g) || []).length;
+    const words = [...body.childNodes].filter((n) => !(n.classList && n.classList.contains("write-block"))).map((n) => n.textContent).join(" ").match(/\S+/g)?.length || 0;
     $("count").textContent = `${words} words · ${Math.max(1, Math.round(words / 230))} min read`;
   }
 
   function saveDraft() {
     if (!current) return;
-    try { if (dirty()) localStorage.setItem(draftKey(), JSON.stringify(collect())); else localStorage.removeItem(draftKey()); } catch (e) { /* no drafts then */ }
+    try {
+      const d = collect();
+      d.blocks = d.blocks.filter((b) => b.type !== "raw" || ![...pending.keys()].some((k) => b.html.includes(k)));  // unpublished photos live only in this tab
+      if (dirty()) localStorage.setItem(draftKey(), JSON.stringify(d)); else localStorage.removeItem(draftKey());
+    } catch (e) { /* no drafts then */ }
   }
   function checkDraft() {
     let d = null;
@@ -265,18 +289,28 @@
       const feed = window.buildFeed(thinking, next);
       const name = curl(post.title), message = mode === "archive" ? `Writings: “${name}” saved for later` : isNew ? `Writings: “${name}”` : `Writings: edit “${name}”`;
       if (local) {
-        window.__writeOut = { writings: next, feed, message };
+        window.__writeOut = { writings: next, feed, message, photos: [...photosIn(next)].map(([path, p]) => ({ path, bytes: Math.round(p.b64.length * 3 / 4), webp: !!p.webpB64, width: p.width, height: p.height })) };
         loaded.writings = next;
         status(`Local test: built “${name}” (see window.__writeOut); nothing was published`, "ok");
       } else {
         const base = await gh(`/repos/${REPO}/git/commits/${head}`);
-        const tree = await gh(`/repos/${REPO}/git/trees`, { method: "POST", body: { base_tree: base.tree.sha, tree: [
-          { path: FILE, mode: "100644", type: "blob", content: next }, { path: FEED, mode: "100644", type: "blob", content: feed }] } });
+        const entries = [{ path: FILE, mode: "100644", type: "blob", content: next }, { path: FEED, mode: "100644", type: "blob", content: feed }];
+        for (const [path, p] of photosIn(next)) {
+          status(`Uploading ${path.split("/").pop()}…`);
+          for (const [file, b64] of [[path, p.b64], [path.replace(/\.jpg$/, ".webp"), p.webpB64]]) {
+            if (!b64) continue;
+            const blob = await gh(`/repos/${REPO}/git/blobs`, { method: "POST", body: { content: b64, encoding: "base64" } });
+            entries.push({ path: file, mode: "100644", type: "blob", sha: blob.sha });
+          }
+        }
+        status("Publishing…");
+        const tree = await gh(`/repos/${REPO}/git/trees`, { method: "POST", body: { base_tree: base.tree.sha, tree: entries } });
         const commit = await gh(`/repos/${REPO}/git/commits`, { method: "POST", body: { message, tree: tree.sha, parents: [head] } });
         await gh(`/repos/${REPO}/git/refs/heads/${BRANCH}`, { method: "PATCH", body: { sha: commit.sha, force: false } });
         loaded = { head: commit.sha, writings: next, thinking };
         status(mode === "archive" ? `Taken down · live in about a minute ·` : `Published · live in about a minute ·`, "ok", { href: commit.html_url, text: commit.sha.slice(0, 7) });
       }
+      for (const [path, p] of photosIn(loaded.writings)) { shown.set(path, p); pending.delete(path); }  // published: from now on they come from the site
       try { localStorage.removeItem("write-draft:" + (isNew ? "new" : post.id)); } catch (e) { /* fine */ }
       posts = articles(loaded.writings).map(parsePost);
       listPosts();
@@ -287,6 +321,46 @@
       status(e.status === 409 || e.status === 422 ? "The site changed while publishing. Reload and try again; your text is kept as a draft." : `Couldn’t publish: ${e.message}. Your text is kept as a draft.`, "bad");
     } finally { $("publish").disabled = $("archive").disabled = false; }
   }
+
+
+  // ------------------------------------------------------------------ photos
+  const photosIn = (html) => [...pending].filter(([path]) => html.includes(`"${path}"`));
+  const toB64 = (blob) => new Promise((ok, no) => { const r = new FileReader(); r.onload = () => ok(String(r.result).split(",")[1]); r.onerror = no; r.readAsDataURL(blob); });
+  const encode = (canvas, type, q) => new Promise((ok) => canvas.toBlob(ok, type, q));
+
+  async function addPhoto(file) {
+    status("Preparing the photo…");
+    let bmp;
+    try { bmp = await createImageBitmap(file, { imageOrientation: "from-image" }); }
+    catch (e) { return status("Couldn’t read that photo. Try a JPEG or PNG.", "bad"); }
+    const scale = Math.min(1, 1600 / bmp.width), w = Math.round(bmp.width * scale), h = Math.round(bmp.height * scale);
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    canvas.getContext("2d").drawImage(bmp, 0, 0, w, h);
+    const jpg = await encode(canvas, "image/jpeg", 0.84);
+    let webp = await encode(canvas, "image/webp", 0.8);
+    if (!webp || webp.type !== "image/webp") webp = null;  // Safari can't write WebP; the JPEG alone is fine
+    const alt = (prompt("Describe the photo for someone who can’t see it (alt text):", "") || "").trim();
+    if (!alt) return status("Photo not added: it needs a description.", "bad");
+    const caption = (prompt("Caption under the photo (optional):", "") || "").trim();
+    const d = new Date(), stamp = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    const path = `images/writings/${stamp}-${Math.random().toString(36).slice(2, 7)}.jpg`;
+    pending.set(path, { url: URL.createObjectURL(jpg), webpUrl: webp && URL.createObjectURL(webp), b64: await toB64(jpg), webpB64: webp && await toB64(webp), width: w, height: h });
+    const img = `<img src="${path}" alt="Photo: ${escAttr(curl(alt))}" loading="lazy" width="${w}" height="${h}">`;
+    const html = `<figure class="writing-photo"><picture>${webp ? `<source type="image/webp" srcset="${path.replace(/\.jpg$/, ".webp")}">` : ""}${img}</picture>`
+      + (caption ? `\n          <figcaption>${esc(curl(caption))}</figcaption>` : "") + "</figure>";
+    // Put it after the paragraph the cursor is in, or at the end
+    const sel = getSelection();
+    let at = sel.rangeCount && body.contains(sel.anchorNode) ? sel.anchorNode : null;
+    while (at && at.parentNode !== body) at = at.parentNode;
+    const block = rawBlock(html);
+    if (at) at.after(block); else body.append(block);
+    if (!block.nextSibling) block.after(document.createElement("p"));
+    count();
+    status(`Photo added (${w}×${h}); it uploads when you publish`, "ok");
+  }
+  $("add-photo").addEventListener("click", () => $("photo-file").click());
+  $("photo-file").addEventListener("change", (e) => { const f = e.target.files[0]; e.target.value = ""; if (f) addPhoto(f); });
 
   // ------------------------------------------------------------------ wiring
   body.addEventListener("input", () => { count(); clearTimeout(body.t); body.t = setTimeout(saveDraft, 800); });
@@ -335,7 +409,7 @@
     $("draft-note").hidden = true;
   });
   $("draft-discard").addEventListener("click", () => { try { localStorage.removeItem(draftKey()); } catch (e) { /* fine */ } $("draft-note").hidden = true; });
-  addEventListener("beforeunload", (e) => { if (dirty()) { saveDraft(); e.preventDefault(); } });
+  addEventListener("beforeunload", (e) => { if (dirty() || pending.size && photosIn(serialize(collect())).length) { saveDraft(); e.preventDefault(); } });
 
   async function signIn(t, remember) {
     token = t;

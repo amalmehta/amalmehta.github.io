@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light dark">
   <!-- The editor for Writings. Unlinked and kept out of search; it can do nothing without a GitHub token,
        which stays in the browser that holds it and is only ever sent to api.github.com. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' https://amalmehta.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' https://amalmehta.com blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <title>Write · Amal Mehta</title>
@@ -82,6 +82,8 @@
       </div>
       <footer class="write-foot">
         <span id="count"></span>
+        <input id="photo-file" type="file" accept="image/*" hidden>
+        <button type="button" id="add-photo">Add photo</button>
         <button type="button" id="archive" class="write-quiet">Save for later (take down)</button>
         <button type="button" id="publish" class="write-primary">Publish</button>
       </footer>
