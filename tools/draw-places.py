@@ -1490,13 +1490,69 @@ def death_valley():
     return svg("death-valley", "".join(b), ("#5e6ba8", "#f6c48f"))
 
 
+# ---------------------------------------------------------------- Iraq: the road north to the Erbil Citadel, past date palms
+def iraq():
+    rng = random.Random(762)
+    b = []
+    b.append(glow(820, 380, 640, 220, "#ffe2b0", 0.7))
+    b.append(clouds(rng, 2, 70, 150, colour="#fff3e0", opacity=0.55))
+    # The Erbil Citadel: a walled town on a high round mound, the city low around it
+    b.append(poly(ridge(-20, W + 20, 470, rng, [(0.3, 0.35, 0.25), (0.8, 0.3, 0.2)], 140, step=30), "#d7b98f", opacity="0.6"))
+    b.append('<path d="M560 470 C590 400 620 352 700 340 H900 C980 352 1010 400 1040 470 Z" fill="#c79a66"/>')
+    b.append('<path d="M612 352 H988 V336 H612 Z" fill="#b68657"/>')
+    x = 612
+    while x < 988:
+        w, h = rng.randint(26, 46), rng.randint(26, 52)
+        b.append(f'<rect x="{x}" y="{336 - h}" width="{w}" height="{h}" fill="{rng.choice(("#e6c79a", "#dcb98a", "#efd5ab"))}"/>')
+        if rng.random() < 0.5:
+            b.append(f'<rect x="{x + w / 2 - 4:.0f}" y="{336 - h + 10}" width="8" height="10" fill="#8a6440"/>')
+        x += w
+    b.append('<rect x="770" y="250" width="56" height="40" fill="#efd5ab"/><path d="M770 250 A28 26 0 0 1 826 250 Z" fill="#7aa6b8"/>')  # a dome
+    b.append('<rect x="790" y="300" width="18" height="36" rx="9" fill="#8a6440"/>')  # the gate
+    # Low town around the mound
+    x = -10
+    while x < W:
+        w, h = rng.randint(40, 80), rng.randint(16, 46)
+        if not 560 < x + w / 2 < 1040:
+            b.append(f'<rect x="{x}" y="{470 - h}" width="{w}" height="{h}" fill="{rng.choice(("#d9bd93", "#ccad82", "#e2c8a0"))}"/>')
+        x += w + rng.randint(2, 10)
+    # The desert floor and the highway running into the distance
+    b.append(f'<rect y="470" width="{W}" height="{H - 470}" fill="#e3c38f"/>')
+    for _ in range(60):
+        x, y = rng.uniform(0, W), rng.uniform(490, 790)
+        b.append(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{rng.uniform(20, 70):.0f}" ry="{rng.uniform(2, 5):.0f}" fill="#d2ad76" opacity="0.6"/>')
+    b.append(poly([(560, 470), (640, 470), (900, 800), (230, 800)], "#4d4a48"))
+    for k in range(8):
+        y0 = 480 + k * 40 + k * k * 2.2
+        h = 12 + k * 3.5
+        x0 = 600 + (y0 - 470) * 0.02
+        b.append(poly([(x0 - 2 - k * 0.6, y0), (x0 + 2 + k * 0.6, y0), (x0 + 3 + k, y0 + h), (x0 - 3 - k, y0 + h)], "#f2d98f"))
+    # Date palms along the road, nearer ones larger
+    def palm(x, base, sc):
+        out = [f'<path d="M{x} {base} C{x - 6 * sc:.0f} {base - 90 * sc:.0f} {x + 8 * sc:.0f} {base - 170 * sc:.0f} {x + 2 * sc:.0f} {base - 230 * sc:.0f}" fill="none" stroke="#7a5a36" stroke-width="{10 * sc:.1f}"/>']
+        top = (x + 2 * sc, base - 230 * sc)
+        for a in range(-80, 260, 34):
+            ang = math.radians(a)
+            ex, ey = top[0] + math.cos(ang) * 95 * sc, top[1] + math.sin(ang) * 52 * sc + 22 * sc
+            mx, my = top[0] + math.cos(ang) * 50 * sc, top[1] - 18 * sc
+            out.append(f'<path d="M{top[0]:.0f} {top[1]:.0f} Q{mx:.0f} {my:.0f} {ex:.0f} {ey:.0f}" fill="none" stroke="{rng.choice(("#4f6b3a", "#5d7a43", "#46602f"))}" stroke-width="{7 * sc:.1f}" stroke-linecap="round"/>')
+        out.append(f'<circle cx="{top[0]:.0f}" cy="{top[1] + 14 * sc:.0f}" r="{9 * sc:.1f}" fill="#b5652c"/>')
+        return "".join(out)
+    for x, base, sc in ((120, 600, 0.75), (40, 720, 1.1), (420, 520, 0.4), (470, 505, 0.3), (1020, 610, 0.8), (1120, 740, 1.15), (760, 520, 0.38)):
+        b.append(palm(x, base, sc))
+    # A car heading north on the road
+    b.append('<rect x="566" y="560" width="46" height="26" rx="6" fill="#f4efe2"/><rect x="572" y="548" width="34" height="16" rx="5" fill="#9fb6c4"/>')
+    b.append('<circle cx="576" cy="588" r="6" fill="#222"/><circle cx="602" cy="588" r="6" fill="#222"/>')
+    return svg("iraq", "".join(b), ("#f6c48e", "#fbe7c8"))
+
+
 PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofoten), ("patagonia", patagonia),
           ("bhutan", bhutan), ("samarkand", samarkand), ("pamir-highway", pamir_highway), ("faroe-islands", faroe),
           ("chamonix", chamonix), ("garibaldi", garibaldi), ("glacier-national-park", glacier), ("moorea", moorea),
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:

@@ -54,6 +54,9 @@ PINS = [
     ("been", "Thailand", 15.5, 101.0, None),
     ("been", "Singapore", 1.35, 103.82, None),
     ("been", "Pakistan", 28.3, 65.0, "place-hunza"),
+    ("been", "Baghdad, Iraq", 33.31, 44.37, "place-iraq"),
+    ("been", "Basra, Iraq", 30.51, 47.78, None),
+    ("been", "Erbil, Iraq", 36.19, 44.01, None),
     ("been", "Salkantay trek to Machu Picchu, Peru", -13.16, -72.55, "place-machu-picchu"),
     ("been", "Kilimanjaro, Tanzania", -3.08, 37.35, "place-kilimanjaro"),
     ("been", "Scuba diving in Sipadan, Malaysia", 4.11, 118.63, None),
@@ -61,7 +64,7 @@ PINS = [
     ("been", "Jaipur, India", 26.92, 75.79, None),
 ]
 # Countries tinted as visited (names as in the data)
-BEEN_COUNTRIES = {"United Kingdom", "Italy", "United States of America", "India", "Japan", "Thailand", "Pakistan", "Peru", "Tanzania", "Malaysia", "Canada"}
+BEEN_COUNTRIES = {"United Kingdom", "Italy", "United States of America", "India", "Japan", "Thailand", "Pakistan", "Peru", "Tanzania", "Malaysia", "Canada", "Iraq"}
 KINDS = {"expedition": "Expeditions", "going": "Going", "want": "Want to go", "been": "Been"}
 # Long trips drawn as lines: class, title, legend key, and the (lat, lon) points it passes through.
 # Two points make a gentle arc, more make a smooth curve through them; neither follows the exact roads.
@@ -70,6 +73,8 @@ ROUTES = [
     ("ride", "Seattle to Washington, DC, by bike", "Seattle to DC by bike", [(47.61, -122.33), (38.91, -77.04)]),
     ("road", "Road trip across Pakistan, Karachi to Hunza", "Road trip across Pakistan",
      [(24.86, 67.01), (31.55, 74.34), (33.68, 73.05), (36.32, 74.66)]),
+    ("road", "Road trip across Iraq, Baghdad to Basra to Erbil", "Road trip across Iraq",
+     [(33.31, 44.37), (30.51, 47.78), (36.19, 44.01)]),
 ]
 
 W = 1200
@@ -180,7 +185,7 @@ def routes():
     """Each route as a line that draws itself in: two ends make a quadratic arc bowed a little north,
     more points a curve through their midpoints."""
     out = []
-    for kind, title, _, points in ROUTES:
+    for i, (kind, title, _, points) in enumerate(ROUTES):
         xy = [project(lon, lat) for lat, lon in points]
         (x0, y0), (x1, y1) = xy[0], xy[-1]
         if len(xy) == 2:
@@ -192,8 +197,8 @@ def routes():
                 f"Q{x:.1f} {y:.1f} {(x + nx) / 2:.1f} {(y + ny) / 2:.1f}" for (x, y), (nx, ny) in zip(xy[1:-2], xy[2:-1])
             ) + f"Q{xy[-2][0]:.1f} {xy[-2][1]:.1f} {x1:.1f} {y1:.1f}"
         out += [f'    <g class="map-route map-{kind}"><title>{html.escape(title)}</title>',
-                f'      <mask id="{kind}-reveal"><path class="map-route-reveal" pathLength="1" d="{d}"/></mask>',
-                f'      <path class="map-route-line" mask="url(#{kind}-reveal)" d="{d}"/>',
+                f'      <mask id="route-{i}-reveal"><path class="map-route-reveal" pathLength="1" d="{d}"/></mask>',
+                f'      <path class="map-route-line" mask="url(#route-{i}-reveal)" d="{d}"/>',
                 f'      <circle class="map-route-end" cx="{x0:.1f}" cy="{y0:.1f}" r="4"/><circle class="map-route-end" cx="{x1:.1f}" cy="{y1:.1f}" r="4"/>',
                 '    </g>']
     return out
