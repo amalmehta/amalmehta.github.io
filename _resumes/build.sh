@@ -13,7 +13,7 @@ find . -name amal-mehta-resume.tex | grep -- "${1:-}" | while read -r tex; do
   python3 - "$tex" "$TMP/docx.tex" <<'PY'
 import re, sys
 s = open(sys.argv[1]).read().split(r"\begin{document}")[1]
-s = s.replace(r"\fontsize{9.8}{11.2}\selectfont", "").replace(r"\begin{center}", "").replace(r"\end{center}", "")
+s = re.sub(r"\\fontsize\{[\d.]+\}\{[\d.]+\}\\selectfont", "", s).replace(r"\begin{center}", "").replace(r"\end{center}", "")
 s = s.replace(r"{\LARGE\bfseries Amal Mehta}\\[3pt]", r"\section*{Amal Mehta}")
 s = re.sub(r"\\quad\$\\cdot\$\\quad", " | ", s)
 def role(m):
