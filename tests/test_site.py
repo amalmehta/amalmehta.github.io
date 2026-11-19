@@ -1194,6 +1194,7 @@ class PolishTest(unittest.TestCase):
                          "feed.xml is out of date: run python3 tools/make-feed.py")
         items = ET.parse(ROOT / "feed.xml").findall(".//item")
         ids = re.findall(r'<li class="thought" id="([^"]+)">', re.sub(r"<!--.*?-->", "", THINKING.read_text(encoding="utf-8"), flags=re.S))
+        ids += re.findall(r'<article class="writing" id="([^"]+)">', re.sub(r"<!--.*?-->", "", (ROOT / "writings.html").read_text(encoding="utf-8"), flags=re.S))
         self.assertEqual([i.find("link").text.rsplit("#", 1)[1] for i in items], ids)
         self.assertIn('<link rel="alternate" type="application/rss+xml"', THINKING.read_text(encoding="utf-8"))
 

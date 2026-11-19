@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <atom:link href="https://amalmehta.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <title>Things I’m thinking about · Amal Mehta</title>
+    <title>Thinking and writing · Amal Mehta</title>
     <link>https://amalmehta.com/thinking.html</link>
-    <description>Open questions Amal Mehta keeps coming back to: tools that let anyone build what they want, what brains can teach robots, and physical intelligence.</description>
+    <description>Open questions and writing by Amal Mehta.</description>
     <language>en</language>
     <item>
       <title>Theory of AGI</title>
@@ -54,6 +54,13 @@
       <guid>https://amalmehta.com/thinking.html#vla-and-physical-intelligence</guid>
       <pubDate>Sun, 11 Oct 2026 12:00:00 +0000</pubDate>
       <description>VLAs bring internet-scale pretraining to robot control: one model that sees, reads an instruction and outputs actions. What I keep wondering is how much of the hard part that covers (contact, balance, recovering when the world doesn’t match the plan) and how much still needs reinforcement learning, simulation and real-world experience. Training a robot dog in simulation that then hit its target about 60% of the time on hardware made that gap concrete for me.</description>
+    </item>
+    <item>
+      <title>A hard day</title>
+      <link>https://amalmehta.com/writings.html#a-hard-day</link>
+      <guid>https://amalmehta.com/writings.html#a-hard-day</guid>
+      <pubDate>Thu, 19 Nov 2026 12:00:00 +0000</pubDate>
+      <description>My legs burned. I felt hollow. Empty. Eaten up by the road, the rain, and the heat. Lack of sleep gave me searing intermittent headaches. After grabbing a Honey Oats Granola Crunch bar from my saddle bag reserves, I trudged on. This shouldn’t be that hard, I thought. It’s biking. The previous night I only ate a 2000 calorie meal: 500 from a rice and chicken Thai dinner, and the rest from chocolate milks, ice cream, and pizza that I bought at the KOA in Sheridan, WY. I was burning 6500+ that day, riding 120 miles, and climbing 6000 feet. The problem was damn obvious.</description>
     </item>
   </channel>
 </rss>
