@@ -310,6 +310,7 @@ h3 { font-family: var(--serif); font-weight: 600; font-size: 1.55rem; line-heigh
 /* The five-pass ridge, small and faint, as the footer's top edge */
 .footer::before { content: ""; position: absolute; top: 0; left: 16px; right: 16px; height: 20px; background: color-mix(in srgb, var(--warm) 35%, var(--line)); -webkit-mask: url("images/ridge.svg") center / 100% 100% no-repeat; mask: url("images/ridge.svg") center / 100% 100% no-repeat; }
 .footer p { margin: 0; }
+.footer { text-align: center; }  /* the footer sits centered under the page */
 main.page:not(.photos-page) ~ .footer { max-width: 760px; }  /* line up with the narrower reading column above it */
 
 /* Colour accents */
@@ -804,11 +805,13 @@ picture { display: contents; }
 .thanks { font-family: var(--serif); font-style: italic; font-size: 1.05rem; }
 .minis-note a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 /* End credits: a short roll under the footer links, role on the left, name in serif italic */
-.footer .credits { margin: 1.6rem 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 1.2rem; align-items: baseline; }
+.footer .credits { margin: 1.6rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1.2rem; align-items: baseline; }
+.footer .credits dt { text-align: right; }  /* labels and names meet in the middle */
+.footer .credits dd { text-align: left; }
 .footer .credits > div { display: contents; }
 .footer .credits dt { white-space: nowrap; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .footer .credits dd { margin: 0; font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--text); }
-@media (max-width: 480px) { .footer .credits { grid-template-columns: 1fr; row-gap: 0; } .footer .credits dd + dt { margin-top: 0.4rem; } }
+@media (max-width: 480px) { .footer .credits { grid-template-columns: 1fr; row-gap: 0; } .footer .credits dt, .footer .credits dd { text-align: center; } .footer .credits dd + dt { margin-top: 0.4rem; } }
 .footer .signoff { margin-top: 1.4rem; font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--text); }
 /* A quiet privacy note under the sign-off */
 .footer .footer-note { margin-top: 0.5rem; font-size: 0.8rem; color: var(--faint); }
