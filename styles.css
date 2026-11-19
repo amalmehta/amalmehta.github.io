@@ -798,11 +798,11 @@ picture { display: contents; }
 .thanks { font-family: var(--serif); font-style: italic; font-size: 1.05rem; }
 .minis-note a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 /* End credits: a short roll under the footer links, role on the left, name in serif italic */
-.footer .credits { margin: 1.6rem 0 0; display: grid; gap: 0.3rem; }
-.footer .credits > div { display: grid; grid-template-columns: 14rem 1fr; gap: 0.9rem; align-items: baseline; }
-.footer .credits dt { white-space: nowrap; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-align: right; }
+.footer .credits { margin: 1.6rem 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 1.2rem; align-items: baseline; }
+.footer .credits > div { display: contents; }
+.footer .credits dt { white-space: nowrap; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .footer .credits dd { margin: 0; font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--text); }
-@media (max-width: 480px) { .footer .credits > div { grid-template-columns: 1fr; gap: 0; } .footer .credits dt { text-align: left; } }
+@media (max-width: 480px) { .footer .credits { grid-template-columns: 1fr; row-gap: 0; } .footer .credits dd + dt { margin-top: 0.4rem; } }
 .footer .signoff { margin-top: 1.4rem; font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: var(--text); }
 /* A quiet privacy note under the sign-off */
 .footer .footer-note { margin-top: 0.5rem; font-size: 0.8rem; color: var(--faint); }
