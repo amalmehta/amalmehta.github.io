@@ -182,26 +182,27 @@ def outline():
 
 
 def routes():
-    """Each route as a line that draws itself in: two ends make a quadratic arc bowed a little north,
-    more points a curve through their midpoints."""
-    out = []
+    """Each route as a line that draws itself in, one arc per leg through every stop in order.
+    Returns the lines and, separately, the stop dots (drawn under the pins)."""
+    out, ends = [], []
     for i, (kind, title, _, points) in enumerate(ROUTES):
         xy = [project(lon, lat) for lat, lon in points]
         (x0, y0), (x1, y1) = xy[0], xy[-1]
-        if len(xy) == 2:
-            cx, cy = (x0 + x1) / 2, (y0 + y1) / 2 - abs(x1 - x0) * 0.12
-            d = f"M{x0:.1f} {y0:.1f}Q{cx:.1f} {cy:.1f} {x1:.1f} {y1:.1f}"
-        else:
-            # Each inner point bends the curve, which passes through the midpoints between them
-            d = f"M{x0:.1f} {y0:.1f}" + "".join(
-                f"Q{x:.1f} {y:.1f} {(x + nx) / 2:.1f} {(y + ny) / 2:.1f}" for (x, y), (nx, ny) in zip(xy[1:-2], xy[2:-1])
-            ) + f"Q{xy[-2][0]:.1f} {xy[-2][1]:.1f} {x1:.1f} {y1:.1f}"
+        # One gentle arc per leg, so the line passes through every stop in order
+        d = f"M{x0:.1f} {y0:.1f}"
+        for (ax, ay), (bx, by) in zip(xy, xy[1:]):
+            if len(xy) == 2:  # a single leg bows a little north
+                cx, cy = (ax + bx) / 2, (ay + by) / 2 - abs(bx - ax) * 0.12
+            else:  # each leg bows to its left
+                cx, cy = (ax + bx) / 2 + (by - ay) * 0.25, (ay + by) / 2 - (bx - ax) * 0.25
+            d += f"Q{cx:.1f} {cy:.1f} {bx:.1f} {by:.1f}"
+        ends.append(f'    <g class="map-route map-{kind}">' + "".join(f'<circle class="map-route-end" cx="{x:.1f}" cy="{y:.1f}" r="{4 if j in (0, len(xy) - 1) else 3}"/>' for j, (x, y) in enumerate(xy)) + "</g>")
         out += [f'    <g class="map-route map-{kind}"><title>{html.escape(title)}</title>',
                 f'      <mask id="route-{i}-reveal"><path class="map-route-reveal" pathLength="1" d="{d}"/></mask>',
+                f'      <path class="map-route-glow" mask="url(#route-{i}-reveal)" d="{d}"/>',
                 f'      <path class="map-route-line" mask="url(#route-{i}-reveal)" d="{d}"/>',
-                f'      <circle class="map-route-end" cx="{x0:.1f}" cy="{y0:.1f}" r="4"/><circle class="map-route-end" cx="{x1:.1f}" cy="{y1:.1f}" r="4"/>',
                 '    </g>']
-    return out
+    return out, ends
 
 
 def build():
@@ -212,22 +213,31 @@ def build():
              '<figure class="travel-map">',
              f'  <svg viewBox="{-PAD} {-PAD} {W + 2 * PAD} {H + 2 * PAD}" role="img" aria-labelledby="map-title">',
              f'    <title id="map-title">{html.escape(summary)}</title>',
+             # A sea that deepens toward the edges, and a soft shadow under each pin, so the map has some depth
+             '    <defs><radialGradient id="map-sea" cx="50%" cy="45%" r="65%"><stop class="sea-in" offset="0"/><stop class="sea-out" offset="1"/></radialGradient>'
+             '<filter id="pin-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-opacity="0.35"/></filter></defs>',
              f'    <path class="map-ocean" d="{outline()}"/>',
              f'    <path class="map-grid" d="{graticule()}"/>']
     for name, d in country_paths():
         cls = "map-land map-been" if name in BEEN_COUNTRIES else "map-land"
         lines.append(f'    <path class="{cls}" d="{d}"/>')
-    lines += routes()
-    # Been first, then want, then going, with expeditions on top
-    for kind in ("been", "want", "going", "expedition"):
+    # Been first, then the routes (short ones like Iraq would hide under pins), then want, going and expeditions on top
+    # Route stops sit under the pins, so a pin keeps its own colour; the lines go above the been pins
+    route_lines, route_ends = routes()
+    lines += route_ends
+    for kind in ("been", "routes", "want", "going", "expedition"):
+        if kind == "routes":
+            lines += route_lines
+            continue
         for k, label, lat, lon, card in PINS:
             if k != kind:
                 continue
             x, y = project(lon, lat)
             tip = html.escape(f"{label}: {'expedition' if k == 'expedition' else KINDS[k].lower()}")
             r = {"expedition": 11, "going": 11, "want": 9, "been": 7}[k]  # big enough to see and tap at phone width
-            pin = (f'<g class="pin pin-{k}"><title>{tip}</title><circle class="pin-halo" cx="{x:.1f}" cy="{y:.1f}" r="{r * 2.2:.0f}"/>'
-                   f'<circle class="pin-dot" cx="{x:.1f}" cy="{y:.1f}" r="{r}"/></g>')
+            pin = (f'<g class="pin pin-{k}"><title>{tip}</title><circle class="pin-halo" cx="{x:.1f}" cy="{y:.1f}" r="{r * 1.9:.0f}"/>'
+                   + (f'<circle class="pin-pulse" cx="{x:.1f}" cy="{y:.1f}" r="{r}"/>' if k in ("going", "expedition") else "")
+                   + f'<circle class="pin-dot" cx="{x:.1f}" cy="{y:.1f}" r="{r}"/></g>')
             lines.append(f'    <a href="#{card}">{pin}</a>' if card else f"    {pin}")
     lines += ["  </svg>",
               '  <figcaption class="map-legend">' + " ".join(
