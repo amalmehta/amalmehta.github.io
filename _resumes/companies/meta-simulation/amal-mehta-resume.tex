@@ -21,24 +21,24 @@ SF Bay Area \quad$\cdot$\quad \href{mailto:amal.mehta@gmail.com}{amal.mehta@gmai
 % Saved for later, cut 2026-11-17, once ended the line above: \quad$\cdot$\quad \href{https://www.linkedin.com/in/amal-mehta-264413a9/}{LinkedIn} \quad$\cdot$\quad \href{https://github.com/amalmehta}{GitHub}
 \end{center}
 
-Software engineer for ML, simulation and computer vision, with six years building the whole system: synthetic-image generation and object detection for drone imagery, batched physics simulators, RL training infrastructure, and models shipped to the browser and Core ML.
+Software engineer for ML, simulation and computer vision, with six years building synthetic-data and training pipelines end to end, from generating synthetic imagery for drone object detection to training and evaluating the detectors on it.
 
 \section*{Experience}
 
 \role{Independent ML \& Robotics Research}{Sept 2025 -- Present}{Self-directed projects; details at \href{https://amalmehta.com/}{amalmehta.com}}{San Francisco Bay Area}
 \begin{itemize}
 \item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Quadrotor simulator:}} batched simulator modelled on a Holybro X500 V2 (500\,Hz, PX4-style thrust and body-rate commands), randomizing payload, motor wear, drag, wind and latency; a learned residual cut held-out tracking error to 7.3\,cm vs.\ 14.0\,cm for tuned L1 adaptive control.
-\item \href{https://amalmehta.com/AlphaGoLite/}{\textbf{AlphaGo Lite:}} AlphaZero-style 9$\times$9 Go engine trained on one CPU (17,120 self-play games in 23 hours); 32 of 40 wins against GNU Go level 1. Exported to ONNX and Core ML and shipped as a browser app and a Mac app; the browser port matches the Python rules on 3,000 random positions.
+\item \href{https://amalmehta.com/AlphaGoLite/}{\textbf{AlphaGo Lite:}} AlphaZero-style 9$\times$9 Go engine (17,120 self-play games); 32 of 40 wins against GNU Go level 1. Exported to ONNX and Core ML for a browser app and a Mac app; the browser port matches the Python rules on 3,000 random positions.
 \item \href{https://amalmehta.com/long_term_horizon_planning/}{\textbf{Code-repair RL environment:}} built an environment with visible tests and a hidden verifier; GRPO raised pass rate 35\%\,$\to$\,58\% while true correctness fell 31\%\,$\to$\,2\%, and targeted audits held false success to 4\% vs.\ 24\% for random ones.
 % Saved for later, cut 2026-11-19: \item \textbf{Software:} \href{https://amalmehta.com/}{amalmehta.com}, hand-built, with tests on every push in GitHub Actions.
 \end{itemize}
 
 \role{Deep Learning Scientist}{Sept 2021 -- Aug 2025}{PhysicsAI (DARPA-funded)}{Pacifica, CA (remote)}
 \begin{itemize}
-\item Turned synthetic-data generation for drone perception into a closed RL loop: policies (TD3, PPO, DDPG) set an image generator's parameters, a spatiotemporal detector retrained on its images, and its accuracy on real drone imagery was the reward.
+\item Built a closed loop that generated synthetic training images for drone perception and tuned them from model performance: RL policies (TD3, PPO, DDPG) set the generator's parameters, and a detector's accuracy on real drone imagery was the reward.
 \item Built the PEARL meta-RL codebase (probabilistic task embeddings over TD3) so the agent adapts to a new generator task in a few tries; ran its multi-week GPU training, and the method was also applied to a fighter-jet simulation.
-\item Implemented gradient-reversal domain adaptation from scratch to hold detector accuracy with scarce real labels (10--15\,GB, mostly synthetic).
-\item Built and benchmarked GAN synthesis pipelines (DCGAN, InfoGAN, FineGAN) that produced the detectors' training data.
+\item Implemented domain adaptation from scratch to hold detector accuracy with few real labels (10--15\,GB, mostly synthetic data).
+\item Built and benchmarked GAN pipelines (DCGAN, InfoGAN, FineGAN) that generated the detectors' training data.
 \end{itemize}
 
 \role{Deep RL Researcher}{Aug 2023 -- Mar 2024}{Hybrid Robotics Lab, UC Berkeley --- adv.\ Prof.\ Koushil Sreenath}{Berkeley, CA}
@@ -59,7 +59,7 @@ Software engineer for ML, simulation and computer vision, with six years buildin
 
 \role{Researcher}{June 2020 -- Aug 2020}{Abbasi-Asl Lab, UCSF --- adv.\ Prof.\ Reza Abbasi-Asl}{San Francisco, CA}
 \begin{itemize}
-\item Built empirical mode decomposition (EMD) pipelines to align 2D and 3D brain scans across visits and to a common template.
+\item Built image-registration pipelines (empirical mode decomposition) to align 2D and 3D brain scans across visits and to a common template.
 \end{itemize}
 
 \section*{Education}
@@ -74,9 +74,10 @@ Software engineer for ML, simulation and computer vision, with six years buildin
 \section*{Technical Skills}
 \begin{tabular}{@{}p{0.9in}l}
 \textbf{Languages} & Python, C++, Swift, JavaScript / TypeScript \\
-\textbf{ML / CV} & PyTorch, TensorFlow, OpenCV, GANs, domain adaptation, IsaacGym, stable-baselines3 \\
-\textbf{Engineering} & Docker, GitHub Actions CI, CUDA/multi-GPU, ONNX, Core ML, SwiftUI, Three.js \\
-\textbf{Robotics} & ROS, Gazebo, Unitree Go1, Kalman filtering \\
+\textbf{ML / CV} & PyTorch, TensorFlow, OpenCV, object detection, segmentation, GANs, domain adaptation \\
+\textbf{Simulation} & Synthetic data generation, IsaacGym, Gazebo, batched physics simulation, stable-baselines3 \\
+\textbf{Engineering} & Git, Docker, GitHub Actions CI, CUDA/multi-GPU, ONNX, Core ML \\
+\textbf{Robotics} & ROS, Unitree Go1, Kalman filtering \\
 \end{tabular}
 
 \section*{Publications}
