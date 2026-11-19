@@ -524,8 +524,77 @@ def particles():
     return svg("".join(b))
 
 
+# ---------------------------------------------------------------- IBM Research: contract terms checked against invoices
+def ibm_contracts():
+    rng = random.Random(21)
+    mono = 'font-family="Menlo,monospace"'
+    GREEN = "#4f8a4b"
+    b = []
+
+    def doc(x, y, w, h, title, marks, tint):
+        """A page with ruled text lines; marks are the line numbers whose terms get highlighted."""
+        out = [f'<rect x="{x + 8}" y="{y + 10}" width="{w}" height="{h}" rx="8" fill="#e4dfd3"/>',
+               f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="#fff" stroke="{INK}" stroke-width="2.5"/>',
+               f'<text x="{x + 26}" y="{y + 44}" {mono} font-size="17" font-weight="bold" fill="{INK}" letter-spacing="3">{title}</text>']
+        spots = {}
+        for i in range(14):
+            yy = y + 82 + i * 26
+            lw = (w - 52) * rng.uniform(0.55, 1.0)
+            if i in marks:
+                hx = x + 26 + lw * rng.uniform(0.25, 0.45)
+                out.append(f'<rect x="{hx:.0f}" y="{yy - 9}" width="{w * 0.3:.0f}" height="18" rx="4" fill="{tint}" opacity="0.35"/>')
+                spots[i] = (hx + w * 0.15, yy)
+            out.append(f'<line x1="{x + 26}" y1="{yy}" x2="{x + 26 + lw:.0f}" y2="{yy}" stroke="#c9c3b6" stroke-width="5" stroke-linecap="round"/>')
+        return "".join(out), spots
+
+    cdoc, cspots = doc(70, 130, 300, 470, "CONTRACT", (1, 4, 8, 12), BLUE)
+    idoc, ispots = doc(910, 170, 300, 430, "INVOICE", (2, 6, 9), WARM)
+    b += [cdoc, idoc]
+
+    # The extracted terms, side by side
+    tx, ty, tw, rh = 410, 170, 460, 80
+    rows = (("unit rate", "$120/hr", "$120/hr", "ok"), ("payment", "net 30", "net 30", "ok"),
+            ("discount", "5%", "0%", "bad"), ("end date", "Dec 2021", "?", "ask"))
+    b.append(f'<rect x="{tx}" y="{ty}" width="{tw}" height="{60 + rh * len(rows)}" rx="10" fill="#fff" stroke="{INK}" stroke-width="2.5"/>')
+    for k, head in enumerate(("term", "contract", "invoice")):
+        b.append(f'<text x="{tx + 22 + k * 150}" y="{ty + 38}" {mono} font-size="17" fill="#5f5c55">{head}</text>')
+    b.append(f'<line x1="{tx}" y1="{ty + 52}" x2="{tx + tw}" y2="{ty + 52}" stroke="{INK}" stroke-width="1.5"/>')
+    rowy = []
+    for i, (term, c, v, st) in enumerate(rows):
+        y = ty + 52 + rh * i
+        if st == "bad":
+            b.append(f'<rect x="{tx + 2}" y="{y + 2}" width="{tw - 4}" height="{rh - 4}" fill="{WARM_SOFT}"/>')
+        b.append(f'<text x="{tx + 22}" y="{y + 48}" {mono} font-size="20" fill="{INK}">{term}</text>'
+                 f'<text x="{tx + 172}" y="{y + 48}" {mono} font-size="20" fill="{BLUE}">{c}</text>'
+                 f'<text x="{tx + 322}" y="{y + 48}" {mono} font-size="20" fill="{WARM}">{v}</text>')
+        mx = tx + tw - 28
+        if st == "ok":
+            b.append(f'<path d="M{mx - 9},{y + 42} l7,8 l13,-16" fill="none" stroke="{GREEN}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>')
+        elif st == "bad":
+            b.append(f'<path d="M{mx - 8},{y + 32} l16,16 M{mx + 8},{y + 32} l-16,16" stroke="{WARM}" stroke-width="4" stroke-linecap="round"/>')
+        if i < len(rows) - 1:
+            b.append(f'<line x1="{tx + 16}" y1="{y + rh}" x2="{tx + tw - 16}" y2="{y + rh}" stroke="#e4dfd3" stroke-width="1.5"/>')
+        rowy.append(y + 42)
+
+    # Dashed arrows: highlighted terms flow into the table
+    for (i, (sx, sy)), ry in zip(sorted(cspots.items()), rowy):
+        b.append(f'<path d="M{sx + 50:.0f},{sy} C{tx - 40},{sy} {tx - 70},{ry} {tx - 6},{ry}" fill="none" stroke="{BLUE}" stroke-width="2" stroke-dasharray="6 6" opacity="0.8"/>')
+    for (i, (sx, sy)), ry in zip(sorted(ispots.items()), rowy[:3]):
+        b.append(f'<path d="M{sx - 50:.0f},{sy} C{tx + tw + 40},{sy} {tx + tw + 70},{ry} {tx + tw + 6},{ry}" fill="none" stroke="{WARM}" stroke-width="2" stroke-dasharray="6 6" opacity="0.8"/>')
+
+    # The uncertain row goes to a person
+    py = rowy[-1]
+    hx, hy = tx + tw / 2, ty + 60 + rh * len(rows) + 64
+    b.append(f'<path d="M{tx + tw - 28},{py + 16} C{tx + tw - 28},{hy - 30} {hx + 60},{hy - 10} {hx + 34},{hy - 4}" fill="none" stroke="{INK}" stroke-width="2" stroke-dasharray="5 6"/>')
+    b.append(f'<circle cx="{tx + tw - 28}" cy="{py}" r="13" fill="#fff6d9" stroke="{INK}" stroke-width="2"/>'
+             f'<text x="{tx + tw - 28}" y="{py + 6}" {mono} font-size="16" font-weight="bold" fill="{INK}" text-anchor="middle">?</text>')
+    b.append(f'<circle cx="{hx}" cy="{hy - 16}" r="16" fill="{BLUE_SOFT}" stroke="{INK}" stroke-width="2.5"/>'
+             f'<path d="M{hx - 28},{hy + 30} Q{hx - 26},{hy + 2} {hx},{hy + 2} Q{hx + 26},{hy + 2} {hx + 28},{hy + 30} Z" fill="{BLUE_SOFT}" stroke="{INK}" stroke-width="2.5" stroke-linejoin="round"/>')
+    return svg("".join(b))
+
+
 DRAWINGS = (("robot-soccer", robot_soccer), ("physicsai", physicsai), ("vip-lab", vip_lab), ("brain-emd", brain_emd),
-            ("supernova", supernova), ("particles", particles))
+            ("supernova", supernova), ("particles", particles), ("ibm-contracts", ibm_contracts))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in DRAWINGS:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:
