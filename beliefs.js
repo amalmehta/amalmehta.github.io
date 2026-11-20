@@ -7,12 +7,28 @@
   // A tab whose list is still empty stays hidden; with one tab left there's nothing to switch, so no tab bar
   const tabs = [...section.querySelectorAll('[role="tab"]')].filter(t => !t.hidden);
   if (tabs.length < 2) { section.classList.add("single"); return; }  // one list: the section title is enough, so its own heading hides
-  const show = tab => tabs.forEach(t => {
-    const on = t === tab;
-    t.setAttribute("aria-selected", on);
-    t.tabIndex = on ? 0 : -1;
-    document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
-  });
+  // A marker that slides under the chosen tab, and the newly shown list fades across
+  const bar = section.querySelector('[role="tablist"]');
+  const marker = document.createElement("span");
+  marker.className = "tab-marker";
+  marker.setAttribute("aria-hidden", "true");
+  bar.prepend(marker);
+  bar.classList.add("has-marker");
+  let chosen = null;
+  const place = () => { if (chosen) { marker.style.width = `${chosen.offsetWidth}px`; marker.style.transform = `translateX(${chosen.offsetLeft}px)`; } };
+  new ResizeObserver(place).observe(bar);
+  const show = tab => {
+    const changed = chosen && chosen !== tab;
+    chosen = tab;
+    tabs.forEach(t => {
+      const on = t === tab, panel = document.getElementById(t.getAttribute("aria-controls"));
+      t.setAttribute("aria-selected", on);
+      t.tabIndex = on ? 0 : -1;
+      panel.hidden = !on;
+      panel.classList.toggle("fade-in", on && changed);
+    });
+    place();
+  };
   const pick = tab => { show(tab); history.replaceState(null, "", "#" + tab.getAttribute("aria-controls")); };
   const fromHash = () => tabs.find(t => "#" + t.getAttribute("aria-controls") === location.hash);
   tabs.forEach((tab, i) => {

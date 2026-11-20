@@ -134,6 +134,14 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* Outside work: an elevation profile of five passes instead of the plain rule, drawn in on load */
 #outside .section-title { border-bottom: 0; padding-bottom: 0.2rem; margin-bottom: 0.3rem; }
 #outside .section-title::after { display: none; }
+/* The brush stroke under each section title paints itself in, left to right, as the title scrolls into view
+   (scroll-driven, no script; browsers without it, or reduced motion, show it already painted) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section-title { view-timeline: --title block; }
+    .section-title::after { clip-path: inset(0 100% 0 0); animation: brush linear both; animation-timeline: --title; animation-range: entry 20% cover 30%; }
+  }
+}
 .ridge { display: block; width: 100%; height: 56px; margin: 0 0 1.8rem; overflow: visible; }
 .ridge path { fill: none; stroke: color-mix(in srgb, var(--warm) 55%, var(--line)); stroke-width: 1.5; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: ride-draw 2.4s ease-out 0.2s forwards; }
 @media (prefers-reduced-motion: reduce) { .ridge path { animation: none; stroke-dashoffset: 0; } }
@@ -569,6 +577,14 @@ path.map-been { fill: color-mix(in srgb, var(--been) 55%, var(--surface)); strok
 .belief-tabs [role="tab"]:hover { color: var(--text); }
 .belief-tabs [role="tab"][aria-selected="true"] { background: var(--accent-soft); color: var(--accent); }
 .belief-tabs[hidden] { display: none; }
+/* beliefs.js: a marker slides under the chosen tab, and the list fades across */
+.belief-tabs.has-marker { position: relative; }
+.belief-tabs.has-marker [role="tab"] { position: relative; z-index: 1; transition: color 0.25s; }
+.belief-tabs.has-marker [role="tab"][aria-selected="true"] { background: none; }
+.tab-marker { position: absolute; top: 0.25rem; bottom: 0.25rem; left: 0; width: 0; border-radius: 8px; background: var(--accent-soft); transition: transform 0.32s cubic-bezier(0.3, 0.7, 0.2, 1), width 0.32s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.belief-panel.fade-in { animation: panel-in 0.32s ease-out; }
+@keyframes panel-in { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .tab-marker { transition: none; } .belief-panel.fade-in { animation: none; } }
 /* Small phones: the three tabs share the full width, sized to their labels; on the narrowest
    screens a long label wraps onto two lines rather than running off the edge. */
 @media (max-width: 420px) {
