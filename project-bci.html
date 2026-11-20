@@ -11,13 +11,13 @@
   <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <meta name="description" content="Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.72 on 17 of 19 held-out days up to day 138, against 0.42 for a Wiener filter.">
+  <meta name="description" content="Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 over all 19 held-out days up to day 138, against 0.35 for a re-centred Wiener filter, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.">
   <link rel="canonical" href="https://amalmehta.com/project-bci.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Amal Mehta">
   <meta property="og:url" content="https://amalmehta.com/project-bci.html">
   <meta property="og:title" content="BCI Projects · Amal Mehta">
-  <meta property="og:description" content="Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.72 on 17 of 19 held-out days up to day 138, against 0.42 for a Wiener filter.">
+  <meta property="og:description" content="Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 over all 19 held-out days up to day 138, against 0.35 for a re-centred Wiener filter, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.">
   <meta property="og:image" content="https://amalmehta.com/images/og-project-bci.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -54,7 +54,7 @@
     <header class="page-head">
       <p class="card-when">2026 · offline decoding on public data; closed loop simulated</p>
       <h1>BCI Projects</h1>
-      <p class="case-hook">Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.72 on 17 of 19 held-out days up to day 138, against 0.42 for a Wiener filter.</p>
+      <p class="case-hook">Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 over all 19 held-out days up to day 138, against 0.35 for a re-centred Wiener filter, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.</p>
       <p class="links"><a href="https://github.com/amalmehta/BCIProjects">Code and write-ups on GitHub →</a> <a href="https://github.com/amalmehta/BCIProjects/blob/main/papers/Telepathy.pdf">Cursor decoding write-up (PDF) →</a> <a href="https://github.com/amalmehta/NeuroFalcon">Neuro Falcon follow-up →</a></p>
     </header>
 
@@ -64,7 +64,7 @@
         <li><strong>Once upon a time,</strong> a cursor BCI was only as good as its worst day.</li>
         <li><strong>Every day,</strong> the neurons an implant records drift a little, and a decoder trained once slowly stops working.</li>
         <li><strong>One day,</strong> I re-centred each channel on the new day’s unlabelled spikes.</li>
-        <li><strong>Because of that,</strong> the decoder held R² 0.72 on 17 of 19 later days, against 0.42 for a linear decoder.</li>
+        <li><strong>Because of that,</strong> the decoder held R² 0.64 across all 19 later days, and 0.72 against 0.66 for a plain GRU without the two re-mapped days.</li>
         <li><strong>Until finally,</strong> it reached day 138 with no new labels.</li>
         <li><strong>And ever since,</strong> the weeks where it still fades are what I’m working on.</li>
       </ol>

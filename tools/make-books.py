@@ -85,7 +85,7 @@ def build(data=None):
     for key, heading, books, date, text in groups:
         if not books:
             continue
-        out += [f'  <h3 class="book-group">{heading}</h3>', '  <div class="book-grid">']
+        out += [f'  <h3 class="book-group">{heading}</h3>', '  <div class="book-grid">' if key != "reading" else '  <div class="book-grid reading-now">']
         for book in books:
             out += ["    " + line for line in card(book, key, date, text)]
         out.append("  </div>")

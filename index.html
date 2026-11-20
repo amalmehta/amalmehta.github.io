@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-  <title>Amal Mehta · Independent research engineer in RL and robotics</title>
+  <title>Amal Mehta · Research engineer in RL post-training and neural decoding</title><!-- Saved for later, until 2026-11-20: Amal Mehta · Independent research engineer in RL and robotics -->
   <meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
@@ -17,7 +17,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Amal Mehta">
   <meta property="og:url" content="https://amalmehta.com/">
-  <meta property="og:title" content="Amal Mehta · RL and robotics">
+  <meta property="og:title" content="Amal Mehta · RL post-training and neural decoding">
   <meta property="og:description" content="Independent research engineer in reinforcement learning: reward hacking in RL post-training, robot learning in simulation and on hardware, and decoding movement from neural recordings.">
   <meta property="og:image" content="https://amalmehta.com/images/og.png">
   <meta property="og:image:width" content="1200">
@@ -98,7 +98,7 @@
             "item": {
                 "@type": "SoftwareSourceCode",
                 "name": "BCI Projects",
-                "description": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.72 on 17 of 19 later days, against 0.42 for the classic linear decoder.",
+                "description": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 across all 19 later days, against 0.35 for the classic linear decoder, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.",
                 "url": "https://github.com/amalmehta/BCIProjects",
                 "codeRepository": "https://github.com/amalmehta/BCIProjects",
                 "author": {
@@ -221,46 +221,6 @@
       </div>
     </section>
 
-    <section id="writeups" class="wrap section">
-      <h2 class="section-title">Publications &amp; reports</h2>
-      <article class="role" id="spie-2023">
-        <p class="when">2023</p>
-        <div>
-          <h3>Deep Learning Segmentation for Invasive Melanoma</h3>
-          <p class="where">SPIE Medical Imaging · peer-reviewed paper · with A. Shah, M. Wang, N. Neumann, T. McCalmont and A. Zakhor</p>
-          <p class="links"><a href="https://doi.org/10.1117/12.2654672">Paper (SPIE Digital Library) →</a></p>
-        </div>
-      </article>
-
-      <!-- Saved for later:
-      <article class="role" id="few-shot-imitation">
-        <p class="when">2021</p>
-        <div>
-          <h3>Few-Shot Imitation Learning for Robotic Manipulation</h3>
-          <p class="where">Class report · CS330 Meta-Learning, Stanford · with Sebastian Kochman and Soham Sinha</p>
-          <p>Teaching a robot arm a new Meta-World task from a single expert demonstration. We paired inverse soft Q-learning with implicit MAML and tried a recurrent RL² variant. Both were compared with a MAML baseline trained by behavioural cloning.</p>
-          <p class="tags"><span class="chip">Meta-learning</span> <span class="chip">Imitation learning</span> <span class="chip">iMAML</span> <span class="chip">RL²</span> <span class="chip">Meta-World</span></p>
-          <p class="links"><a href="papers/cs330-few-shot-imitation-learning.pdf" type="application/pdf">Report (PDF, 445 KB) →</a></p>
-        </div>
-      </article>
-      -->
-
-
-      <!-- Saved for later:
-      <article class="role" id="defensive-retraining">
-        <p class="when">2020</p>
-        <div>
-          <h3>Defensive Iterative Retraining</h3>
-          <p class="where">Class report · CS285 Deep Reinforcement Learning, UC Berkeley · with Aman Shah and Srikar Boinapally</p>
-          <p>Training agents to resist adversarial policies by mixing past selves and freshly trained adversaries into the opponent pool, instead of plain self-play. In SumoAnts it slightly beat self-play; in the harder SumoHumans it fell behind, because the interruptions came before the agent had learned to stay on its feet.</p>
-          <p class="tags"><span class="chip">Multi-agent RL</span> <span class="chip">Adversarial policies</span> <span class="chip">PPO</span></p>
-          <p class="links"><a href="papers/cs285-defensive-iterative-retraining.pdf" type="application/pdf">Report (PDF, 200 KB) →</a></p>
-        </div>
-      </article>
-      -->
-      <!-- Saved for later: <p class="thanks">Thank you to Prof. Koushil Sreenath, Prof. Avideh Zakhor and Prof. Reza Abbasi-Asl, who took a chance on me early and taught me how research is done.</p> -->
-    </section>
-
     <section id="featured" class="wrap section">
       <h2 class="section-title">Featured projects</h2>
       <div class="featured">
@@ -282,7 +242,7 @@
         <div class="project-text">
           <p class="card-when">2026 · offline decoding on public data; closed loop simulated</p>
           <h3>BCI Projects</h3>
-          <p>Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.72 on 17 of 19 later days, against 0.42 for the classic linear decoder.</p>
+          <p>Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 across all 19 later days, against 0.35 for the classic linear decoder, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.</p>
           <!-- Saved for later, cut 2026-11-17: <p class="card-miss"><span>What didn’t work</span> Adaptation still fades three to four weeks out: R² 0.21 and 0.15, against 0.42–0.45 on earlier days (Neuro Falcon).</p> -->
           <p class="tags"><span class="chip">PyTorch</span> <span class="chip">Neural decoding</span> <span class="chip">Shared autonomy</span></p><!-- Saved for later, chips cut 2026-11-17: Closed-loop simulation, Public neural data -->
           <p class="links"><a class="deep" href="project-bci.html">Deep dive →</a> <a href="https://github.com/amalmehta/BCIProjects">Code and write-ups on GitHub →</a></p>
@@ -337,7 +297,7 @@
           <!~~ Saved for later, the fuller version with every number (the resume keeps them):
           <p>The result that hooked me: in a toy repair task, GRPO on visible tests raised the pass rate from 35% to 58% while true correctness fell from 31% to 2%, because the agent learned to delete 98% of the branches no test reaches. My focus is RL post-training when rewards can’t be checked.</p>[once: Running four research programs end to end on my own: decoding hand movement from motor-cortex spikes, post-training a small transformer with GRPO and DPO, testing sim-to-real transfer of meta-learned drone control, and training a Go engine from scratch by self-play.]
           <p>I wrote down a prediction before each of 50 follow-ups, and 15 were refuted. Auditing a random 25% of episodes delayed the hack rather than preventing it; choosing which 10% to audit held false success to 0.04, against 0.24 at random. RL still never beat the fine-tuned starting point on honest repair when the agent picks its single best answer.</p>
-          <p>Alongside it: re-centring each channel on a new day’s unlabelled spikes keeps a cursor decoder at R² 0.72 on 17 of 19 later days, against 0.42 for a linear decoder, though the two days the electrodes were re-mapped break it. In simulation, a learned residual cuts quadrotor tracking error from adaptive control’s 14.0 cm to 7.3 cm, and meta-learning adds little to it.</p>[Saved for later, once also: a 9×9 Go engine trained by self-play.]
+          <p>Alongside it: re-centring each channel on a new day’s unlabelled spikes keeps a cursor decoder at R² 0.64 across all 19 later days, against 0.35 for a linear decoder; leaving out the two days the electrodes were re-mapped, it’s 0.72, against 0.66 for a plain GRU.<!-- Saved for later, until 2026-11-20: keeps a cursor decoder at R² 0.72 on 17 of 19 later days, against 0.42 for a linear decoder, though the two days the electrodes were re-mapped break it. --> In simulation, a learned residual cuts quadrotor tracking error from adaptive control’s 14.0 cm to 7.3 cm, and meta-learning adds little to it.</p>[Saved for later, once also: a 9×9 Go engine trained by self-play.]
           ~~>
           <p>Member of the Sensorimotor AI journal club at Berkeley’s Redwood Center for Theoretical Neuroscience, and mentor to undergraduate scholars from UC Berkeley.</p>
           -->
@@ -348,7 +308,7 @@
           <!-- Saved for later, cut 2026-11-19: <p>I run my own research on one question: what does a learning system actually learn when you can’t fully check its work?</p> -->
           <!-- Saved for later, until 2026-11-20 the line began: I trained a small coding agent with reinforcement learning (GRPO), rewarding … -->
           <p><strong>Code agents.</strong> I trained a small network to repair code, one choice per branch, with reinforcement learning (GRPO), rewarding it whenever the tests it could see passed. Its pass rate rose from 35% to 58%, but the share of programs that were actually correct fell from 31% to 2%: it had learned to delete the code no test checks. Spot-checking <a class="quiet-link" href="interests.html#math-clt">a random sample</a> of its work with a hidden, complete check only slowed this down. Choosing which attempts to check held it off: 4% false passes, against 24% for random checks on the same budget.</p>
-          <p><strong>Brain–computer interfaces.</strong> The signals an implant records <a class="quiet-link" href="interests.html#math-walk">drift from day to day</a>, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.72<!-- Saved for later, cut 2026-11-19: (1.0 is perfect) --> on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder.</p>
+          <p><strong>Brain–computer interfaces.</strong> The signals an implant records <a class="quiet-link" href="interests.html#math-walk">drift from day to day</a>, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.64<!-- Saved for later, cut 2026-11-19: (1.0 is perfect) --> across all 19 later days, up to 138 days out, against 0.35 for the standard linear decoder. Leaving out the two days the electrodes were re-mapped, it’s 0.72, against 0.66 for a plain GRU.</p><!-- Saved for later, until 2026-11-20: …scoring R² 0.72 on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder. -->
           <!-- Saved for later, cut 2026-11-19: <p>Both are small-scale experiments; I wrote down a prediction before each run.</p> -->
           <p class="tags"><span class="chip">GRPO</span> <span class="chip">Neural decoding</span> <span class="chip">Sim-to-real</span></p><!-- Saved for later, chips cut 2026-11-17: Meta-learning -->
         </div>
@@ -466,6 +426,46 @@
     </section>
 
     <!-- Always shown; the master list the resume's Technical Skills must match (the tests check it). -->
+    <section id="writeups" class="wrap section">
+      <h2 class="section-title">Publications &amp; reports</h2>
+      <article class="role" id="spie-2023">
+        <p class="when">2023</p>
+        <div>
+          <h3>Deep Learning Segmentation for Invasive Melanoma</h3>
+          <p class="where">SPIE Medical Imaging · peer-reviewed paper · with A. Shah, M. Wang, N. Neumann, T. McCalmont and A. Zakhor</p>
+          <p class="links"><a href="https://doi.org/10.1117/12.2654672">Paper (SPIE Digital Library) →</a></p>
+        </div>
+      </article>
+
+      <!-- Saved for later:
+      <article class="role" id="few-shot-imitation">
+        <p class="when">2021</p>
+        <div>
+          <h3>Few-Shot Imitation Learning for Robotic Manipulation</h3>
+          <p class="where">Class report · CS330 Meta-Learning, Stanford · with Sebastian Kochman and Soham Sinha</p>
+          <p>Teaching a robot arm a new Meta-World task from a single expert demonstration. We paired inverse soft Q-learning with implicit MAML and tried a recurrent RL² variant. Both were compared with a MAML baseline trained by behavioural cloning.</p>
+          <p class="tags"><span class="chip">Meta-learning</span> <span class="chip">Imitation learning</span> <span class="chip">iMAML</span> <span class="chip">RL²</span> <span class="chip">Meta-World</span></p>
+          <p class="links"><a href="papers/cs330-few-shot-imitation-learning.pdf" type="application/pdf">Report (PDF, 445 KB) →</a></p>
+        </div>
+      </article>
+      -->
+
+
+      <!-- Saved for later:
+      <article class="role" id="defensive-retraining">
+        <p class="when">2020</p>
+        <div>
+          <h3>Defensive Iterative Retraining</h3>
+          <p class="where">Class report · CS285 Deep Reinforcement Learning, UC Berkeley · with Aman Shah and Srikar Boinapally</p>
+          <p>Training agents to resist adversarial policies by mixing past selves and freshly trained adversaries into the opponent pool, instead of plain self-play. In SumoAnts it slightly beat self-play; in the harder SumoHumans it fell behind, because the interruptions came before the agent had learned to stay on its feet.</p>
+          <p class="tags"><span class="chip">Multi-agent RL</span> <span class="chip">Adversarial policies</span> <span class="chip">PPO</span></p>
+          <p class="links"><a href="papers/cs285-defensive-iterative-retraining.pdf" type="application/pdf">Report (PDF, 200 KB) →</a></p>
+        </div>
+      </article>
+      -->
+      <!-- Saved for later: <p class="thanks">Thank you to Prof. Koushil Sreenath, Prof. Avideh Zakhor and Prof. Reza Abbasi-Asl, who took a chance on me early and taught me how research is done.</p> -->
+    </section>
+
     <section id="skills" class="wrap section">
       <h2 class="section-title">Skills</h2>
       <!-- The most current list of skills: update it here first; the resume's
