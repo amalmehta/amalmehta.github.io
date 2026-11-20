@@ -17,7 +17,8 @@ def text(fragment):
 
 def item(page, id_, body):
     title = text(re.search(r"<h2>(.*?)</h2>", body, flags=re.S).group(1))
-    summary = text(re.search(r"<p>(.*?)</p>", body, flags=re.S).group(1))
+    para = re.search(r"<p>(.*?)</p>", body, flags=re.S)
+    summary = text(para.group(1)) if para else title  # a question added before its paragraph is written
     day = datetime.date.fromisoformat(re.findall(r'<time datetime="(\d{4}-\d{2}-\d{2})">', body)[-1])  # a piece's posted day
     when = email.utils.format_datetime(datetime.datetime(day.year, day.month, day.day, 12, tzinfo=datetime.timezone.utc))
     link = f"{SITE}{page}#{id_}"

@@ -31,7 +31,8 @@
 
   function item(page, id, body) {
     const title = text(/<h2>([\s\S]*?)<\/h2>/.exec(body)[1]);
-    const summary = text(/<p>([\s\S]*?)<\/p>/.exec(body)[1]);
+    const para = /<p>([\s\S]*?)<\/p>/.exec(body);
+    const summary = para ? text(para[1]) : title;  // a question added before its paragraph is written
     const days = [...body.matchAll(/<time datetime="(\d{4}-\d{2}-\d{2})">/g)].map((m) => m[1]);
     const link = `${SITE}${page}#${id}`;
     return `    <item>\n      <title>${escape(title)}</title>\n      <link>${link}</link>\n`
