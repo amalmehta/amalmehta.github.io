@@ -643,6 +643,21 @@ path.map-been { fill: color-mix(in srgb, var(--been) 55%, var(--surface)); strok
 .math-card canvas { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; background: #15171c; cursor: pointer; box-shadow: 0 10px 26px -16px rgb(0 0 0 / 0.5); }
 .math-card h3 { margin: 0.65rem 0 0.2rem; font-family: var(--serif); font-size: 1.05rem; font-weight: 600; }
 .math-card p { margin: 0; font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+/* Math I love (math3d.js): one draggable 3D scene with a tab per idea; without JS, a plain list */
+.math3d { margin: 0 0 3rem; }
+.math3d-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.8rem; }
+.math3d-tabs button { font: 500 0.85rem/1 var(--sans); padding: 0.5rem 0.85rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+.math3d-tabs button:hover { color: var(--text); border-color: color-mix(in srgb, var(--text) 30%, var(--line)); }
+.math3d-tabs button[aria-selected="true"] { background: #15171c; color: #ffd23f; border-color: #15171c; }
+.math3d-canvas { display: block; width: 100%; aspect-ratio: 16 / 10; border-radius: 14px; background: #121419; cursor: grab; touch-action: pan-y; box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.6); }
+.math3d-canvas.grabbing { cursor: grabbing; }
+.math3d-caption { margin: 0.8rem 0 0.2rem; color: var(--muted); line-height: 1.55; }
+.math3d-caption strong { color: var(--text); font-family: var(--serif); font-size: 1.05rem; margin-right: 0.35rem; }
+.math3d-hint { margin: 0; font-size: 0.8rem; color: var(--faint); }
+@media (max-width: 640px) { .math3d-canvas { aspect-ratio: 1 / 1; } }
+.math-list { list-style: none; padding: 0; margin: 0 0 3rem; }
+.math-list li { padding: 0.45rem 0; color: var(--muted); }
+.math-list strong { color: var(--text); margin-right: 0.35rem; }
 .tiles { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 /* Three across on desktop, two on tablets, one on phones; a pair sits two across */
 .tiles.pair { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }

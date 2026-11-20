@@ -32,7 +32,7 @@
   <script src="mischief.js" defer></script>
   <script src="tiles.js" defer></script>
   <script src="events.js" defer></script>
-  <script src="math.js" defer></script>
+  <script src="math3d.js" defer></script>
   <script src="eggs.js" defer></script>
 </head>
 <body>
@@ -231,7 +231,32 @@
 
     <section class="math" id="math">
       <h2 class="section-title">Math I love</h2>
-      <!-- Drawn live by math.js; click a canvas to replay it. A new one needs a scene in math.js and a card here. -->
+      <!-- Drawn by math3d.js: one 3D scene, a tab per idea; the list below is what shows without JS,
+           and gives each tab its caption (data-scene matches a scene in math3d.js, data-alt describes it). -->
+      <div class="math3d" hidden>
+        <div class="math3d-tabs" role="tablist" aria-label="Math I love">
+          <button type="button" role="tab" data-scene="descent" aria-selected="true">Gradient descent</button>
+          <button type="button" role="tab" data-scene="lagrange" aria-selected="false" tabindex="-1">Lagrange multipliers</button>
+          <button type="button" role="tab" data-scene="clt" aria-selected="false" tabindex="-1">Central limit theorem</button>
+          <button type="button" role="tab" data-scene="bayes" aria-selected="false" tabindex="-1">Bayesian updating</button>
+          <button type="button" role="tab" data-scene="walk" aria-selected="false" tabindex="-1">Random walks</button>
+        </div>
+        <canvas class="math3d-canvas" role="img" aria-label="A 3D math scene"></canvas>
+        <p class="math3d-caption" aria-live="polite"></p>
+        <p class="math3d-hint">Drag to turn it.</p>
+      </div>
+      <ul class="math-list">
+        <li data-scene="descent" data-alt="3D: a narrow valley surface; a ball taking plain gradient steps zigzags across it while a ball with momentum glides down to the bottom"><strong>Gradient descent</strong> Plain steps zigzag down a narrow valley; momentum glides to the bottom.</li>
+        <li data-scene="lagrange" data-alt="3D: a hill over a floor with a circle drawn on it; a point travels round the circle on the hill and settles at its highest point, where a level curve just touches the circle"><strong>Lagrange multipliers</strong> The best point on a constraint is where a level curve just touches it, and the gradients line up.</li>
+        <li data-scene="clt" data-alt="3D: the spread of the average of n rolls of a lopsided die, for n from 1 to 12; the two-humped shape at the front becomes a bell at the back"><strong>Central limit theorem</strong> Average enough rolls of a lopsided die and the spread still turns into a bell.</li>
+        <li data-scene="bayes" data-alt="3D: the belief about a coin’s bias after each of 40 flips; a flat curve at the front sharpens into a peak near 0.7 at the back"><strong>Bayesian updating</strong> Each flip of a coin reshapes the belief about its bias, from flat to a sharp peak.</li>
+        <li data-scene="walk" data-alt="3D: coin-flip walks wander across the floor while above them a bell curve spreads wider and lower over time"><strong>Random walks</strong> Coin-flip walks spread out like √t, and where they end piles into a bell.</li>
+      </ul>
+    </section>
+    <!-- Saved for later, the five 2D cards Math I love had before the 3D scene (drawn by math.js, kept in the repo):
+    <section class="math" id="math">
+      <h2 class="section-title">Math I love</h2>
+      [ Drawn live by math.js; click a canvas to replay it. A new one needs a scene in math.js and a card here. ]
       <ul class="math-grid">
         <li class="math-card"><canvas data-math="clt" role="img" aria-label="Animation: sums of five rolls of a lopsided die pile up into a bell curve, with the matching normal curve drawn over them"></canvas><h3>Central limit theorem</h3><p>Add up enough rolls of a lopsided die and the sums still pile into a bell.</p></li>
         <li class="math-card"><canvas data-math="bayes" role="img" aria-label="Animation: a belief about a coin’s bias, drawn as a curve, starts flat and sharpens around the true bias of 0.7 with each flip"></canvas><h3>Bayesian updating</h3><p>Each flip of a coin reshapes the belief about its bias, from flat to a sharp peak.</p></li>
@@ -240,6 +265,7 @@
         <li class="math-card"><canvas data-math="walk" role="img" aria-label="Animation: many coin-flip walks fan out within a √t envelope, and where they end piles into a bell"></canvas><h3>Random walks</h3><p>Coin-flip walks spread out like √t, and where they end piles into a bell.</p></li>
       </ul>
     </section>
+    -->
 
     <section class="media" id="media">
       <h2 class="section-title">Films I love</h2>
