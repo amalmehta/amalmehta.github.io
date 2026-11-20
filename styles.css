@@ -456,6 +456,7 @@ picture { display: contents; }
 .events strong { font-weight: 600; }
 .events .event-where { color: var(--muted); }
 .events time { margin-left: auto; font-size: 0.9rem; color: var(--warm); font-variant-numeric: tabular-nums; }
+.events .trip-countdown { margin: 0 0 0 auto; } .events .trip-countdown + time { margin-left: 0; }  /* events.js: the pill sits just before the date */
 /* Profile: a short through-line above the Research & work timeline */
 .section-intro { max-width: 68ch; margin: 0 0 2rem; font-family: var(--sans); font-size: 1.06rem; line-height: 1.75; color: var(--text); }  /* the body sans reads easier than the serif at this length */
 @media (min-width: 720px) { #research .section-intro { margin-left: 11rem; max-width: calc(860px - 11rem); } #writeups .thanks { margin-left: 11rem; max-width: calc(860px - 11rem); } }  /* starts where the role titles do: years column plus gap */
@@ -519,6 +520,11 @@ path.map-been { fill: color-mix(in srgb, var(--been) 55%, var(--surface)); strok
 .writing .when.written { color: var(--warm); }
 .writing .when.posted { color: var(--accent); }
 .writing-photo { margin: 1rem 0 0.4rem; }
+/* ride.js: the Seattle-to-DC line that stays in view while you read A hard day, with a bike that rides along it */
+.ride-bar { position: sticky; top: 3.55rem; z-index: 2; display: flex; align-items: center; gap: 0.6rem; margin: 0.9rem 0 1.1rem; padding: 0.45rem 0.2rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.03em; color: var(--muted); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); }
+.ride-track { position: relative; flex: 1; height: 2px; background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 11px); }
+.ride-done { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--ride, 0) * 100%); background: var(--warm); }
+.ride-bike { position: absolute; top: -17px; left: calc(var(--ride, 0) * 100%); width: 26px; height: 17px; transform: translateX(-50%); fill: none; stroke: var(--warm); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .writing-photo img { display: block; width: 100%; height: auto; border-radius: 10px; }
 .writing-photo figcaption { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); font-style: italic; }
 .writings-empty { margin: 0; padding: 0 0 1rem; border-bottom: 1px dashed var(--line); color: var(--muted); font-style: italic; }
@@ -632,6 +638,11 @@ path.map-been { fill: color-mix(in srgb, var(--been) 55%, var(--surface)); strok
 .stars[data-stars="0"] { --stars: 0; } .stars[data-stars="0.5"] { --stars: 0.5; } .stars[data-stars="1"] { --stars: 1; } .stars[data-stars="1.5"] { --stars: 1.5; } .stars[data-stars="2"] { --stars: 2; } .stars[data-stars="2.5"] { --stars: 2.5; } .stars[data-stars="3"] { --stars: 3; } .stars[data-stars="3.5"] { --stars: 3.5; } .stars[data-stars="4"] { --stars: 4; } .stars[data-stars="4.5"] { --stars: 4.5; } .stars[data-stars="5"] { --stars: 5; }
 @media (prefers-reduced-motion: reduce) { .book { transition: none; } .book:hover { transform: none; } }
 /* Live interests: hobbies as tiles */
+/* Math I love (math.js): small dark canvases in a 3Blue1Brown-like style; without JS they stay dark panels above their text */
+.math-grid { list-style: none; padding: 0; margin: 0 0 3rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.math-card canvas { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; background: #15171c; cursor: pointer; box-shadow: 0 10px 26px -16px rgb(0 0 0 / 0.5); }
+.math-card h3 { margin: 0.65rem 0 0.2rem; font-family: var(--serif); font-size: 1.05rem; font-weight: 600; }
+.math-card p { margin: 0; font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
 .tiles { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 /* Three across on desktop, two on tablets, one on phones; a pair sits two across */
 .tiles.pair { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }

@@ -31,6 +31,8 @@
   <script src="updated.js" defer></script>
   <script src="mischief.js" defer></script>
   <script src="tiles.js" defer></script>
+  <script src="events.js" defer></script>
+  <script src="math.js" defer></script>
   <script src="eggs.js" defer></script>
 </head>
 <body>
@@ -224,6 +226,18 @@
         <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></strong> Vaswani et al., 2017</li>
         <li class="inspo-item"><strong><a href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a></strong> Shao et al., 2024</li>
         <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1606.06565">Concrete Problems in AI Safety</a></strong> Amodei et al., 2016</li>
+      </ul>
+    </section>
+
+    <section class="math" id="math">
+      <h2 class="section-title">Math I love</h2>
+      <!-- Drawn live by math.js; click a canvas to replay it. A new one needs a scene in math.js and a card here. -->
+      <ul class="math-grid">
+        <li class="math-card"><canvas data-math="clt" role="img" aria-label="Animation: sums of five rolls of a lopsided die pile up into a bell curve, with the matching normal curve drawn over them"></canvas><h3>Central limit theorem</h3><p>Add up enough rolls of a lopsided die and the sums still pile into a bell.</p></li>
+        <li class="math-card"><canvas data-math="bayes" role="img" aria-label="Animation: a belief about a coin’s bias, drawn as a curve, starts flat and sharpens around the true bias of 0.7 with each flip"></canvas><h3>Bayesian updating</h3><p>Each flip of a coin reshapes the belief about its bias, from flat to a sharp peak.</p></li>
+        <li class="math-card"><canvas data-math="descent" role="img" aria-label="Animation: on a contour map of a narrow valley, plain gradient steps zigzag while steps with momentum glide to the bottom"></canvas><h3>Gradient descent</h3><p>Plain steps zigzag down a narrow valley; momentum glides to the bottom.</p></li>
+        <li class="math-card"><canvas data-math="lagrange" role="img" aria-label="Animation: circles grow around a point until one just touches a constraint circle, where the two gradients line up"></canvas><h3>Lagrange multipliers</h3><p>The best point on a constraint is where a level curve just touches it, and the gradients line up.</p></li>
+        <li class="math-card"><canvas data-math="walk" role="img" aria-label="Animation: many coin-flip walks fan out within a √t envelope, and where they end piles into a bell"></canvas><h3>Random walks</h3><p>Coin-flip walks spread out like √t, and where they end piles into a bell.</p></li>
       </ul>
     </section>
 
