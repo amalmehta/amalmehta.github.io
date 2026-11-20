@@ -9,7 +9,7 @@
     icon.classList.add("sketching");
     icon.querySelectorAll("path").forEach(p => {
       p.setAttribute("pathLength", "1");
-      p.style.setProperty("--d", `${(i * 0.18 + (p.classList.contains("again") ? 0.55 : 0)).toFixed(2)}s`;
+      p.style.setProperty("--d", `${(i * 0.18 + (p.classList.contains("again") ? 0.55 : 0)).toFixed(2)}s`);
     });
   });
   const io = new IntersectionObserver(es => {

@@ -1238,3 +1238,16 @@ class WriteEditorTest(unittest.TestCase):
         self.assertNotRegex(re.sub(r"<!--.*?-->", "", html, flags=re.S), r'<script(?![^>]*\bsrc=)|\sstyle="|<style\b|\son[a-z]+="')
         for page in ROOT.glob("*.html"):  # nothing on the site links to it
             self.assertNotIn("write/", page.read_text(encoding="utf-8"), page.name)
+
+
+class ScriptSyntaxTest(unittest.TestCase):
+    def test_every_script_parses(self):
+        # A script with a syntax error does nothing at all, silently; node --check catches it before it ships.
+        import shutil, subprocess
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("node isn't installed")
+        for js in sorted(ROOT.glob("*.js")):
+            with self.subTest(script=js.name):
+                r = subprocess.run([node, "--check", str(js)], capture_output=True, text=True)
+                self.assertEqual(r.returncode, 0, r.stderr.strip().splitlines()[-1:] or r.stderr)

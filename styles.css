@@ -1268,3 +1268,26 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
 .photos.reel > .photo.lifted { transform: translateY(-6px); }
 .photos.reel > .photo.lifted img { box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--text) 45%, transparent); border-color: var(--warm); }
 @media (prefers-reduced-motion: reduce) { .photos.reel > .photo { transition: none; } .photos.reel > .photo.lifted { transform: none; } }
+
+/* countup.js: case-study result numbers count up; keep their width steady while they do */
+.stat strong { font-variant-numeric: lining-nums tabular-nums; }
+
+/* nav.js: the warm underline glides to the menu link you point at */
+.nav-links.has-glide { position: relative; }
+.nav-links.has-glide a[aria-current] { text-decoration: none; }
+.nav-links.has-glide a:hover { background-size: 0 1px; }
+.nav-glide { position: absolute; left: 0; top: 0; height: 1px; margin-top: 1px; background: var(--warm); pointer-events: none; opacity: 0; }
+.nav-links.glide-ready .nav-glide { transition: transform 0.35s cubic-bezier(.3,.7,.2,1), width 0.35s cubic-bezier(.3,.7,.2,1), opacity 0.2s; }
+@media (prefers-reduced-motion: reduce) { .nav-links.glide-ready .nav-glide { transition: none; } }
+
+/* portrait.js: the portrait is swept in like a pencil drawing, then its rings ease in */
+.portrait.sketch-wait, .portrait.sketching { box-shadow: 0 0 0 0 var(--bg), 0 0 0 0 var(--accent), 0 0 0 0 var(--bg), 0 0 0 0 transparent; }
+.portrait.sketch-wait { opacity: 0; }
+.portrait.sketching { -webkit-mask: linear-gradient(110deg, #000 42%, transparent 58%) 100% 0 / 260% 100% no-repeat; mask: linear-gradient(110deg, #000 42%, transparent 58%) 100% 0 / 260% 100% no-repeat; animation: portrait-sweep 1.8s cubic-bezier(.45,.05,.35,1) 0.15s forwards; }
+@keyframes portrait-sweep { to { -webkit-mask-position: 0 0; mask-position: 0 0; } }
+.portrait { transition: box-shadow 0.7s ease-out; }
+
+/* The Now dot on the profile breathes, like a live status light */
+.status-dot:not(.open)::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #3fa364; animation: now-breathe 2.6s ease-out infinite; }
+@keyframes now-breathe { 0% { transform: scale(1); opacity: 0.55; } 70%, 100% { transform: scale(2.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .status-dot:not(.open)::after { animation: none; display: none; } }
