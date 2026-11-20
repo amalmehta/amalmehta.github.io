@@ -1,16 +1,19 @@
-// What I try to live by: each Inspiration drawing tilts a little toward the cursor, like a print held in
-// the hand, and settles back when the cursor leaves. Mouse and pen only; reduced motion turns it off.
+// A little life when the cursor is near: on What I try to live by, each Inspiration drawing tilts toward the
+// cursor like a print held in the hand; on Interests, each book's cover tilts the same way, as if picked up.
+// Both settle back when the cursor leaves. Mouse and pen only; reduced motion turns it off.
 (() => {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || !matchMedia("(hover: hover)").matches) return;
-  for (const card of document.querySelectorAll(".inspo-card .photo")) {
-    card.addEventListener("pointermove", e => {
-      const box = card.getBoundingClientRect();
+  const tilt = (area, target, strength) => {
+    area.addEventListener("pointermove", e => {
+      const box = area.getBoundingClientRect();
       const x = (e.clientX - box.left) / box.width - 0.5, y = (e.clientY - box.top) / box.height - 0.5;
-      card.style.setProperty("--tilt-x", `${(-y * 7).toFixed(2)}deg`);
-      card.style.setProperty("--tilt-y", `${(x * 9).toFixed(2)}deg`);
+      target.style.setProperty("--tilt-x", `${(-y * 7 * strength).toFixed(2)}deg`);
+      target.style.setProperty("--tilt-y", `${(x * 9 * strength).toFixed(2)}deg`);
     });
-    card.addEventListener("pointerleave", () => {
-      for (const p of ["--tilt-x", "--tilt-y"]) card.style.setProperty(p, "0deg");
+    area.addEventListener("pointerleave", () => {
+      for (const p of ["--tilt-x", "--tilt-y"]) target.style.setProperty(p, "0deg");
     });
-  }
+  };
+  for (const card of document.querySelectorAll(".inspo-card .photo")) tilt(card, card, 1);
+  for (const book of document.querySelectorAll(".book")) { const cover = book.querySelector(".book-cover"); if (cover) tilt(book, cover, 2.2); }
 })();

@@ -8,6 +8,12 @@
   ],
   "read": [
     {
+      "title": "Ender’s Game",
+      "author": "Orson Scott Card",
+      "review": "A child genius is trained through war games that turn out to be real.",
+      "cover": 7
+    },
+    {
       "title": "Meditations",
       "author": "Marcus Aurelius",
       "review": "An emperor’s private notes to himself on staying steady."
