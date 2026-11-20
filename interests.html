@@ -220,9 +220,9 @@
       <h2 class="section-title">Papers that shaped me</h2>
       <ul class="inspo">
         <li class="inspo-item"><strong><a href="https://doi.org/10.1038/nature24270">Mastering the game of Go without human knowledge</a></strong> Silver et al., 2017</li>
-        <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1707.06347">Proximal Policy Optimization Algorithms</a></strong> Schulman et al., 2017</li>
-        <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1703.03400">Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a></strong> Finn et al., 2017</li>
-        <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1903.08254">Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables</a></strong> Rakelly et al., 2019</li>
+        <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1707.06347">Proximal Policy Optimization Algorithms</a></strong> Schulman et al., 2017 <a class="quiet-link paper-math" href="#math-lagrange">Lagrange multipliers →</a></li>
+        <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1703.03400">Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a></strong> Finn et al., 2017 <a class="quiet-link paper-math" href="#math-descent">Gradient descent →</a></li>
+        <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1903.08254">Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables</a></strong> Rakelly et al., 2019 <a class="quiet-link paper-math" href="#math-bayes">Bayesian updating →</a></li>
         <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></strong> Vaswani et al., 2017</li>
         <li class="inspo-item"><strong><a href="https://arxiv.org/abs/2402.03300">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a></strong> Shao et al., 2024</li>
         <li class="inspo-item"><strong><a href="https://arxiv.org/abs/1606.06565">Concrete Problems in AI Safety</a></strong> Amodei et al., 2016</li>
@@ -246,11 +246,11 @@
         <p class="math3d-hint">Drag to turn it.</p>
       </div>
       <ul class="math-list">
-        <li data-scene="descent" data-alt="3D: a narrow valley surface; a ball taking plain gradient steps zigzags across it while a ball with momentum glides down to the bottom"><strong>Gradient descent</strong> Plain steps zigzag down a narrow valley; momentum glides to the bottom.</li>
-        <li data-scene="lagrange" data-alt="3D: a hill over a floor with a circle drawn on it; a point travels round the circle on the hill and settles at its highest point, where a level curve just touches the circle"><strong>Lagrange multipliers</strong> The best point on a constraint is where a level curve just touches it, and the gradients line up.</li>
-        <li data-scene="clt" data-alt="3D: the spread of the average of n rolls of a lopsided die, for n from 1 to 12; the two-humped shape at the front becomes a bell at the back"><strong>Central limit theorem</strong> Average enough rolls of a lopsided die and the spread still turns into a bell.</li>
-        <li data-scene="bayes" data-alt="3D: the belief about a coin’s bias after each of 40 flips; a flat curve at the front sharpens into a peak near 0.7 at the back"><strong>Bayesian updating</strong> Each flip of a coin reshapes the belief about its bias, from flat to a sharp peak.</li>
-        <li data-scene="walk" data-alt="3D: coin-flip walks wander across the floor while above them a bell curve spreads wider and lower over time"><strong>Random walks</strong> Coin-flip walks spread out like √t, and where they end piles into a bell.</li>
+        <li id="math-descent" data-scene="descent" data-alt="3D: a narrow valley surface; a ball taking plain gradient steps zigzags across it while a ball with momentum glides down to the bottom"><strong>Gradient descent</strong> Plain steps zigzag down a narrow valley; momentum glides to the bottom.</li>
+        <li id="math-lagrange" data-scene="lagrange" data-alt="3D: a hill over a floor with a circle drawn on it; a point travels round the circle on the hill and settles at its highest point, where a level curve just touches the circle"><strong>Lagrange multipliers</strong> The best point on a constraint is where a level curve just touches it, and the gradients line up.</li>
+        <li id="math-clt" data-scene="clt" data-alt="3D: the spread of the average of n rolls of a lopsided die, for n from 1 to 12; the two-humped shape at the front becomes a bell at the back"><strong>Central limit theorem</strong> Average enough rolls of a lopsided die and the spread still turns into a bell.</li>
+        <li id="math-bayes" data-scene="bayes" data-alt="3D: the belief about a coin’s bias after each of 40 flips; a flat curve at the front sharpens into a peak near 0.7 at the back"><strong>Bayesian updating</strong> Each flip of a coin reshapes the belief about its bias, from flat to a sharp peak.</li>
+        <li id="math-walk" data-scene="walk" data-alt="3D: coin-flip walks wander across the floor while above them a bell curve spreads wider and lower over time"><strong>Random walks</strong> Coin-flip walks spread out like √t, and where they end piles into a bell.</li>
       </ul>
     </section>
     <!-- Saved for later, the five 2D cards Math I love had before the 3D scene (drawn by math.js, kept in the repo):

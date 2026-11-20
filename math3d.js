@@ -289,7 +289,7 @@
     paint();
   };
   tabs.forEach((tab, i) => {
-    tab.addEventListener("click", () => choose(tab));
+    tab.addEventListener("click", () => { choose(tab); history.replaceState(null, "", `#math-${tab.dataset.scene}`); });
     tab.addEventListener("keydown", e => {
       const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
       if (k) { e.preventDefault(); choose(tabs[(i + k + tabs.length) % tabs.length], true); }
@@ -336,9 +336,18 @@
     requestAnimationFrame(frame);
   };
 
+  // A link to interests.html#math-bayes (and so on) opens that tab; the ids sit on the no-JS list items
+  const fromHash = () => {
+    const tab = tabs.find(t => location.hash === `#math-${t.dataset.scene}`);
+    if (!tab) return false;
+    choose(tab);
+    requestAnimationFrame(() => root.scrollIntoView({ block: "start" }));
+    return true;
+  };
   size();
   new ResizeObserver(() => { size(); paint(); }).observe(canvas);
-  choose(tabs[0]);
+  if (!fromHash()) choose(tabs[0]);
+  addEventListener("hashchange", fromHash);
   new IntersectionObserver(([e]) => {
     const was = onScreen; onScreen = e.isIntersecting;
     if (onScreen && !was) { last = 0; requestAnimationFrame(frame); }
