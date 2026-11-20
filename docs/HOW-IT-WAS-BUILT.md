@@ -6,7 +6,7 @@ portfolio_website is Amal Mehta's personal site at amalmehta.com. It shows resea
 ## Build history
 
 ```mermaid
-flowchart LR
+flowchart TD
   idea["Idea: a clean site with the top 3-4 projects and resume items"]
   m1["Launch · Oct 8-10"]
   m2["Pages beyond the profile · Oct 11-19"]
