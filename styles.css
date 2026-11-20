@@ -1241,3 +1241,30 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
 /* develop.js: Travel's drawings start as a pale grey sketch and develop into colour as they come into view */
 .photo.developing img { filter: grayscale(1) sepia(0.3) contrast(0.55) brightness(1.12); opacity: 0.55; }
 .photo.develop img { transition: filter 1.8s ease-out, opacity 1.2s ease-out; }
+
+/* rail.js: Research & work's rail fills in warm ink as you scroll, and each role's dot and years light up when reached */
+@media (min-width: 720px) {
+  #research.railed .role::before { background: linear-gradient(var(--warm) calc(var(--fill, 0) * 100%), var(--line) 0); }
+  #research.railed .role::after { transition: background 0.4s, border-color 0.4s, transform 0.4s; }
+  #research.railed .role.reached::after { background: var(--warm); border-color: var(--warm); transform: scale(1.15); }
+}
+#research.railed .role .when { transition: color 0.4s; }
+#research.railed .role.reached .when { color: var(--warm); }
+
+/* sketch.js: the Skills icons trace their own lines in, one after another */
+.skill-icon.sketching path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.skill-icon.sketching.sketched path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s ease-in-out var(--d, 0s); }
+
+/* spine.js: The story on case studies is told one line at a time */
+.spine.telling::before { transform-origin: top; transform: scaleY(0); }
+.spine.telling > li { opacity: 0; transform: translateY(0.4rem); }
+.spine.telling.told::before { transform: none; transition: transform 2.8s ease-in-out 0.1s; }
+.spine.telling.told > li { opacity: 1; transform: none; transition: opacity 0.6s ease-out var(--d, 0s), transform 0.6s ease-out var(--d, 0s); }
+
+/* strip.js: Travel's colour strip fills in swatch by swatch, and a swatch lifts its trip's card */
+.color-script.filling a { opacity: 0; transform: translateY(6px); }
+.color-script.filling.filled a { opacity: 1; transform: none; transition: opacity 0.5s ease-out var(--d, 0s), transform 0.5s ease-out var(--d, 0s); }
+.photos.reel > .photo { transition: transform 0.25s ease-out; }
+.photos.reel > .photo.lifted { transform: translateY(-6px); }
+.photos.reel > .photo.lifted img { box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--text) 45%, transparent); border-color: var(--warm); }
+@media (prefers-reduced-motion: reduce) { .photos.reel > .photo { transition: none; } .photos.reel > .photo.lifted { transform: none; } }
