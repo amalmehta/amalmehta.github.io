@@ -1546,13 +1546,77 @@ def iraq():
     return svg("iraq", "".join(b), ("#f6c48e", "#fbe7c8"))
 
 
+# ---------------------------------------------------------------- Scuba diving (Sipadan, Palau): a reef wall, a sea turtle, a swirling school of fish
+def scuba():
+    rng = random.Random(116)
+    b = []
+    # Light from the surface: a bright band at the top and shafts fanning down
+    b.append(glow(520, 0, 760, 260, "#e8fbff", 0.55))
+    for _ in range(10):
+        x, w = rng.uniform(-150, W - 100), rng.uniform(30, 90)
+        b.append(poly([(x, 0), (x + w, 0), (x + w * 2.4 + 220, H), (x + 180, H)], "#ffffff", opacity="0.06"))
+    b.append(f'<path d="M0,26 C160,14 320,38 480,24 S800,12 960,28 S1120,36 1200,22 L1200,0 L0,0 Z" fill="#c9f0fb" opacity="0.6"/>')
+    # The reef wall dropping away on the right, with corals and sea fans on its ledges
+    wall = [(W, 0), (930, 0)] + [(900 + 40 * math.sin(y / 70) + rng.uniform(-14, 14), y) for y in range(40, H + 1, 40)] + [(W, H)]
+    b.append(poly(wall, "#173a4f"))
+    b.append(poly([(x + 60, y) for x, y in wall[2:-1]] + [(W, H), (W, 0)], "#12304a"))
+    for _ in range(46):
+        y = rng.uniform(60, H - 10)
+        x = 900 + 40 * math.sin(y / 70) + rng.uniform(-6, 120)
+        col = rng.choice(("#f28b6b", "#f6b26b", "#e86a92", "#b28be0", "#f2d36b", "#ff9f80"))
+        kind = rng.random()
+        if kind < 0.4:  # a sea fan
+            r = rng.uniform(26, 56)
+            b.append(f'<path d="M{x:.0f},{y:.0f} q{-r * 0.6:.0f},{-r * 0.5:.0f} {-r * 0.2:.0f},{-r:.0f} M{x:.0f},{y:.0f} q{-r * 0.1:.0f},{-r * 0.7:.0f} {r * 0.3:.0f},{-r * 0.95:.0f} M{x:.0f},{y:.0f} q{-r * 0.9:.0f},{-r * 0.2:.0f} {-r * 0.8:.0f},{-r * 0.7:.0f}" stroke="{col}" stroke-width="3" fill="none" opacity="0.85" stroke-linecap="round"/>')
+        elif kind < 0.75:  # a round coral head
+            b.append(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{rng.uniform(14, 30):.0f}" ry="{rng.uniform(9, 18):.0f}" fill="{col}" opacity="0.85"/>')
+        else:  # branching coral
+            for k in range(4):
+                a = math.radians(-150 + k * 35 + rng.uniform(-8, 8)); L = rng.uniform(18, 34)
+                b.append(f'<path d="M{x:.0f},{y:.0f} l{L * math.cos(a):.0f},{L * math.sin(a):.0f}" stroke="{col}" stroke-width="6" stroke-linecap="round" opacity="0.85"/>')
+    # Sand far below on the left
+    b.append(f'<path d="M0,720 C200,690 420,730 640,708 S860,700 960,720 L960,800 L0,800 Z" fill="#c9b58a" opacity="0.55"/>')
+    # A swirling school of fish, a tornado turning above the reef
+    for k in range(170):
+        t = k / 170
+        ang = t * 9 * math.pi + rng.uniform(-0.3, 0.3)
+        r = 50 + 120 * t + rng.uniform(-12, 12)
+        x, y = 640 + r * math.cos(ang) * 1.1, 180 + t * 280 + r * math.sin(ang) * 0.32
+        d = 1 if math.sin(ang) > 0 else -1
+        sz = rng.uniform(7, 11)
+        b.append(f'<path d="M{x:.0f},{y:.0f} q{d * sz:.1f},{-sz * 0.45:.1f} {d * sz * 2:.1f},0 q{-d * sz:.1f},{sz * 0.45:.1f} {-d * sz * 2:.1f},0 l{-d * sz * 0.7:.1f},{-sz * 0.4:.1f} l0,{sz * 0.8:.1f} Z" fill="{rng.choice(("#d8e6ee", "#b8ccd8", "#eef6fa"))}" opacity="0.85"/>')
+    # A green sea turtle gliding past
+    b.append('<g transform="translate(330,470) rotate(-14)">'
+             '<path d="M-40,-30 C-90,-80 -150,-90 -170,-70 C-130,-60 -90,-40 -60,-14 Z" fill="#5f7d4f"/>'
+             '<path d="M-40,30 C-80,70 -130,84 -150,70 C-110,58 -80,40 -56,18 Z" fill="#5f7d4f"/>'
+             '<path d="M60,-26 C90,-60 120,-66 136,-56 C110,-44 90,-30 74,-12 Z" fill="#5f7d4f"/>'
+             '<path d="M60,26 C84,52 104,58 118,52 C100,42 86,30 74,14 Z" fill="#5f7d4f"/>'
+             '<ellipse cx="0" cy="0" rx="92" ry="58" fill="#6b5a36"/>'
+             '<ellipse cx="0" cy="0" rx="80" ry="48" fill="#8a7444"/>'
+             '<path d="M-40,-30 L0,-44 L40,-30 L48,0 L40,30 L0,44 L-40,30 L-48,0 Z M0,-44 L0,44 M-48,0 L48,0 M-40,-30 L40,30 M40,-30 L-40,30" stroke="#5a4a2a" stroke-width="3" fill="none" opacity="0.7"/>'
+             '<ellipse cx="118" cy="-2" rx="30" ry="20" fill="#7b9662"/>'
+             '<circle cx="132" cy="-8" r="3.5" fill="#1b2a22"/>'
+             '<path d="M-90,6 L-118,12 L-92,18 Z" fill="#5f7d4f"/></g>')
+    # A diver on the wall, small and far off, with bubbles rising
+    b.append('<g transform="translate(820,520) rotate(8) scale(0.7)">'
+             '<rect x="-14" y="-12" width="44" height="16" rx="8" fill="#e7c34a"/>'
+             '<path d="M-50,0 C-20,-6 20,-6 46,0 C20,10 -20,10 -50,0 Z" fill="#1d2633"/>'
+             '<circle cx="54" cy="-2" r="11" fill="#1d2633"/><rect x="56" y="-8" width="12" height="9" rx="3" fill="#7fd0f0"/>'
+             '<path d="M-50,-2 L-88,-16 L-84,4 Z M-50,4 L-86,18 L-76,26 Z" fill="#2c7fb8"/></g>')
+    for k in range(9):
+        b.append(f'<circle cx="{866 + rng.uniform(-10, 10):.0f}" cy="{500 - k * 34:.0f}" r="{2.5 + k * 0.7:.1f}" fill="none" stroke="#e6f8fd" stroke-width="2" opacity="0.7"/>')
+    for _ in range(80):  # drifting motes
+        b.append(f'<circle cx="{rng.uniform(0, W):.0f}" cy="{rng.uniform(40, H):.0f}" r="{rng.uniform(1, 2.6):.1f}" fill="#e6f6fb" opacity="{rng.uniform(0.15, 0.45):.2f}"/>')
+    return svg("scuba", "".join(b), ("#3fb1d8", "#06233f"))
+
+
 PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofoten), ("patagonia", patagonia),
           ("bhutan", bhutan), ("samarkand", samarkand), ("pamir-highway", pamir_highway), ("faroe-islands", faroe),
           ("chamonix", chamonix), ("garibaldi", garibaldi), ("glacier-national-park", glacier), ("moorea", moorea),
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq), ("scuba", scuba))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:

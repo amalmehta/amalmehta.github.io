@@ -59,7 +59,7 @@ PINS = [
     ("been", "Erbil, Iraq", 36.19, 44.01, None),
     ("been", "Salkantay trek to Machu Picchu, Peru", -13.16, -72.55, "place-machu-picchu"),
     ("been", "Kilimanjaro, Tanzania", -3.08, 37.35, "place-kilimanjaro"),
-    ("been", "Scuba diving in Sipadan, Malaysia", 4.11, 118.63, None),
+    ("been", "Scuba diving in Sipadan, Malaysia", 4.11, 118.63, "place-scuba"),
     ("been", "Scuba diving in Palau", 7.50, 134.60, None),
     ("been", "Jaipur, India", 26.92, 75.79, None),
 ]
