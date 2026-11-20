@@ -17,9 +17,25 @@ def grad(gid, top, bottom, x2=0, y2=1):
             f'<stop offset="0" stop-color="{top}"/><stop offset="1" stop-color="{bottom}"/></linearGradient>')
 
 
+# Gentle motion inside the drawings (they're shown as images, so this runs on its own): clouds drift,
+# light shafts breathe, bubbles rise, a school of fish swirls, animals glide. Off with reduced motion.
+MOTION = ("<style>@media (prefers-reduced-motion: no-preference) {"
+          ".drift { animation: drift 40s ease-in-out infinite alternate; }"
+          ".shafts { animation: shafts 7s ease-in-out infinite alternate; }"
+          ".rise { animation: rise 5s linear infinite; }"
+          ".swirl { animation: swirl 10s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }"
+          ".glide { animation: glide 16s ease-in-out infinite alternate; } }"
+          "@keyframes drift { to { transform: translateX(70px); } }"
+          "@keyframes shafts { to { opacity: 0.5; } }"
+          "@keyframes rise { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(-140px); opacity: 0; } }"
+          "@keyframes swirl { to { transform: rotate(7deg) scale(1.05); } }"
+          "@keyframes glide { to { transform: translate(46px, -16px); } }</style>")
+
+
 def svg(name, body, sky, defs=""):
     top, bottom = sky
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">'
+    style = MOTION if any(f'class="{c}"' in body for c in ("drift", "shafts", "rise", "swirl", "glide")) else ""
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">{style}'
             f'<defs>{grad(name + "-sky", top, bottom)}{defs}</defs>'
             f'<rect width="{W}" height="{H}" fill="url(#{name}-sky)"/>{body}</svg>')
 
@@ -57,7 +73,7 @@ def clouds(rng, n, y0, y1, colour="#ffffff", opacity=0.55, x0=0, x1=W):
         for k in range(5):
             out.append(f'<ellipse cx="{cx + (k - 2) * w * 0.22 + rng.uniform(-10, 10):.0f}" cy="{cy - rng.uniform(0, 18):.0f}" '
                        f'rx="{w * rng.uniform(0.2, 0.32):.0f}" ry="{w * rng.uniform(0.07, 0.12):.0f}" fill="{colour}" opacity="{opacity}"/>')
-    return "".join(out)
+    return '<g class="drift">' + "".join(out) + "</g>"
 
 
 _glows = [0]
@@ -971,9 +987,11 @@ def tonga():
     b.append(f'<rect y="120" width="{W}" height="{H - 120}" fill="url(#tonga-water)"/>')
     b.append(clouds(rng, 3, 30, 90, opacity=0.8))
     # The surface seen from just below, and light shafts reaching down
+    b.append('<g class="shafts">')
     for _ in range(9):
         x, w = rng.uniform(-100, W), rng.uniform(30, 90)
         b.append(poly([(x, 120), (x + w, 120), (x + w * 2.6 + 160, H), (x + 140, H)], "#ffffff", opacity="0.07"))
+    b.append("</g>")
     b.append(f'<path d="M0,120 C150,108 300,132 450,120 S750,108 900,122 S1100,130 1200,118 L1200,134 C1050,146 900,130 750,140 S450,132 300,140 S100,130 0,138 Z" fill="#bfe7f6" opacity="0.8"/>')
     # A snorkeler at the surface, looking down
     b.append('<g transform="translate(830,150)">'
@@ -985,11 +1003,12 @@ def tonga():
              '<rect x="44" y="6" width="18" height="12" rx="4" fill="#7fd0f0" stroke="#1d2a36" stroke-width="3"/>'
              '<path d="M40,0 L40,-26" stroke="#f2c94c" stroke-width="4" stroke-linecap="round"/></g>')
     # Mother diving, calf following just above her
-    b.append(humpback(250, 650, 0.95, tilt=-24))
-    b.append(humpback(400, 360, 0.42, tilt=-20))
+    b.append('<g class="glide">' + humpback(250, 650, 0.95, tilt=-24) + humpback(400, 360, 0.42, tilt=-20) + "</g>")
     # Bubbles rising from the calf's blowhole and drifting motes
+    b.append('<g class="rise">')
     for k in range(8):
         b.append(f'<circle cx="{455 + rng.uniform(-8, 8):.0f}" cy="{300 - k * 20:.0f}" r="{3 + k * 0.6:.1f}" fill="none" stroke="#d6f1fb" stroke-width="2" opacity="0.7"/>')
+    b.append("</g>")
     for _ in range(70):
         b.append(f'<circle cx="{rng.uniform(0, W):.0f}" cy="{rng.uniform(150, H):.0f}" r="{rng.uniform(1, 2.6):.1f}" fill="#e6f6fb" opacity="{rng.uniform(0.15, 0.45):.2f}"/>')
     return svg("tonga", "".join(b), ("#7fc0e6", "#e6f4fa"), grad("tonga-water", "#3aa3d2", "#0a2c52"))
@@ -1552,9 +1571,11 @@ def scuba():
     b = []
     # Light from the surface: a bright band at the top and shafts fanning down
     b.append(glow(520, 0, 760, 260, "#e8fbff", 0.55))
+    b.append('<g class="shafts">')
     for _ in range(10):
         x, w = rng.uniform(-150, W - 100), rng.uniform(30, 90)
         b.append(poly([(x, 0), (x + w, 0), (x + w * 2.4 + 220, H), (x + 180, H)], "#ffffff", opacity="0.06"))
+    b.append("</g>")
     b.append(f'<path d="M0,26 C160,14 320,38 480,24 S800,12 960,28 S1120,36 1200,22 L1200,0 L0,0 Z" fill="#c9f0fb" opacity="0.6"/>')
     # The reef wall dropping away on the right, with corals and sea fans on its ledges
     wall = [(W, 0), (930, 0)] + [(900 + 40 * math.sin(y / 70) + rng.uniform(-14, 14), y) for y in range(40, H + 1, 40)] + [(W, H)]
@@ -1577,6 +1598,7 @@ def scuba():
     # Sand far below on the left
     b.append(f'<path d="M0,720 C200,690 420,730 640,708 S860,700 960,720 L960,800 L0,800 Z" fill="#c9b58a" opacity="0.55"/>')
     # A swirling school of fish, a tornado turning above the reef
+    b.append('<g class="swirl">')
     for k in range(170):
         t = k / 170
         ang = t * 9 * math.pi + rng.uniform(-0.3, 0.3)
@@ -1585,8 +1607,9 @@ def scuba():
         d = 1 if math.sin(ang) > 0 else -1
         sz = rng.uniform(7, 11)
         b.append(f'<path d="M{x:.0f},{y:.0f} q{d * sz:.1f},{-sz * 0.45:.1f} {d * sz * 2:.1f},0 q{-d * sz:.1f},{sz * 0.45:.1f} {-d * sz * 2:.1f},0 l{-d * sz * 0.7:.1f},{-sz * 0.4:.1f} l0,{sz * 0.8:.1f} Z" fill="{rng.choice(("#d8e6ee", "#b8ccd8", "#eef6fa"))}" opacity="0.85"/>')
+    b.append("</g>")
     # A green sea turtle gliding past
-    b.append('<g transform="translate(330,470) rotate(-14)">'
+    b.append('<g class="glide"><g transform="translate(330,470) rotate(-14)">'
              '<path d="M-40,-30 C-90,-80 -150,-90 -170,-70 C-130,-60 -90,-40 -60,-14 Z" fill="#5f7d4f"/>'
              '<path d="M-40,30 C-80,70 -130,84 -150,70 C-110,58 -80,40 -56,18 Z" fill="#5f7d4f"/>'
              '<path d="M60,-26 C90,-60 120,-66 136,-56 C110,-44 90,-30 74,-12 Z" fill="#5f7d4f"/>'
@@ -1596,15 +1619,17 @@ def scuba():
              '<path d="M-40,-30 L0,-44 L40,-30 L48,0 L40,30 L0,44 L-40,30 L-48,0 Z M0,-44 L0,44 M-48,0 L48,0 M-40,-30 L40,30 M40,-30 L-40,30" stroke="#5a4a2a" stroke-width="3" fill="none" opacity="0.7"/>'
              '<ellipse cx="118" cy="-2" rx="30" ry="20" fill="#7b9662"/>'
              '<circle cx="132" cy="-8" r="3.5" fill="#1b2a22"/>'
-             '<path d="M-90,6 L-118,12 L-92,18 Z" fill="#5f7d4f"/></g>')
+             '<path d="M-90,6 L-118,12 L-92,18 Z" fill="#5f7d4f"/></g></g>')
     # A diver on the wall, small and far off, with bubbles rising
     b.append('<g transform="translate(820,520) rotate(8) scale(0.7)">'
              '<rect x="-14" y="-12" width="44" height="16" rx="8" fill="#e7c34a"/>'
              '<path d="M-50,0 C-20,-6 20,-6 46,0 C20,10 -20,10 -50,0 Z" fill="#1d2633"/>'
              '<circle cx="54" cy="-2" r="11" fill="#1d2633"/><rect x="56" y="-8" width="12" height="9" rx="3" fill="#7fd0f0"/>'
              '<path d="M-50,-2 L-88,-16 L-84,4 Z M-50,4 L-86,18 L-76,26 Z" fill="#2c7fb8"/></g>')
+    b.append('<g class="rise">')
     for k in range(9):
         b.append(f'<circle cx="{866 + rng.uniform(-10, 10):.0f}" cy="{500 - k * 34:.0f}" r="{2.5 + k * 0.7:.1f}" fill="none" stroke="#e6f8fd" stroke-width="2" opacity="0.7"/>')
+    b.append("</g>")
     for _ in range(80):  # drifting motes
         b.append(f'<circle cx="{rng.uniform(0, W):.0f}" cy="{rng.uniform(40, H):.0f}" r="{rng.uniform(1, 2.6):.1f}" fill="#e6f6fb" opacity="{rng.uniform(0.15, 0.45):.2f}"/>')
     return svg("scuba", "".join(b), ("#3fb1d8", "#06233f"))
