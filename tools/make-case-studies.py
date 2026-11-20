@@ -309,6 +309,7 @@ def page(p, i):
   <link rel="stylesheet" href="styles.css">
   <script src="email.js" defer></script>
   <script src="updated.js" defer></script>
+  <script src="case.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#top">Skip to content</a>
