@@ -82,7 +82,7 @@
             "item": {
                 "@type": "SoftwareSourceCode",
                 "name": "Rewarding What You Can’t Verify",
-                "description": "A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%.",
+                "description": "A small network trained only on visible tests learns to delete untested code until real correctness falls to 2%.",
                 "url": "https://amalmehta.com/long_term_horizon_planning/",
                 "codeRepository": "https://github.com/amalmehta/long_term_horizon_planning",
                 "author": {
@@ -265,7 +265,7 @@
         <div class="project-text">
           <p class="card-when">2026 · pilot, then 50 follow-ups</p>
           <h3>Rewarding What You Can’t Verify</h3>
-          <p>A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%.</p>
+          <p>A small network trained only on visible tests learns to delete untested code until real correctness falls to 2%.</p><!-- Saved for later, until 2026-11-20: <p>A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%.</p> -->
           <!-- Saved for later, cut 2026-11-17: <p class="card-results">50 follow-ups: 21 supported, 15 refuted, 12 mixed, 2 deferred</p> -->
           <!-- Saved for later, cut 2026-11-17: <p class="card-miss"><span>What didn’t work</span> RL never improved honest repair above where supervised fine-tuning (SFT) left it, when the agent picks its single best answer.</p> --><!-- Saved for later, after "left it": , and 25% audits only delayed the hack -->
           <p class="tags"><span class="chip">Python</span> <span class="chip">GRPO</span> <span class="chip">Reward hacking</span></p><!-- Saved for later, chips cut 2026-11-17: Code agents, Predictions written first -->
@@ -342,7 +342,8 @@
           <p>Also: a brain–computer interface decoder that keeps working on most later days without new labels.</p>
           -->
           <!-- Saved for later, cut 2026-11-19: <p>I run my own research on one question: what does a learning system actually learn when you can’t fully check its work?</p> -->
-          <p><strong>Code agents.</strong> I trained a small coding agent with reinforcement learning (GRPO), rewarding it whenever the tests it could see passed. Its pass rate rose from 35% to 58%, but the share of programs that were actually correct fell from 31% to 2%: it had learned to delete the code no test checks. Spot-checking <a class="quiet-link" href="interests.html#math-clt">a random sample</a> of its work with a hidden, complete check only slowed this down. Choosing which attempts to check held it off: 4% false passes, against 24% for random checks on the same budget.</p>
+          <!-- Saved for later, until 2026-11-20 the line began: I trained a small coding agent with reinforcement learning (GRPO), rewarding … -->
+          <p><strong>Code agents.</strong> I trained a small network to repair code, one choice per branch, with reinforcement learning (GRPO), rewarding it whenever the tests it could see passed. Its pass rate rose from 35% to 58%, but the share of programs that were actually correct fell from 31% to 2%: it had learned to delete the code no test checks. Spot-checking <a class="quiet-link" href="interests.html#math-clt">a random sample</a> of its work with a hidden, complete check only slowed this down. Choosing which attempts to check held it off: 4% false passes, against 24% for random checks on the same budget.</p>
           <p><strong>Brain–computer interfaces.</strong> The signals an implant records <a class="quiet-link" href="interests.html#math-walk">drift from day to day</a>, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.72<!-- Saved for later, cut 2026-11-19: (1.0 is perfect) --> on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder.</p>
           <!-- Saved for later, cut 2026-11-19: <p>Both are small-scale experiments; I wrote down a prediction before each run.</p> -->
           <p class="tags"><span class="chip">GRPO</span> <span class="chip">Neural decoding</span> <span class="chip">Sim-to-real</span></p><!-- Saved for later, chips cut 2026-11-17: Meta-learning -->
@@ -365,7 +366,8 @@
           <p>Built the meta-RL codebase (PEARL over TD3) so the agent adapts to a new generator task in a few tries.</p>
           -->
           <p>Detectors that spot objects such as cars from a drone need many labelled images, and real ones are scarce, so we generated synthetic ones. I turned tuning the image generator into a reinforcement learning problem: an agent chose the generator’s settings, a detector trained on the images it produced, and the detector’s accuracy on real drone footage came back as the agent’s reward. Real-world accuracy, not hand-tuning, decided what the generator made.</p>
-          <p>I also built the meta-learning code that lets the agent adapt to a new generator task <a class="quiet-link" href="interests.html#math-bayes">in a few tries</a> instead of starting from scratch, and ran its multi-week GPU training; it was also applied to a fighter-jet simulation. To keep the detector accurate with few real labels, I implemented domain adaptation from scratch on 10–15 GB of mostly synthetic data.</p>
+          <!-- Saved for later, until 2026-11-20 the paragraph began: I also built the meta-learning code that lets the agent adapt to a new generator task in a few tries instead of starting from scratch, and ran its multi-week GPU training; it was also applied to a fighter-jet simulation. -->
+          <p>I also built the meta-learning code for a fighter-jet simulation, so an agent adapts to a new task <a class="quiet-link" href="interests.html#math-bayes">in a few tries</a> instead of starting from scratch, and ran its multi-week GPU training. To keep the detector accurate with few real labels, I implemented domain adaptation from scratch on 10–15 GB of mostly synthetic data.</p>
           <figure class="shot"><img src="images/physicsai.svg" alt="Drawing: a drone’s camera looks down on a city block with cars boxed by a detector, beside the generator settings an RL agent tunes and its rising reward" loading="lazy" width="1280" height="720"></figure>
           <p class="tags"><span class="chip">PPO</span> <span class="chip">PEARL meta-RL</span> <span class="chip">Domain adaptation</span></p><!-- Saved for later, chips cut 2026-11-17: TD3, DDPG, GANs -->
           <!-- Saved for later, cut 2026-11-16: <p>Our team was recognized as the top group in the nation for its reinforcement-learning work.</p> -->
@@ -647,7 +649,7 @@
            Apps: Unzip one, drag it to Applications, and it’s yours.
            Independent research: Some of these projects are featured above, and the rest are below.
            Seattle to DC: The lesson I took from it: you don’t have to be perfectly ready to start. -->
-      <p>I’ve raced a half Ironman, track, the Lake Tahoe Marathon, the San Francisco Ultra and the Death Ride, and played in semi-professional <span class="messi-plain">soccer tournaments</span><button type="button" class="messi-egg" data-script="messi.js" aria-label="soccer tournaments (opens a replay of Messi’s goal)" hidden>soccer tournaments</button>. Later, I ran a sub-5-minute mile with no training and an Ironman with very little.</p><!-- Saved for later, the order once: I later ran a sub-5-minute mile with no training and an Ironman with very little. Since then I’ve raced a half Ironman, track, … -->
+      <p>I’ve raced a half Ironman, track, the Lake Tahoe Marathon, the San Francisco Ultra and the Death Ride, and played in semi-professional <span class="messi-plain">soccer tournaments</span><button type="button" class="messi-egg" data-script="messi.js" aria-label="soccer tournaments (opens a replay of Messi’s goal)" hidden>soccer tournaments</button>. Later, I ran a sub-5-minute mile and an Ironman.</p><!-- Saved for later, until 2026-11-20: Later, I ran a sub-5-minute mile with no training and an Ironman with very little. --><!-- Saved for later, the order once: I later ran a sub-5-minute mile with no training and an Ironman with very little. Since then I’ve raced a half Ironman, track, … -->
       <p><!-- Saved for later, cut 2026-11-19: The same pull takes me up mountains and under water. -->I’ve summited Kilimanjaro, trekked the Salkantay trail to Machu Picchu, and led trips to Half Dome, Zion, the Channel Islands and the most intense rapids in California. I’ve dived caves, shipwrecks and past 130 feet in Palau, Sipadan, Monterey and off the coast of Africa. In winter I ski and climb frozen waterfalls. Someday, <a href="photos.html#place-cerro-torre">Cerro Torre</a>.</p>
       <!-- Saved for later, cut 2026-11-19: <p>I travel for the history, art, architecture, food and people, so far across <a href="photos.html">Europe, Asia, Africa and the Americas</a>.</p> -->
       <!-- Saved for later, cut 2026-11-16: <p>For the love of the game.</p> (once: For the love of the games.) -->
