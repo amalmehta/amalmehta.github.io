@@ -27,4 +27,5 @@ Copy `general/` to `companies/<company>/`, tailor it to the posting, add a `cove
 | idler | [Research Engineer](https://jobs.ashbyhq.com/idler/cce9ab39-0ab0-489d-bbf9-4df74c2baeee) | [`companies/idler/`](companies/idler/) | 2026-11-17 | Not sent |
 | Meta (contract via Spectraforce) | Software Engineer III, Simulation CV/ML, Sunnyvale | [`companies/meta-simulation/`](companies/meta-simulation/) | 2026-11-19 | Not sent |
 | Odyssey | [Member of Technical Staff, Forward Deployed Machine Learning Engineer](https://jobs.ashbyhq.com/odysseyml/1b82838a-f5c9-4246-86bf-f6f40993736b), Palo Alto | [`companies/odyssey/`](companies/odyssey/) | 2026-11-20 | Not sent |
+| RAI Institute | [Sim2Real Robotics Research Scientist, Manipulation](https://jobs.lever.co/rai/893052e9-0607-4e74-a44a-e5536eb08ad2), Cambridge MA | [`companies/rai/`](companies/rai/) | 2026-11-22 | Not sent |
 | Pre-seed SF robotics startup (via recruiter) | Robot learning, electronics manufacturing | [`companies/robotics-startup/`](companies/robotics-startup/) | 2026-11-19 | Not sent |
