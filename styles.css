@@ -1252,8 +1252,8 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
 #research.railed .role.reached .when { color: var(--warm); }
 
 /* sketch.js: the Skills icons trace their own lines in, one after another */
-.skill-icon.sketching path { stroke-dasharray: 1; stroke-dashoffset: 1; }
-.skill-icon.sketching.sketched path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s ease-in-out var(--d, 0s); }
+.skill-icon.sketching :is(path, circle, ellipse, line, polyline, rect) { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.skill-icon.sketching.sketched :is(path, circle, ellipse, line, polyline, rect) { stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s ease-in-out var(--d, 0s); }
 
 /* spine.js: The story on case studies is told one line at a time */
 .spine.telling::before { transform-origin: top; transform: scaleY(0); }
@@ -1324,3 +1324,18 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
   }
 }
 @keyframes ribbon-down { from { transform: scaleY(0); } to { transform: none; } }
+
+/* tilt.js: each Featured project's picture leans gently toward the cursor */
+.project .shot { transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
+.project:hover .shot { transform: perspective(900px) translateY(-2px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); }
+@media (prefers-reduced-motion: reduce) { .project .shot, .project:hover .shot { transform: none; } }
+
+/* map.js: a small card with the place's drawing floats above the pin you point at */
+.pin-preview { position: absolute; z-index: 3; width: 160px; padding: 5px 5px 6px; border-radius: 9px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 12px 28px -12px rgb(0 0 0 / 0.4); pointer-events: none; opacity: 0; transform: translate(-50%, calc(-100% - 14px)) scale(0.94); transform-origin: 50% 100%; transition: opacity 0.18s ease-out, transform 0.18s ease-out; }
+.pin-preview.below { transform: translate(-50%, 26px) scale(0.94); transform-origin: 50% 0; }
+.pin-preview.shown { opacity: 1; transform: translate(-50%, calc(-100% - 14px)); }
+.pin-preview.below.shown { transform: translate(-50%, 26px); }
+.pin-preview img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; border-radius: 6px; }
+.pin-preview span { display: block; margin-top: 5px; font-size: 0.74rem; font-weight: 600; line-height: 1.25; color: var(--text); text-align: center; }
+@media (prefers-reduced-motion: reduce) { .pin-preview { transition: none; } }
+@media print { .pin-preview { display: none; } }

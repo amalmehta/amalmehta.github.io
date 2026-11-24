@@ -26,3 +26,37 @@
   }, { threshold: 0.3 });
   io.observe(map);
 })();
+
+// Travel map: pointing at a pin (or focusing it) floats a small card above it with that place's drawing and
+// name, so you can see where it goes before clicking. Mouse, pen and keyboard; touch just follows the link.
+(() => {
+  const map = document.querySelector(".travel-map");
+  if (!map) return;
+  const card = document.createElement("div");
+  card.className = "pin-preview";
+  card.setAttribute("aria-hidden", "true");
+  card.innerHTML = '<img alt="" width="1200" height="800"><span></span>';
+  map.style.position = "relative";
+  map.appendChild(card);
+  const img = card.querySelector("img"), label = card.querySelector("span");
+  const show = a => {
+    const place = document.getElementById((a.getAttribute("href") || "").slice(1));
+    const src = place?.querySelector("img")?.getAttribute("src");
+    if (!src) return;
+    if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+    label.textContent = place.querySelector("figcaption strong")?.textContent || "";
+    const dot = (a.querySelector(".pin-dot") || a).getBoundingClientRect(), box = map.getBoundingClientRect();
+    const x = dot.left + dot.width / 2 - box.left, y = dot.top - box.top;
+    card.style.left = `${Math.min(Math.max(x, 90), box.width - 90).toFixed(0)}px`;
+    card.style.top = `${y.toFixed(0)}px`;
+    card.classList.toggle("below", y < 150);  // near the top edge: show it under the pin instead
+    card.classList.add("shown");
+  };
+  const hide = () => card.classList.remove("shown");
+  for (const a of map.querySelectorAll('svg a[href^="#place-"]')) {
+    a.addEventListener("pointerenter", e => { if (e.pointerType !== "touch") show(a); });
+    a.addEventListener("pointerleave", hide);
+    a.addEventListener("focus", () => show(a));
+    a.addEventListener("blur", hide);
+  }
+})();

@@ -1321,6 +1321,114 @@ def kobe():
     return wrap(defs, body)
 
 
+def neistat():
+    """Casey Neistat riding an electric skateboard down a Manhattan avenue at dusk: black wayfarers, black tee,
+    messy hair, his vlog camera on a bendy tripod held out to film himself, a yellow cab, a rooftop water tower
+    and DO MORE sprayed on the wall."""
+    rng = random.Random(7)
+    vx, vy = 600, 340  # where the avenue meets the sky
+    defs = ('<linearGradient id="nsky" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0" stop-color="#2d2f5e"/><stop offset="0.55" stop-color="#9a5a86"/><stop offset="1" stop-color="#f4a25a"/></linearGradient>'
+            '<linearGradient id="nroad" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0" stop-color="#5d5566"/><stop offset="1" stop-color="#2a2730"/></linearGradient>'
+            '<radialGradient id="nglow" cx="0.5" cy="0.5" r="0.5">'
+            '<stop offset="0" stop-color="#ffd29a" stop-opacity="0.75"/><stop offset="1" stop-color="#ffd29a" stop-opacity="0"/></radialGradient>')
+    body = [f'<rect width="{W}" height="{vy + 20}" fill="url(#nsky)"/>',
+            f'<ellipse cx="{vx}" cy="{vy}" rx="260" ry="90" fill="url(#nglow)"/>']
+    # Far towers at the end of the avenue, one taller with a spire
+    x = 470
+    for w, h in ((40, 120), (34, 170), (46, 140), (30, 230), (52, 150), (38, 190), (44, 130)):
+        body.append(f'<rect x="{x}" y="{vy - h}" width="{w}" height="{h + 20}" fill="#3a3352" opacity="0.85"/>')
+        x += w
+    body.append(f'<line x1="{470 + 40 + 34 + 46 + 15}" y1="{vy - 230}" x2="{470 + 40 + 34 + 46 + 15}" y2="{vy - 285}" stroke="#3a3352" stroke-width="4"/>')
+    # The avenue running away from us, its centre line and a crosswalk near the front
+    body.append(f'<polygon points="{pts([(-200, H), (W + 200, H), (vx + 40, vy), (vx - 40, vy)])}" fill="url(#nroad)"/>')
+    for k in range(12):
+        t0, t1 = (k / 12) ** 1.8, ((k + 0.55) / 12) ** 1.8
+        y0, y1 = vy + (H - vy) * t0, vy + (H - vy) * t1
+        body.append(f'<polygon points="{pts([(vx - 2 - 10 * t0, y0), (vx + 2 + 10 * t0, y0), (vx + 2 + 10 * t1, y1), (vx - 2 - 10 * t1, y1)])}" fill="#f2c94c" opacity="0.85"/>')
+    for k in range(9):
+        cx = 180 + k * 105
+        body.append(f'<polygon points="{pts([(cx - 30, 742), (cx + 30, 742), (cx + 36, 780), (cx - 36, 780)])}" fill="#e9e4da" opacity="0.55"/>')
+    # Buildings down both sides, their windows lit
+    for side in (-1, 1):
+        edge = 0 if side < 0 else W
+        for k in range(5):
+            t0, t1 = k / 5, (k + 1) / 5
+            near = lambda t: edge + (vx - 60 * side - edge) * t
+            xa, xb = near(t0 * 0.85), near(t1 * 0.85)
+            top_a, top_b = 170 + (vy - 230) * t0 * 0.85, 170 + (vy - 230) * t1 * 0.85
+            bot_a, bot_b = H - 120 - (H - 120 - vy) * t0 * 0.85, H - 120 - (H - 120 - vy) * t1 * 0.85
+            shade = ["#2e2a3d", "#36304a", "#2b2738", "#3a3350", "#312c42"][k]
+            body.append(f'<polygon points="{pts([(xa, top_a - 40 * (1 - t0)), (xb, top_b), (xb, bot_b), (xa, bot_a)])}" fill="{shade}"/>')
+            for r in range(9):
+                for c in range(3):
+                    if rng.random() < 0.45:
+                        u = (c + 0.5) / 3
+                        wx = xa + (xb - xa) * u
+                        ty = top_a + (top_b - top_a) * u + 30 + r * ((bot_a + (bot_b - bot_a) * u) - (top_a + (top_b - top_a) * u) - 60) / 9
+                        sz = 10 * (1 - (t0 + (t1 - t0) * u) * 0.8)
+                        body.append(f'<rect x="{wx - sz / 2:.1f}" y="{ty:.1f}" width="{sz:.1f}" height="{sz * 1.3:.1f}" fill="#ffd27a" opacity="0.8"/>')
+    # A yellow cab coming up the avenue behind him
+    cx0 = 500
+    body.append(f'<rect x="{cx0}" y="404" width="58" height="28" rx="6" fill="#f2c230"/><rect x="{cx0 + 12}" y="394" width="34" height="14" rx="4" fill="#f2c230"/>'
+                f'<rect x="{cx0 + 16}" y="397" width="26" height="9" rx="2" fill="#3a3b4a"/><circle cx="{cx0 + 11}" cy="433" r="6" fill="#1c1b22"/><circle cx="{cx0 + 48}" cy="433" r="6" fill="#1c1b22"/>'
+                f'<circle cx="{cx0 + 5}" cy="418" r="3" fill="#fff4d0"/><circle cx="{cx0 + 54}" cy="418" r="3" fill="#fff4d0"/>')
+    # Speed lines streaming past
+    for k in range(7):
+        y = 520 + k * 26
+        body.append(f'<line x1="{170 + rng.randint(0, 80)}" y1="{y}" x2="{330 + rng.randint(0, 60)}" y2="{y - 6}" stroke="#f4ead8" stroke-width="3" stroke-linecap="round" opacity="0.35"/>')
+    # The board, its shadow and wheels
+    x, y = 600, 690
+    body.append(f'<ellipse cx="{x}" cy="{y + 26}" rx="120" ry="14" fill="#141218" opacity="0.6"/>')
+    body.append(f'<rect x="{x - 110}" y="{y}" width="220" height="16" rx="8" fill="#3b3d46"/>'
+                f'<rect x="{x - 96}" y="{y + 14}" width="52" height="8" rx="3" fill="#24252c"/><rect x="{x + 44}" y="{y + 14}" width="52" height="8" rx="3" fill="#24252c"/>')
+    for wx in (x - 84, x - 56, x + 56, x + 84):
+        body.append(f'<circle cx="{wx}" cy="{y + 24}" r="9" fill="#e8873a"/><circle cx="{wx}" cy="{y + 24}" r="3" fill="#2a2730"/>')
+    # "DO MORE" sprayed on the wall on the left, in drippy white paint
+    body.append('<g transform="translate(108 470) rotate(-17) skewX(-8)" opacity="0.85">'
+                '<text x="0" y="0" text-anchor="middle" font-family="Impact, Arial Black, Arial, sans-serif" font-size="46" fill="#f4f1ea" letter-spacing="3">DO MORE</text>')
+    for dx, h in ((-70, 16), (-24, 26), (12, 12), (50, 22), (82, 15)):
+        body.append(f'<rect x="{dx}" y="2" width="3.5" height="{h}" rx="1.75" fill="#f4f1ea"/>')
+    body.append('</g>')
+    # A rooftop water tower on the right, very New York
+    body.append('<g transform="translate(0 34)" fill="#1e1a2b" stroke="#1e1a2b"><rect x="1080" y="62" width="62" height="52" rx="5" stroke="none"/><polygon points="1074,64 1111,34 1148,64" stroke="none"/>'
+                '<line x1="1086" y1="114" x2="1082" y2="140" stroke-width="5"/><line x1="1136" y1="114" x2="1140" y2="140" stroke-width="5"/>'
+                '<line x1="1084" y1="128" x2="1138" y2="128" stroke-width="3"/></g>'
+                '<g transform="translate(0 34)" stroke="#2c2740" stroke-width="2">' + ''.join(f'<line x1="{1080 + k * 10}" y1="66" x2="{1080 + k * 10}" y2="112"/>' for k in range(1, 7)) + '</g>')
+    # Him: legs apart for balance, black tee, grey trousers, one arm out with the vlog camera pointed back at him
+    skin, tee, trousers = "#e2b48f", "#1b1b20", "#7d7a72"
+    for leg in (((x - 14, 540), (x - 40, 610), (x - 62, 690)), ((x + 14, 540), (x + 34, 612), (x + 58, 690))):
+        body.append(f'<polyline points="{pts(leg)}" fill="none" stroke="{trousers}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>')
+        fx, fy = leg[-1]
+        body.append(f'<rect x="{fx - 21}" y="{fy - 12}" width="42" height="14" rx="6" fill="#f2efe8"/><rect x="{fx - 21}" y="{fy - 1}" width="42" height="4" rx="2" fill="#c9c4b8"/>')
+    body.append(f'<rect x="{x - 36}" y="420" width="72" height="130" rx="20" fill="{tee}"/>')
+    body.append(f'<polyline points="{pts([(x - 30, 440), (x - 70, 500), (x - 92, 548)])}" fill="none" stroke="{skin}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>')
+    body.append(f'<polyline points="{pts([(x + 30, 440), (x + 106, 424), (x + 172, 410)])}" fill="none" stroke="{skin}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>')
+    # The camera on a bendy tripod, legs wrapped round as a handle, a shotgun mic on top, lens turned to his face
+    cx, cy = x + 196, 384
+    for k, (dx, dy) in enumerate(((-8, 30), (2, 34), (12, 30))):
+        body.append(f'<path d="M{cx + dx / 3:.0f} {cy + 14} q{dx} {dy / 2:.0f} {dx - 10} {dy}" fill="none" stroke="#2a2a30" stroke-width="7" stroke-linecap="round"/>')
+        for b in range(3):
+            body.append(f'<circle cx="{cx + dx / 3 + (dx - 10) * (b + 1) / 4:.1f}" cy="{cy + 14 + dy * (b + 1) / 4:.1f}" r="4" fill="#3d3d45"/>')
+    body.append(f'<rect x="{cx - 24}" y="{cy - 14}" width="48" height="32" rx="6" fill="#2b2c34"/><rect x="{cx - 24}" y="{cy - 14}" width="48" height="6" rx="3" fill="#3c3d47"/>')
+    body.append(f'<circle cx="{cx - 22}" cy="{cy + 2}" r="11" fill="#1a1b22" stroke="#55607a" stroke-width="4"/><circle cx="{cx - 24}" cy="{cy}" r="3" fill="#9fb4d8"/>')
+    body.append(f'<rect x="{cx - 30}" y="{cy - 30}" width="52" height="11" rx="5.5" fill="#1d1e24"/><rect x="{cx - 34}" y="{cy - 31}" width="12" height="13" rx="4" fill="#3a3b44"/>'
+                f'<rect x="{cx - 4}" y="{cy - 20}" width="6" height="8" fill="#1d1e24"/><circle cx="{cx + 14}" cy="{cy - 6}" r="2.5" fill="#e5483a"/>')
+    # Neck, head, the messy swept hair, stubble and the black wayfarer sunglasses
+    body.append(f'<rect x="{x - 10}" y="398" width="20" height="26" fill="{skin}"/>')
+    body.append(f'<circle cx="{x}" cy="372" r="34" fill="{skin}"/>')
+    body.append(f'<path d="M{x - 30} 388 q30 30 60 0 q-6 14 -30 16 q-24 -2 -30 -16z" fill="#6b4b38" opacity="0.45"/>')
+    body.append(f'<path d="M{x - 36} 372 q-6 -36 20 -48 q-4 10 4 12 q2 -18 22 -20 q-2 10 6 12 q8 -14 24 -6 q-10 4 -6 10 q14 4 8 30 '
+                f'q-6 -16 -22 -20 q-18 -4 -34 2 q-12 6 -16 24 q-4 4 -6 4z" fill="#4e3324"/>')
+    body.append(f'<polygon points="{pts([(x - 30, 360), (x - 3, 360), (x - 6, 378), (x - 26, 378)])}" fill="#0e0e12"/>'
+                f'<polygon points="{pts([(x + 3, 360), (x + 30, 360), (x + 26, 378), (x + 6, 378)])}" fill="#0e0e12"/>'
+                f'<rect x="{x - 32}" y="357" width="64" height="5" rx="2" fill="#0e0e12"/>'
+                f'<line x1="{x - 24}" y1="364" x2="{x - 15}" y2="364" stroke="#5c6376" stroke-width="2"/><line x1="{x + 9}" y1="364" x2="{x + 18}" y2="364" stroke="#5c6376" stroke-width="2"/>')
+    body.append(f'<path d="M{x - 9} 391 q9 7 18 0" fill="none" stroke="#7a4a36" stroke-width="3" stroke-linecap="round"/>')
+    return wrap(defs, body)
+
+
 DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-blackboard": feynman,
             "kipchoge-vienna": kipchoge, "honnold-el-capitan": honnold, "alcaraz-wimbledon": alcaraz,
             "neuralink-chess": neuralink, "jobs-empty-room": jobs,
@@ -1329,7 +1437,7 @@ DRAWINGS = {"messi-world-cup": messi, "alphago-lee-sedol": alphago, "feynman-bla
             "maps-earth": maps_earth, "grateful-garden": grateful_garden, "waymo-crosswalk": waymo,
             "zimmer-studio": zimmer, "nolan-folding-city": nolan,
             "finn-robot-arm": finn, "kalanithi-desk": kalanithi,
-            "langer-chip": langer, "hamming-chalkboard": hamming, "kobe-gym": kobe}
+            "langer-chip": langer, "hamming-chalkboard": hamming, "kobe-gym": kobe, "neistat-boosted": neistat}
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
