@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Robot Soccer · Amal Mehta</title>
+  <meta name="theme-color" content="#f8f3ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161412" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <meta name="description" content="One reinforcement-learning policy walks a Unitree Go1 robot dog to a ball, kicks it at a target and stays balanced; trained only in simulation, it hit the target about 60% of the time on the real robot.">
+  <link rel="canonical" href="https://amalmehta.com/project-robot-soccer.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Amal Mehta">
+  <meta property="og:url" content="https://amalmehta.com/project-robot-soccer.html">
+  <meta property="og:title" content="Robot Soccer · Amal Mehta">
+  <meta property="og:description" content="One reinforcement-learning policy walks a Unitree Go1 robot dog to a ball, kicks it at a target and stays balanced; trained only in simulation, it hit the target about 60% of the time on the real robot.">
+  <meta property="og:image" content="https://amalmehta.com/images/og-project-robot-soccer.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Robot Soccer: the deep dive, from the question to what didn’t work">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="Robot Soccer: the deep dive, from the question to what didn’t work">
+  <link rel="preload" href="fonts/newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="email.js" defer></script>
+  <script src="updated.js" defer></script>
+  <script src="nav.js" defer></script>
+  <script src="case.js" defer></script>
+  <script src="spine.js" defer></script>
+  <script src="countup.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#top">Skip to content</a>
+  <header class="site-header">
+    <nav class="wrap nav">
+      <span class="nav-brand"><a class="nav-name" href="index.html">Amal Mehta</a><a class="nav-status" href="https://github.com/amalmehta/PortfolioWebsite/commits/main/" title="See every change on GitHub">Evolving site · <time datetime="2026-11">Nov 2026</time></a></span>
+      <div class="nav-links">
+        <a href="index.html">Profile</a>
+        <a href="index.html#featured" aria-current="true">Projects</a>
+        <a href="interests.html">Interests</a>
+        <a href="writings.html">Writings</a>
+        <a href="resume/amal-mehta-resume.pdf" type="application/pdf">Resume <span class="file">PDF</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Built by tools/make-case-studies.py; edit the content there, not here. -->
+  <main id="top" class="wrap page case">
+    <header class="page-head">
+      <p class="card-when">2023 – 2024 · Hybrid Robotics Lab, UC Berkeley; research report</p>
+      <h1>Robot Soccer</h1>
+      <p class="case-hook">One reinforcement-learning policy walks a Unitree Go1 robot dog to a ball, kicks it at a target and stays balanced; trained only in simulation, it hit the target about 60% of the time on the real robot.</p>
+      <p class="links"><a href="papers/robot-soccer-thesis.pdf" type="application/pdf">Report (PDF, 330 KB) →</a></p>
+    </header>
+
+    <section class="case-part">
+      <h2 class="section-title">The question</h2>
+      <p>Kicking a ball at a target is really three skills in a row: get to the ball, kick it the right way, and don’t fall over afterwards. Earlier work in the lab split this into separate policies, one per skill, with the kick following a planned curve.</p>
+      <p>The question is whether a single policy can learn the whole task.</p>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">Setup</h2>
+      <p>A Unitree Go1, a small four-legged robot, trained with PPO in IsaacGym, a GPU simulator that runs thousands of robots at once. Each episode places a ball and a randomly chosen target. The policy sees the robot’s position, orientation and joint angles, where the ball started, where it is now, and the target.</p>
+      <p>Walking comes from a central pattern generator, which gives each leg a rhythmic path to follow: a trot at 0.5 m/s with diagonal legs in step. To kick, the target speed drops to zero and the legs stop stepping, so the robot stands instead of marching in place. My part was the stage-switching rewards and the gait tracking.</p>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">How it works</h2>
+      <ol class="flow">
+        <li>A status flag reads two distances</li>
+        <li>Track: trot to the ball, facing it</li>
+        <li>Kick: stop, send the ball toward the target</li>
+        <li>Hold: stay balanced while the ball travels</li>
+        <li>The rewards grow from stage to stage</li>
+        <li>Trained in IsaacGym, run on the real Go1</li>
+      </ol>
+      <p class="flow-note">Far from the ball means track. Close, with the ball still where it started, means kick. Once the ball has moved, it’s hold. Until a stage needs them, the ball’s live position and the target are fed in as zeros, so the input never changes size.</p>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">Results</h2>
+      <div class="stats">
+        <div class="stat"><strong>~60%</strong><span>of kicks hit the target on the real Go1</span></div>
+        <div class="stat"><strong>1</strong><span>policy for all three stages</span></div>
+        <div class="stat"><strong>0</strong><span>real-world training before it ran on the robot</span></div>
+      </div>
+      <p>Trained only in simulation, the policy ran on the real Go1 and hit the target about 60% of the time, going from walking to kicking to holding still as one network.</p>
+      <p>Each kick was judged on how far the ball ended from the target, the direction it left in, how long it took to get there, and whether the robot stayed steady afterwards.</p>
+      <figure class="case-figure">
+        <img src="images/robot-soccer.svg" alt="Drawing: a four-legged robot dog kicks a soccer ball along an arc into a target in a goal, on a simulation grid" loading="lazy" width="1280" height="720">
+        <figcaption>Drawing: a four-legged robot dog kicks a soccer ball along an arc into a target in a goal, on a simulation grid.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">What didn’t work</h2>
+      <p>The report gives the 60% without a trial count or a side-by-side comparison with the earlier multi-policy system, so it shows the approach works, not that it’s better.</p>
+      <p>Simulation can’t fully reproduce the ball’s friction on the ground, how it deforms when kicked, or sensor noise. I prototyped RLPD, fine-tuning the simulated policy on real robot runs, but it isn’t part of the reported result.</p>
+    </section>
+
+    <section class="case-part">
+      <h2 class="section-title">What’s next</h2>
+      <p>Track the ball and target with a camera, and finish the RLPD fine-tuning on real runs.</p>
+    </section>
+
+    <nav class="case-nav" aria-label="Other projects">
+      <a href="project-post-training.html">← Post Training Lab</a>
+      <a href="index.html#hybrid-robotics">Back to the profile</a>
+      <a href="project-rewarding.html">Rewarding What You Can’t Verify →</a>
+    </nav>
+  </main>
+
+  <footer class="wrap footer">
+    <p>Amal Mehta · <a href="https://reachouts.me/?u=amal">Get in touch</a> · <a class="email" href="https://reachouts.me/?u=amal" data-u="amal.mehta" data-d="gmail.com">amal.mehta [at] gmail.com</a> · <a rel="me" href="https://www.linkedin.com/in/amal-mehta-264413a9/">LinkedIn</a> · <a rel="me" href="https://github.com/amalmehta">GitHub</a> · <a href="thinking.html">Things I’m thinking about</a> · <a href="photos.html">Travel</a> · <a href="interests.html">Interests</a> · <a href="writings.html">Writings</a> · <a href="values.html">What I try to live by</a> · <a href="feed.xml">RSS</a></p>
+    <dl class="credits" aria-label="Credits"><div><dt>Written and directed by</dt><dd>Amal Mehta</dd></div><div><dt>Drawings</dt><dd>tools/draw-places.py</dd></div><div><dt>Tested</dt><dd>on every push</dd></div></dl><!-- Saved for later, the sign-off before the credits: <p class="signoff">Thanks for stopping by.</p> -->
+    <!-- Saved for later, once beside the sign-off: <span class="secrets">There are eight secrets here.</span> -->
+    <!-- Saved for later, the footer notes: <p class="footer-note">No trackers, no cookies.</p> <p class="footer-note">Plain HTML and CSS, tested on every push. <a href="https://github.com/amalmehta/PortfolioWebsite">Source on GitHub</a>.</p> -->
+  </footer>
+</body>
+</html>
