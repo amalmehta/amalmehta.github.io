@@ -245,6 +245,36 @@ PAGES = [
         "figure": ("post-training", 1200, 635, "Training curves across 3 seeds: GRPO climbs from the SFT starting point while RL from scratch stays at zero"),
         "links": [("Live demo: race the checkpoints", "https://amalmehta.com/PostTrainingLab/"), ("Code and write-up on GitHub", "https://github.com/amalmehta/PostTrainingLab")],
     },
+    {
+        "slug": "robot-soccer", "card": "hybrid-robotics",
+        "title": "Robot Soccer",
+        "when": "2023 – 2024 · Hybrid Robotics Lab, UC Berkeley; research report",
+        "hook": "One reinforcement-learning policy walks a Unitree Go1 robot dog to a ball, kicks it at a target and stays balanced; trained only in simulation, it hit the target about 60% of the time on the real robot.",
+        "question": [
+            "Kicking a ball at a target is really three skills in a row: get to the ball, kick it the right way, and don’t fall over afterwards. Earlier work in the lab split this into separate policies, one per skill, with the kick following a planned curve.",
+            "The question is whether a single policy can learn the whole task.",
+        ],
+        "setup": [
+            "A Unitree Go1, a small four-legged robot, trained with PPO in IsaacGym, a GPU simulator that runs thousands of robots at once. Each episode places a ball and a randomly chosen target. The policy sees the robot’s position, orientation and joint angles, where the ball started, where it is now, and the target.",
+            "Walking comes from a central pattern generator, which gives each leg a rhythmic path to follow: a trot at 0.5 m/s with diagonal legs in step. To kick, the target speed drops to zero and the legs stop stepping, so the robot stands instead of marching in place. My part was the stage-switching rewards and the gait tracking.",
+        ],
+        "flow": ["A status flag reads two distances", "Track: trot to the ball, facing it", "Kick: stop, send the ball toward the target",
+                 "Hold: stay balanced while the ball travels", "The rewards grow from stage to stage", "Trained in IsaacGym, run on the real Go1"],
+        "flow_note": "Far from the ball means track. Close, with the ball still where it started, means kick. Once the ball has moved, it’s hold. Until a stage needs them, the ball’s live position and the target are fed in as zeros, so the input never changes size.",
+        "stats": [("~60%", "of kicks hit the target on the real Go1"), ("1", "policy for all three stages"),
+                  ("0", "real-world training before it ran on the robot")],
+        "results": [
+            "Trained only in simulation, the policy ran on the real Go1 and hit the target about 60% of the time, going from walking to kicking to holding still as one network.",
+            "Each kick was judged on how far the ball ended from the target, the direction it left in, how long it took to get there, and whether the robot stayed steady afterwards.",
+        ],
+        "missed": [
+            "The report gives the 60% without a trial count or a side-by-side comparison with the earlier multi-policy system, so it shows the approach works, not that it’s better.",
+            "Simulation can’t fully reproduce the ball’s friction on the ground, how it deforms when kicked, or sensor noise. I prototyped RLPD, fine-tuning the simulated policy on real robot runs, but it isn’t part of the reported result.",
+        ],
+        "next": ["Track the ball and target with a camera, and finish the RLPD fine-tuning on real runs."],
+        "figure": ("robot-soccer.svg", 1280, 720, "Drawing: a four-legged robot dog kicks a soccer ball along an arc into a target in a goal, on a simulation grid"),
+        "links": [("Report (PDF, 330 KB)", "papers/robot-soccer-thesis.pdf")],
+    },
 ]
 
 
@@ -257,12 +287,18 @@ def page(p, i):
     url = f"{SITE}project-{p['slug']}.html"
     desc = e(p["hook"])
     name, w, h, alt = p["figure"]
+    if name.endswith(".svg"):  # a drawing already on the site: no AVIF/WebP variants needed
+        figure_img = f'<img src="images/{name}" alt="{e(alt)}" loading="lazy" width="{w}" height="{h}">'
+    else:
+        figure_img = (f'<picture><source type="image/avif" srcset="images/case/{name}.avif"><source type="image/webp" srcset="images/case/{name}.webp">'
+                      f'<img src="images/case/{name}.webp" alt="{e(alt)}" loading="lazy" width="{w}" height="{h}"></picture>')
     prev_p, next_p = PAGES[i - 1], PAGES[(i + 1) % len(PAGES)]
     flow = "\n".join(f"        <li>{e(s)}</li>" for s in p["flow"])
     stats = "\n".join(f'        <div class="stat"><strong>{e(v)}</strong><span>{e(k)}</span></div>' for v, k in p["stats"])
     notes = ("\n      <ul class=\"case-notes\">\n" + "\n".join(f"        <li>{n}</li>" for n in p["notes"]) + "\n      </ul>") if p.get("notes") else ""
     flow_note = f'\n      <p class="flow-note">{e(p["flow_note"])}</p>' if p.get("flow_note") else ""
-    links = " ".join(f'<a href="{u}">{e(t)} →</a>' for t, u in p["links"])
+    pdf = lambda u: ' type="application/pdf"' if u.endswith(".pdf") and not u.startswith("http") else ""  # a PDF on this site
+    links = " ".join(f'<a href="{u}"{pdf(u)}>{e(t)} →</a>' for t, u in p["links"])
     spine = ""
     if p.get("spine"):
         board = ""
@@ -362,7 +398,7 @@ def page(p, i):
       </div>
 {paras(p["results"])}{notes}
       <figure class="case-figure">
-        <picture><source type="image/avif" srcset="images/case/{name}.avif"><source type="image/webp" srcset="images/case/{name}.webp"><img src="images/case/{name}.webp" alt="{e(alt)}" loading="lazy" width="{w}" height="{h}"></picture>
+        {figure_img}
         <figcaption>{e(alt)}.</figcaption>
       </figure>
     </section>
