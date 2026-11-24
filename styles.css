@@ -1339,3 +1339,12 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
 .pin-preview span { display: block; margin-top: 5px; font-size: 0.74rem; font-weight: 600; line-height: 1.25; color: var(--text); text-align: center; }
 @media (prefers-reduced-motion: reduce) { .pin-preview { transition: none; } }
 @media print { .pin-preview { display: none; } }
+
+/* nav.js: the section title a link lands you on glows warm for a moment */
+.section-title.arrived { animation: arrived 1.8s ease-out; }
+@keyframes arrived { 0%, 25% { color: var(--warm); text-shadow: 0 0 14px color-mix(in srgb, var(--warm) 45%, transparent); } 100% { text-shadow: 0 0 14px transparent; } }
+@media (prefers-reduced-motion: reduce) { .section-title.arrived { animation: none; } }
+
+/* nav.js: the bike that rides along the footer's ridge once */
+.footer-bike { position: absolute; left: 0; top: 0; width: 28px; height: 17px; color: color-mix(in srgb, var(--warm) 80%, var(--text)); transform-origin: 14px 17px; pointer-events: none; opacity: 0; }
+@media print { .footer-bike { display: none; } }

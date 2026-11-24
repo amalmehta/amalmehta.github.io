@@ -1,6 +1,7 @@
 // Every page's top menu: the warm underline under the page you're on glides to whichever link you point at,
 // and slides back when the pointer leaves the menu. Without JS the underline simply sits under the current page;
-// with reduced motion it moves without gliding. Below it: the back-to-top ring for long pages.
+// with reduced motion it moves without gliding. Below it: the back-to-top ring for long pages, the glow on
+// whatever a link lands you on, and the bike that rides along the footer's ridge.
 (() => {
   const links = document.querySelector(".nav-links");
   if (!links || !matchMedia("(hover: hover)").matches) return;
@@ -53,4 +54,74 @@
   addEventListener("scroll", queue, { passive: true });
   addEventListener("resize", queue);
   update();
+})();
+
+// Landing on a spot: when a link takes you to a section or card on a page (or a page opens at one), the section's
+// title, or the card itself, glows warm for a moment so you can see where you are. Reduced motion skips the glow.
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const land = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id || id === "top") return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const title = el.matches("section") ? el.querySelector(":scope > .section-title, :scope > header .section-title") : null;
+    const target = title || el;
+    target.classList.remove("arrived", "flash");
+    void target.offsetWidth;  // restart the animation if it's the same spot again
+    target.classList.add(title ? "arrived" : "flash");
+  };
+  addEventListener("hashchange", land);
+  if (location.hash) setTimeout(land, 350);  // after the page has scrolled there
+})();
+
+// The footer's top edge is the five-pass ridge from the Seattle-to-DC ride. The first time you reach the bottom
+// of a page, the little bike signed on every drawing rides along it once, climbing and descending each pass.
+(() => {
+  const footer = document.querySelector(".footer");
+  if (!footer || !("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const NS = "http://www.w3.org/2000/svg";
+  const bike = document.createElementNS(NS, "svg");
+  bike.setAttribute("class", "footer-bike");
+  bike.setAttribute("viewBox", "0 0 72 44");
+  bike.setAttribute("aria-hidden", "true");
+  bike.innerHTML = '<g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">'
+    + '<circle cx="14" cy="30" r="12"/><circle cx="58" cy="30" r="12"/><path d="M14 30 L28 30 L22 13 M28 30 L46 13 L22 13 M46 13 L58 30 M28 30 L36 13"/>'
+    + '<path d="M19 8 H27 M22 13 L21 8"/><path d="M46 13 L47 7 Q52 6 53 10 Q53 13 50 13"/><path d="M4 15 H20 M5 15 V25 H18 V15"/><path d="M51 19 H62 V27 H52 Z"/></g>';
+  let ridge = null;
+  const go = () => {
+    footer.appendChild(bike);
+    const w = footer.clientWidth - 32, H = 20, DURATION = 6500, start = performance.now();
+    const at = x => {  // the ridge's height at x (0..1000), by straight lines between its points
+      let i = ridge.findIndex(p => p[0] >= x);
+      if (i <= 0) return ridge[Math.max(i, 0)][1];
+      const [x0, y0] = ridge[i - 1], [x1, y1] = ridge[i];
+      return y0 + (y1 - y0) * (x - x0) / (x1 - x0);
+    };
+    const step = now => {
+      const t = Math.min((now - start) / DURATION, 1);
+      const x = 1000 * (0.5 - 0.5 * Math.cos(Math.PI * t));  // ease in and out
+      const px = 16 + (x / 1000) * w, py = (at(x) / 24) * H;
+      const slope = ((at(Math.min(x + 6, 1000)) - at(Math.max(x - 6, 0))) / 24 * H) / (12 / 1000 * w);
+      bike.style.transform = `translate(${(px - 14).toFixed(1)}px, ${(py - 19).toFixed(1)}px) rotate(${(Math.atan(slope) * 180 / Math.PI).toFixed(1)}deg)`;
+      bike.style.opacity = t < 0.04 ? (t / 0.04).toFixed(2) : t > 0.96 ? ((1 - t) / 0.04).toFixed(2) : "1";
+      if (t < 1) requestAnimationFrame(step); else bike.remove();
+    };
+    requestAnimationFrame(step);
+  };
+  const io = new IntersectionObserver(es => {
+    if (!es.some(e => e.isIntersecting) || !ridge) return;
+    io.disconnect();
+    go();
+  }, { threshold: 0.9 });
+  fetch(new URL("images/ridge.svg", document.querySelector('link[rel="stylesheet"]')?.href || location.href))
+    .then(r => r.text())
+    .then(text => {
+      const d = (text.match(/ d="([^"]+)"/) || [])[1] || "";
+      const pts = [...d.matchAll(/[ML]\s*([\d.]+)[ ,]([\d.]+)/g)].map(m => [+m[1], +m[2]]);
+      const end = pts.findIndex((p, i) => i > 0 && p[0] < pts[i - 1][0]);  // the top line only, not the way back
+      ridge = end > 0 ? pts.slice(0, end) : pts;
+      if (ridge.length > 1) io.observe(footer);
+    })
+    .catch(() => {});
 })();
