@@ -1,0 +1,80 @@
+% Embo, Research Scientist, Reinforcement Learning (Member of Technical Staff), San Francisco, on-site. Made 2026-11-24.
+% https://jobs.ashbyhq.com/Embo/41e84cff-1d20-4c48-845d-70e2efeb6500
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in,vmargin=0.36in]{geometry}
+\usepackage{fontspec}\setmainfont{Times New Roman}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Amal Mehta — Resume}, pdfauthor={Amal Mehta}}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{-0.6em}\rule{\linewidth}{0.5pt}]
+\titlespacing*{\section}{0pt}{5pt}{2pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.2pt,topsep=1pt,parsep=0pt}
+\newcommand{\role}[4]{\textbf{#1}\hfill\textbf{#2}\\\textit{#3}\hfill\textit{#4}}
+
+\begin{document}\fontsize{9.8}{10.7}\selectfont
+
+\begin{center}
+{\LARGE\bfseries Amal Mehta}\\[3pt]
+SF Bay Area \quad$\cdot$\quad \href{mailto:amal.mehta@gmail.com}{amal.mehta@gmail.com} \quad$\cdot$\quad \href{https://amalmehta.com/}{amalmehta.com}
+\end{center}
+
+Research engineer in reinforcement learning, with four years in industry and deep learning research since 2020. I've taken a PPO policy from simulation onto a real Unitree Go1, studied how rewards are learned from preferences and demonstrations and how agents exploit them, and built RL systems that improve against real-world feedback. I implement each method myself and test it hard: held-out evals, several seeds, and a prediction written down before each run.
+
+\section*{Experience}
+
+\role{Independent RL \& Robotics Research}{Sept 2025 -- Present}{Self-directed projects, each with public code and a write-up; details at \href{https://amalmehta.com/}{amalmehta.com}}{San Francisco Bay Area}
+\begin{itemize}
+\item \href{https://amalmehta.com/RewardModeling/}{\textbf{Reward modeling:}} learned rewards from pairwise preferences (Bradley--Terry) and demonstrations (MaxEnt IRL) across five reward shapes, 10 seeds and 1--1,000 labels; hypotheses fixed before the run. EPIC distance predicted downstream policy regret better than raw reward correlation (Spearman 0.61 vs.\ 0.54; 0.46 vs.\ 0.05 on shaped rewards).
+\item \href{https://amalmehta.com/long_term_horizon_planning/}{\textbf{Reward hacking (toy code repair):}} GRPO on visible tests raised pass rate 35\%\,$\to$\,58\% while true correctness fell 31\%\,$\to$\,2\%, as the agent deleted 98\% of untested branches; choosing which episodes to audit held false success to 4\% vs.\ 24\% for random audits at the same 10\% budget.
+\item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Quadrotor adaptation:}} batched simulator modelled on a Holybro X500 V2 (500\,Hz), randomizing payload, motor wear, drag, wind and latency; benchmarked domain-randomized PPO and seven meta-learning methods; a learned residual cut held-out tracking error to 7.3\,cm vs.\ 14.0\,cm for tuned L1 adaptive control.
+\item \href{https://amalmehta.com/RLInitStability/}{\textbf{RL training dynamics:}} reviewed 68 papers on how initialization and network health shape deep RL stability; built a browser lab that trains PPO under four init schemes, tracking entropy, gradient norm and dormant units.
+\item \href{https://github.com/amalmehta/PostTrainingLab}{\textbf{Post-training a policy:}} SFT then GRPO on a small transformer policy; over 3 seeds GRPO lifted held-out success from 70\% to 80\% (DPO: 81\%), where RL from scratch failed.
+\end{itemize}
+
+\role{Deep RL Researcher}{Aug 2023 -- Mar 2024}{Hybrid Robotics Lab, UC Berkeley --- adv.\ Prof.\ Koushil Sreenath}{Berkeley, CA}
+\begin{itemize}
+\item Trained a single multi-stage PPO policy in IsaacGym and ran it on a real Unitree Go1 quadruped to track, approach and kick a soccer ball at a target, replacing the multi-policy hierarchical framework of prior work; $\sim$60\% kicking accuracy on hardware.
+\item Designed the three-stage reward and CPG-based gait tracking; prototyped RLPD (SAC mixing offline prior data with online replay) to fine-tune the policy on real robot data.
+\end{itemize}
+
+\role{Deep Learning Scientist}{Sept 2021 -- Aug 2025}{PhysicsAI (DARPA-funded)}{Pacifica, CA (remote)}
+\begin{itemize}
+\item Built a closed RL loop for drone perception: policies (TD3, PPO, DDPG) set a synthetic image generator's parameters, a detector trained on its images, and the detector's accuracy on real drone imagery was the reward.
+\item Built the PEARL meta-RL codebase (probabilistic latent task embeddings inferred from off-policy experience, over TD3) for a fighter-jet simulation, so an agent adapts to a new task in a few tries; ran its multi-week GPU training.
+\item Implemented domain adaptation from scratch to hold detector accuracy with few real labels (10--15\,GB, mostly synthetic), and built and benchmarked the GAN pipelines (DCGAN, InfoGAN, FineGAN) that generated its training data.
+\end{itemize}
+
+\role{Research Assistant}{June 2020 -- Dec 2022}{Video \& Image Processing Lab, BAIR --- adv.\ Prof.\ Avideh Zakhor}{UC Berkeley}
+\begin{itemize}
+\item Built a deep CNN segmentation pipeline for invasive melanoma on gigapixel whole-slide images (F1 0.44 vs.\ 0.14 prior best), multi-GPU PyTorch/CUDA; published at SPIE Medical Imaging 2023 and USCAP 2022.
+\end{itemize}
+% Saved for later, cut for Embo: IBM Research intern (contract NLP) and the UCSF EMD role.
+
+\section*{Education}
+
+\role{University of California, Berkeley}{2021}{B.A.\ Computer Science --- Regents Scholar}{Berkeley, CA}
+
+\role{Stanford University}{Aug 2021 -- May 2023}{Graduate coursework (non-degree) --- Autonomous Systems \& Artificial Intelligence}{}
+\begin{itemize}
+\item CS330 (Meta-Learning), CS231N (Deep Learning for Vision), AA271A/B (Autonomy I \& II), AA273 (State Estimation).
+\end{itemize}
+
+\section*{Technical Skills}
+\begin{tabular}{@{}p{0.9in}l}
+\textbf{RL} & PPO, SAC/RLPD, TD3, DDPG, PEARL, GRPO, DPO, reward learning (Bradley--Terry, MaxEnt IRL) \\
+\textbf{ML} & PyTorch, CUDA/multi-GPU, IsaacGym, Gymnasium, GANs, domain adaptation, transformers \\
+\textbf{Languages} & Python, C++, Swift, JavaScript / TypeScript \\
+\textbf{Tools} & Docker, GitHub Actions CI, ONNX, Core ML, ROS, Gazebo \\
+\end{tabular}
+
+\section*{Publications}
+\begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=1pt]
+\item Shah, A., \textbf{Mehta, A.}, Wang, M., Neumann, N., McCalmont, T., Zakhor, A. ``Deep Learning Segmentation for Invasive Melanoma.'' \textit{SPIE Medical Imaging}, 2023.
+\item Neumann, N., Wang, M., \textbf{Mehta, A.}, et al. ``Quantifying Invasive Melanoma Volume by Deep Learning Segmentation at the Pixel-Level.'' \textit{USCAP Annual Meeting}, 2022.
+\item \textbf{Mehta, A.}, et al. ``Contract Information Extraction Using Watson NLP and Human-in-the-Loop.'' \textit{INFORMS Annual Meeting}, 2021.
+\end{enumerate}
+
+\end{document}
