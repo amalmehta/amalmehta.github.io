@@ -28,6 +28,8 @@ Copy `general/` to `companies/<company>/`, tailor it to the posting, add a `cove
 | Apple | [AI Measurement Scientist, AI Evaluation Platform](https://jobs.apple.com/en-us/details/200695284-3337/ai-measurement-scientist-ai-evaluation-platform?team=SFTWR), Seattle | [`companies/apple-ai-measurement/`](companies/apple-ai-measurement/) | 2026-11-24 | Not sent |
 | Embo | [Research Scientist, Reinforcement Learning](https://jobs.ashbyhq.com/Embo/41e84cff-1d20-4c48-845d-70e2efeb6500), San Francisco | [`companies/embo/`](companies/embo/) | 2026-11-24 | Not sent |
 | idler | [Research Engineer](https://jobs.ashbyhq.com/idler/cce9ab39-0ab0-489d-bbf9-4df74c2baeee) | [`companies/idler/`](companies/idler/) | 2026-11-17 | Not sent |
+| Lute | Forward Deployed Engineer, on-site San Mateo | [`companies/lute-fde/`](companies/lute-fde/) | 2026-11-25 | Not sent |
+| Lute | Robotics Engineer (Integrator), Warsaw | [`companies/lute-integrator/`](companies/lute-integrator/) | 2026-11-25 | Not sent |
 | Meta (contract via Spectraforce) | Software Engineer III, Simulation CV/ML, Sunnyvale | [`companies/meta-simulation/`](companies/meta-simulation/) | 2026-11-19 | Not sent |
 | Odyssey | [Member of Technical Staff, Forward Deployed Machine Learning Engineer](https://jobs.ashbyhq.com/odysseyml/1b82838a-f5c9-4246-86bf-f6f40993736b), Palo Alto | [`companies/odyssey/`](companies/odyssey/) | 2026-11-20 | Not sent |
 | RAI Institute | [Sim2Real Robotics Research Scientist, Manipulation](https://jobs.lever.co/rai/893052e9-0607-4e74-a44a-e5536eb08ad2), Cambridge MA | [`companies/rai/`](companies/rai/) | 2026-11-22 | Not sent |
