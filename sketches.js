@@ -3,6 +3,10 @@
 //     tracing itself around the dense cells, then filling in, like the model drawing its mask.
 //   Earlier research: a star flares into a supernova beside the cosmology line, and particle tracks spray out
 //     beside the particle-physics line.
+//   Publications & reports: a tiny sketch beside each title. The thesis: a ball chipped into a goal. The two
+//     melanoma papers: dense cells and the tumour's outline tracing itself round them. Few-shot imitation: a
+//     ghost arm shows a reach once and a solid arm copies it. Defensive retraining: two sumo agents, one
+//     shoving the other out of the ring.
 //   More projects, Drone Autonomy: a floor plan with a wall in the way; the planned path draws itself from
 //     start to goal around the wall's end, and a tiny quadrotor flies it.
 // Decoration only (hidden from screen readers), added with JavaScript; with reduced motion each shows its
@@ -86,6 +90,37 @@
       el("circle", { class: "vertex", cx: 4, cy: 20, r: 1.6 }, svg);
     }
     li.lastElementChild.appendChild(svg);
+    playOnView(svg, () => {});
+  }
+
+  // ---------------------------------------------------------------- publications & reports
+  const pubs = { "robot-soccer-thesis": "kick", "spie-2023": "cells", "uscap-2022": "cells", "few-shot-imitation": "arm", "defensive-retraining": "sumo" };
+  for (const [id, kind] of Object.entries(pubs)) {
+    const h = document.querySelector(`#writeups #${id} h3`);
+    if (!h) continue;
+    const svg = el("svg", { class: `spark spark-${kind}`, viewBox: "0 0 24 24", "aria-hidden": "true" });
+    if (kind === "kick") {
+      el("path", { class: "kick-goal", d: "M16,21 V9 H22 V21" }, svg);
+      el("path", { class: "kick-arc", d: "M3,20 Q10,4 19,13", pathLength: 1 }, svg);
+      el("circle", { class: "kick-ball", cx: 3, cy: 20, r: 1.9 }, svg);
+    } else if (kind === "cells") {
+      for (const [x, y, r] of [[5, 6, 1.1], [19, 5, 1], [4, 18, 1], [20, 19, 1.1], [12, 3, 0.9], [11, 21, 0.9]]) el("circle", { class: "cell", cx: x, cy: y, r }, svg);
+      for (const [x, y] of [[10, 10], [13, 9], [14, 13], [10, 14], [12, 12], [8, 12], [15, 11]]) el("circle", { class: "cell dense", cx: x, cy: y, r: 1.3 }, svg);
+      el("path", { class: "cell-outline", d: "M7,11 C7,7 15,6 17,10 C18,14 15,17 11,16 C8,16 7,14 7,11Z", pathLength: 1 }, svg);
+    } else if (kind === "arm") {
+      el("path", { class: "arm-base", d: "M3,21 H9" }, svg);
+      for (const cls of ["arm-ghost", "arm-copy"]) {
+        const g = el("g", { class: cls }, svg);
+        el("path", { d: "M6,20 L6,12 L14,9" }, g);
+        el("circle", { cx: 14, cy: 9, r: 1.3 }, g);
+      }
+      el("circle", { class: "arm-target", cx: 18, cy: 16, r: 1.6 }, svg);
+    } else {
+      el("circle", { class: "sumo-ring", cx: 12, cy: 13, r: 9 }, svg);
+      el("circle", { class: "sumo-a", cx: 8, cy: 13, r: 2.6 }, svg);
+      el("circle", { class: "sumo-b", cx: 14, cy: 13, r: 2.6 }, svg);
+    }
+    h.appendChild(svg);
     playOnView(svg, () => {});
   }
 })();
