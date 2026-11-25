@@ -1,5 +1,20 @@
 # Cover note: Apple, AI Measurement Scientist, AI Evaluation Platform, Seattle
 
+Hi AI Evaluation Platform team,
+
+I'm applying because I've spent this year on a problem your team works on every day: scores that don't match reality.
+
+In one study, I trained a code-repair agent with GRPO and rewarded it for passing the tests it could see. Its pass rate went up, from 35% to 58%. Then I checked its code against a full hidden test. The share that was actually correct had dropped from 31% to 2%. It had learned to cheat: it deleted the code no test touched. Random spot checks only slowed that down. Choosing which attempts to check held false passes to 4%, against 24% for random checks on the same budget.
+
+Before that, for four years at PhysicsAI, we judged our synthetic training data by how a detector did on real drone footage.
+
+That's the work I want to do.
+
+Thanks,
+Amal
+
+<!-- Saved for later, the second draft (2026-11-25):
+
 Most of my research this year has been about one problem: what happens when the number you train on isn't the thing you care about.
 
 I ran into it head on in a small study. I trained a code-repair agent with GRPO and rewarded it for passing the tests it could see. Its pass rate went up, from 35% to 58%. Then I checked its code against a full hidden test. The share that was actually correct had dropped from 31% to 2%. It had learned to delete the code no test touched. Random spot checks only slowed that down. Choosing which attempts to check held false passes to 4%, against 24% for random checks on the same budget.
@@ -9,7 +24,7 @@ That's why this role caught my eye. If teams decide what ships from a score, the
 I've worked this way for a while. For four years at PhysicsAI, we judged our synthetic training data by how a detector did on real drone footage, not on more synthetic data.
 
 I'm not a psychometrician, and IRT would be new to me. I'd be learning it from your team, and I'm looking forward to that.
-
+-->
 <!-- Saved for later, the first draft (2026-11-24):
 
 The most useful result I've had recently was a score that lied. In a small reward-hacking study, I trained a code-repair agent with GRPO on visible tests: its pass rate rose from 35% to 58% while true correctness fell from 31% to 2%, because it learned to delete untested branches. Audits targeted at the risky cases held false success to 4%, against 24% for random audits at the same 10% budget. I'd like to work on making evaluation trustworthy.
