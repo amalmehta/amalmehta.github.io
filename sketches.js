@@ -1,6 +1,8 @@
 // Profile: two small working sketches that play when they scroll into view, and again on hover.
 //   Publications, the melanoma paper: a slice of tissue, pink with purple nuclei, and the tumour's outline
 //     tracing itself around the dense cells, then filling in, like the model drawing its mask.
+//   Earlier research: a star flares into a supernova beside the cosmology line, and particle tracks spray out
+//     beside the particle-physics line.
 //   More projects, Drone Autonomy: a floor plan with a wall in the way; the planned path draws itself from
 //     start to goal around the wall's end, and a tiny quadrotor flies it.
 // Decoration only (hidden from screen readers), added with JavaScript; with reduced motion each shows its
@@ -66,5 +68,24 @@
     else quad.setAttribute("transform", "translate(18 20)");
     drone.prepend(svg);
     playOnView(svg, () => { quad.removeAttribute("transform"); try { fly.beginElement(); } catch { /* not ready */ } });
+  }
+
+  // ---------------------------------------------------------------- earlier research: a supernova and particle tracks
+  for (const li of document.querySelectorAll(".earlier-list li")) {
+    const text = li.textContent;
+    const kind = /supernova/i.test(text) ? "nova" : /particle/i.test(text) ? "tracks" : null;
+    if (!kind) continue;
+    const svg = el("svg", { class: `spark spark-${kind}`, viewBox: "0 0 24 24", "aria-hidden": "true" });
+    if (kind === "nova") {
+      el("circle", { class: "nova-glow", cx: 12, cy: 12, r: 9 }, svg);
+      el("path", { class: "nova-rays", d: "M12,2 V7 M12,17 V22 M2,12 H7 M17,12 H22 M5,5 L8.5,8.5 M15.5,15.5 L19,19 M19,5 L15.5,8.5 M8.5,15.5 L5,19", pathLength: 1 }, svg);
+      el("circle", { class: "nova-core", cx: 12, cy: 12, r: 2.2 }, svg);
+    } else {
+      for (const d of ["M4,20 C8,14 12,11 21,9", "M4,20 C9,16 13,15 20,17", "M4,20 C6,13 8,8 11,3", "M4,20 C10,18 15,20 22,22", "M4,20 C7,15 13,9 16,4"])
+        el("path", { class: "track", d, pathLength: 1 }, svg);
+      el("circle", { class: "vertex", cx: 4, cy: 20, r: 1.6 }, svg);
+    }
+    li.lastElementChild.appendChild(svg);
+    playOnView(svg, () => {});
   }
 })();

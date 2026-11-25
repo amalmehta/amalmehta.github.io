@@ -181,3 +181,14 @@
   }, { threshold: 1 });
   io.observe(win);
 })();
+
+// Header: once you scroll past the top it settles, a little more solid with a soft shadow and the name a touch
+// smaller, and relaxes back when you return to the top. Nothing moves on the page; only the bar changes.
+(() => {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+  let queued = false;
+  const update = () => { queued = false; header.classList.toggle("settled", scrollY > 24); };
+  addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();

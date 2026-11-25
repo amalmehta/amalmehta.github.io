@@ -1523,3 +1523,35 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .earlier-list .when { color: var(--faint); font-size: 0.85rem; padding-top: 0.1rem; }
 .earlier-list strong { color: var(--text); font-weight: 600; margin-right: 0.35rem; }
 @media (max-width: 600px) { .earlier-list li { grid-template-columns: 3.4rem 1fr; } }
+
+/* Profile (nowchip.js): the Now chip's phrase slides up and out as the next one slides in */
+.now-what { display: inline-block; }
+.now-what.now-out { opacity: 0; translate: 0 -0.45em; transition: opacity 0.26s ease, translate 0.26s ease; }
+.now-what.now-in { opacity: 0; translate: 0 0.45em; }
+.now-what:not(.now-out):not(.now-in) { transition: opacity 0.3s ease, translate 0.3s ease; }
+
+/* Profile, Earlier research (sketches.js): a supernova flares, particle tracks spray out */
+.spark { display: inline-block; width: 1.15em; height: 1.15em; margin-left: 0.4rem; vertical-align: -0.2em; overflow: visible; }
+.nova-glow { fill: var(--warm); opacity: 0; }
+.nova-rays { fill: none; stroke: var(--warm); stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0.8; }
+.nova-core { fill: var(--warm); }
+.spark-nova.played .nova-glow { animation: nova-flare 1.6s ease-out 0.2s both; }
+.spark-nova.played .nova-rays { stroke-dashoffset: 0; opacity: 0.55; transition: stroke-dashoffset 0.6s ease-out 0.3s, opacity 1.2s ease 0.9s; }
+.spark-nova.still .nova-rays { stroke-dashoffset: 0; opacity: 0.55; transition: none; }
+@keyframes nova-flare { 0% { opacity: 0; scale: 0.2; } 25% { opacity: 0.55; scale: 1; } 100% { opacity: 0; scale: 1.5; } }
+.nova-glow { transform-origin: 12px 12px; transform-box: view-box; }
+.track { fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0.75; }
+.track:nth-child(2n) { stroke: var(--warm); }
+.vertex { fill: var(--text); }
+.spark-tracks.played .track { stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s cubic-bezier(0.2, 0.7, 0.3, 1); }
+.spark-tracks.played .track:nth-child(2) { transition-delay: 0.08s; } .spark-tracks.played .track:nth-child(3) { transition-delay: 0.16s; }
+.spark-tracks.played .track:nth-child(4) { transition-delay: 0.24s; } .spark-tracks.played .track:nth-child(5) { transition-delay: 0.32s; }
+.spark-tracks.still .track { stroke-dashoffset: 0; transition: none; }
+@media print { .spark { display: none; } }
+
+/* Every page (nav.js): the header settles once you scroll, a touch more solid, a soft shadow, the name a little smaller */
+.site-header { transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+.site-header.settled { background: color-mix(in srgb, var(--bg) 96%, transparent); box-shadow: 0 6px 18px -14px rgb(0 0 0 / 0.35); }
+.nav-name { display: inline-block; transform-origin: left center; transition: scale 0.3s ease; }
+.site-header.settled .nav-name { scale: 0.94; }
+@media (prefers-reduced-motion: reduce) { .site-header, .nav-name { transition: none; } }
