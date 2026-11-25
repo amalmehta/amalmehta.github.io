@@ -1566,8 +1566,8 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 
 /* Research & work, robot soccer: the live 3D world that takes the drawing's place (soccer.js, soccer-world.js) */
 .sim-badge { border: 0; cursor: pointer; z-index: 3; }
-.shot.sim-on { scroll-margin-top: 5rem; }
-.shot.sim-on > img { display: none; }
+.shot.sim-open { scroll-margin-top: 5rem; }
+.shot.sim-open > img { display: none; }
 .sim-box { border-radius: 12px; overflow: hidden; background: #0d1117; color: #eef1f5; box-shadow: 0 18px 44px -20px rgb(0 0 0 / 0.55); animation: game-open 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; font: 0.82rem/1.4 var(--sans); }
 .sim-stage { position: relative; aspect-ratio: 16 / 9; }
 @media (max-width: 719px) { .sim-stage { aspect-ratio: 4 / 5; } }
@@ -1602,7 +1602,7 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .sim-check input { accent-color: #46d7ff; width: 1rem; height: 1rem; }
 .sim-hint { margin: 0; color: #8f99a8; font-size: 0.78rem; }
 @media (prefers-reduced-motion: reduce) { .sim-box { animation: none; } .sim-toast { transition: none; } }
-.role .shot.sim-on, .shot.sim-on { aspect-ratio: auto; max-width: none; overflow: visible; border: 0; background: none; transform: none; box-shadow: none; }
+.role .shot.sim-open, .shot.sim-open { aspect-ratio: auto; max-width: none; overflow: visible; border: 0; background: none; transform: none; box-shadow: none; }
 
 /* Research & work, PhysicsAI: the fighter-jet sim (jet.js, jet-world.js) shares the soccer sim's frame */
 .jet-hud { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
@@ -1615,3 +1615,45 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .jet-bar-guess { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; border-radius: inherit; background: linear-gradient(90deg, #38ff8a, #7dffb0); transition: width 0.15s linear; }
 .jet-bar-truth { position: absolute; top: -0.25rem; bottom: -0.25rem; width: 2px; left: 50%; background: #ffd23f; z-index: 1; }
 .jet-bar-val { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* A quiet way into a sim: a small faint icon in a drawing's top corner (simicon.js) */
+.sim-host { position: relative; }
+.sim-icon { position: absolute; top: 0.45rem; right: 0.45rem; z-index: 3; width: 30px; height: 30px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--muted); opacity: 0.3; cursor: pointer; transition: opacity 0.25s, background-color 0.25s, transform 0.25s; }
+.sim-icon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.sim-icon svg.filled { fill: currentColor; stroke: none; }
+.sim-host:hover .sim-icon, .sim-icon:focus-visible { opacity: 0.9; background: color-mix(in srgb, var(--surface) 80%, transparent); transform: scale(1.08); }
+.sim-icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (hover: none) { .sim-icon { opacity: 0.5; } }
+.sim-icon.loading { animation: sim-icon-wait 0.9s ease-in-out infinite; }
+@keyframes sim-icon-wait { 50% { opacity: 0.25; } }
+.sim-open .sim-icon { opacity: 0.75; color: #eef1f5; background: rgb(20 26 36 / 0.55); }
+.sim-open .sim-icon:hover { opacity: 1; }
+.sim-open > picture, .case-figure.sim-open > img { display: none; }
+.case-figure.sim-open { scroll-margin-top: 5rem; }
+@media (prefers-reduced-motion: reduce) { .sim-icon { transition: none; } .sim-icon.loading { animation: none; } }
+
+/* Home, Apps you can use: a small live glimpse in a screenshot's corner (apps-live.js) */
+.app-shot.has-live { position: relative; }
+.app-live { position: absolute; right: 0.6rem; bottom: 0.6rem; width: min(42%, 170px); aspect-ratio: 150 / 86; border-radius: 9px; background: rgb(14 18 26 / 0.78); backdrop-filter: blur(6px); box-shadow: 0 8px 20px -10px rgb(0 0 0 / 0.6); pointer-events: none; }
+.app-live svg { display: block; width: 100%; height: 100%; }
+.al-label { font: 600 8px/1 var(--sans); fill: #aeb6c2; letter-spacing: 0.06em; text-transform: uppercase; }
+.al-num { font: 600 8.5px/1 ui-monospace, Menlo, monospace; fill: #eef1f5; }
+.al-note { font: 500 8px/1 var(--sans); fill: #ffd23f; }
+.al-grid { stroke: rgb(255 255 255 / 0.08); stroke-width: 1; }
+.al-loss { fill: none; stroke: #7dffb0; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.al-track { fill: rgb(255 255 255 / 0.08); }
+.al-edge { stroke: rgb(170 200 255 / 0.55); stroke-width: 1.2; }
+.al-me { fill: #ffd23f; }
+.al-node { fill: #9cc2ff; transition: opacity 0.4s; }
+.al-node.al-fading { opacity: 0.45; }
+.al-band { fill: rgb(125 255 176 / 0.14); }
+.al-mid { stroke: rgb(125 255 176 / 0.6); stroke-width: 1; stroke-dasharray: 3 3; fill: none; }
+
+/* Writings: a line beside a piece fills as you read it, and the paragraph you're on stays full ink (reading.js) */
+.writing.has-read { position: relative; }
+.read-fill { position: absolute; left: -1.1rem; top: 0; bottom: 0; width: 2px; border-radius: 2px; background: var(--line); }
+.read-fill::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--accent); transform-origin: top; transform: scaleY(var(--read, 0)); }
+@media (max-width: 719px) { .read-fill { left: -0.6rem; } }
+.writing.has-read p:not(.when) { transition: opacity 0.5s ease; }
+.writing.reading p:not(.when):not(.now) { opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) { .writing.reading p:not(.when):not(.now) { opacity: 1; } .writing.has-read p:not(.when) { transition: none; } }

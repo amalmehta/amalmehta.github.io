@@ -30,6 +30,7 @@
   <script src="email.js" defer></script>
   <script src="updated.js" defer></script>
   <script src="nav.js" defer></script>
+  <script src="simicon.js" defer></script>
   <script src="case.js" defer></script>
   <script src="spine.js" defer></script>
   <script src="countup.js" defer></script>
@@ -92,7 +93,7 @@
       </div>
       <p>On 32 held-out tracking tasks, a learned residual trained across all conditions reaches 7.3 cm error with no adaptation at all, against 14.0 cm for tuned L1 adaptive control and 21.4 cm for the plain controller. Meta-learning adds little to that residual: the gradient meta-learners land at 7.7–7.8 cm after adapting.</p>
       <p>Meta-learning pays off when it adapts the classical gains instead: Meta-SGD goes from 15.8 to 10.8 cm, 3.5 cm better than tuning without it on paired tasks, and wins 83% of the pairs. For navigation in unseen rooms, the classical local planner reaches 73% success over 96 flights; learned planners reach 31–55%.</p>
-      <figure class="case-figure">
+      <figure class="case-figure" data-embed="/DroneAutonomy/" data-icon="drone" data-label="Fly the drone simulator here">
         <picture><source type="image/avif" srcset="images/case/drone.avif"><source type="image/webp" srcset="images/case/drone.webp"><img src="images/case/drone.webp" alt="Two recorded flights: the map built from depth, the final A* plan and the track flown" loading="lazy" width="1200" height="441"></picture>
         <figcaption>Two recorded flights: the map built from depth, the final A* plan and the track flown.</figcaption>
       </figure>
