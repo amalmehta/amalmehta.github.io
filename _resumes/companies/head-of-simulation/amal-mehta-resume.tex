@@ -1,0 +1,99 @@
+% Unnamed physical-AI simulation startup (via Adapt Talent, Francesca Torsiello), Head of Simulation, Real2Sim and Robot Learning. Made 2026-11-25.
+% Recruiter email 2026-11-24: owns real2sim, policy learning and robot experiments for dexterous manipulation; sets the research agenda with the CTO and builds the team.
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in,vmargin=0.36in]{geometry}
+\usepackage{fontspec}\setmainfont{Times New Roman}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Amal Mehta — Resume}, pdfauthor={Amal Mehta}}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{-0.6em}\rule{\linewidth}{0.5pt}]
+\titlespacing*{\section}{0pt}{5pt}{2pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.2pt,topsep=1pt,parsep=0pt}
+\newcommand{\role}[4]{\textbf{#1}\hfill\textbf{#2}\\\textit{#3}\hfill\textit{#4}}
+
+\begin{document}\fontsize{9.8}{10.8}\selectfont
+
+\begin{center}
+{\LARGE\bfseries Amal Mehta}\\[3pt]
+SF Bay Area \quad$\cdot$\quad \href{mailto:amal.mehta@gmail.com}{amal.mehta@gmail.com} \quad$\cdot$\quad \href{https://amalmehta.com/}{amalmehta.com}
+% Saved for later, cut 2026-11-17, once ended the line above: \quad$\cdot$\quad \href{https://www.linkedin.com/in/amal-mehta-264413a9/}{LinkedIn} \quad$\cdot$\quad \href{https://github.com/amalmehta}{GitHub}
+\end{center}
+
+Robot learning engineer working on getting policies trained in simulation to hold up on real hardware. I've taken an RL policy from IsaacGym onto a real Unitree Go1, built a batched simulator of a real drone, and spent four years at PhysicsAI closing a synthetic-to-real gap.
+% Saved for later, the RAI summary: Robot learning engineer with four years in industry and deep learning research since 2020. I've taken an RL policy from IsaacGym onto a real Unitree Go1, designed the rewards that made it work, and closed a synthetic-to-real gap with RL that tuned training data against accuracy on real drone footage. I build each study end to end, from simulator and reward to training and hardware tests.
+
+\section*{Experience}
+
+\role{Independent ML \& Robotics Research}{Sept 2025 -- Present}{Self-directed projects and mentoring UC Berkeley undergraduates; details at \href{https://amalmehta.com/}{amalmehta.com}}{San Francisco Bay Area}
+\begin{itemize}
+\item \href{https://amalmehta.com/DroneAutonomy/}{\textbf{Drone simulator from a real airframe:}} batched simulator modelled on a real Holybro X500 V2, randomizing payload, motor wear, drag, wind and latency; a learned residual cut held-out tracking error to 7.3\,cm vs.\ 14.0\,cm for tuned L1 adaptive control.
+\item \href{https://amalmehta.com/long_term_horizon_planning/}{\textbf{Reward hacking, run end to end (toy code repair):}} 50 experiments, each predicted first; GRPO on visible tests raised pass rate 35\%\,$\to$\,58\% while true correctness fell 31\%\,$\to$\,2\%.
+\item \href{https://github.com/amalmehta/PostTrainingLab}{\textbf{Post-training a policy:}} SFT then GRPO on a small transformer policy; held-out success rose from 70\% to 80\% over 3 seeds, where RL from scratch failed.
+% Saved for later, cut for RAI 2026-11-24: \href{https://github.com/amalmehta/BCIProjects}{\textbf{Brain--computer interfaces:}} label-free decoding held R\textsuperscript{2} 0.64 on all 19 held-out days to day 138 (Wiener 0.35); 0.72 vs.\ 0.66 for a GRU without 2 remap days.
+% Saved for later, cut for RAI: \item \href{https://amalmehta.com/AlphaGoLite/}{\textbf{AlphaGo Lite:}} AlphaZero-style 9$\times$9 Go engine (17,120 self-play games); 32 of 40 wins against GNU Go level 1. Exported to ONNX and Core ML for a browser app and a Mac app; the browser port matches the Python rules on 3,000 random positions.
+\end{itemize}
+
+\role{Deep Learning Scientist}{Sept 2021 -- Aug 2025}{PhysicsAI (DARPA-funded)}{Pacifica, CA (remote)}
+\begin{itemize}
+\item Closed a synthetic-to-real gap for drone perception: RL policies (TD3, PPO, DDPG) set a synthetic image generator's parameters, rewarded by a detector's accuracy on real drone imagery, so real-world results, not hand-tuning, decided what the generator made.
+% Saved for later, before the Meta wording (2026-11-19): Turned synthetic-data generation for drone perception into a closed RL loop: policies (TD3, PPO, DDPG) set an image generator's parameters, a spatiotemporal detector retrained on its images, and its accuracy on real drone imagery was the reward.
+\item Built the PEARL meta-RL codebase (probabilistic task embeddings over TD3) for a fighter-jet simulation, so an agent adapts to a new task in a few tries; ran its multi-week GPU training.
+\item Implemented gradient-reversal domain adaptation from scratch to hold detector accuracy with few real labels (10--15\,GB, mostly synthetic data).
+% Saved for later, before the Meta wording (2026-11-19): Implemented gradient-reversal domain adaptation from scratch to hold detector accuracy with scarce real labels (10--15\,GB, mostly synthetic).
+\item Built and benchmarked GAN pipelines (DCGAN, InfoGAN, FineGAN) that generated the detectors' training data.
+% Saved for later, before the Meta wording (2026-11-19): Built and benchmarked GAN synthesis pipelines (DCGAN, InfoGAN, FineGAN) that produced the detectors' training data.
+\end{itemize}
+
+\role{Deep RL Researcher}{Aug 2023 -- Mar 2024}{Hybrid Robotics Lab, UC Berkeley --- adv.\ Prof.\ Koushil Sreenath}{Berkeley, CA}
+\begin{itemize}
+\item Trained a single multi-stage PPO policy in IsaacGym and ran it sim-to-real on a Unitree Go1 quadruped to track, approach and kick a soccer ball at a target, replacing the multi-policy hierarchical framework of prior work; $\sim$60\% kicking accuracy on hardware.
+\item Reward engineering: designed the three-stage reward and CPG-based gait tracking; prototyped RLPD (SAC with prior data) to fine-tune the policy on real robot data.
+\end{itemize}
+
+
+
+% Saved for later, cut for RAI: \role{Research Intern}{May 2021 -- Aug 2021}{IBM Research}{Almaden, CA}
+% Saved for later, cut for RAI: \begin{itemize}
+% Saved for later, cut for RAI: \item Built an NLP pipeline (Watson NLP, human in the loop) that extracts terms from unstructured contracts and checks them against invoices to catch spend leakage, with a web app that reports the mismatches; patent submitted.
+% Saved for later, cut for RAI: \end{itemize}
+
+\role{Research Assistant}{June 2020 -- Dec 2022}{Video \& Image Processing Lab, BAIR --- adv.\ Prof.\ Avideh Zakhor}{UC Berkeley}
+\begin{itemize}
+\item Built a deep CNN segmentation pipeline for invasive melanoma in whole-slide histopathology (F1 0.44 vs.\ 0.14 prior best): patch-wise training and inference on gigapixel slides, detail-preserving downsampling, multi-GPU PyTorch/CUDA.
+\item Published at SPIE Medical Imaging 2023 and USCAP 2022 (Stowell-Orbison Award Poster Session); mentored master's students extending it to vision transformers.
+% Saved for later, the single bullet before 2026-11-19: Developed a deep CNN segmentation pipeline for invasive melanoma in large-scale histopathological images (F1 0.44 vs.\ 0.14 for the prior best); published at SPIE Medical Imaging 2023; Stowell-Orbison Award Poster Session at USCAP 2022.
+\end{itemize}
+
+% Saved for later, cut 2026-11-19: \role{Researcher}{June 2020 -- Aug 2020}{Abbasi-Asl Lab, UCSF --- adv.\ Prof.\ Reza Abbasi-Asl}{San Francisco, CA}
+% Saved for later, cut 2026-11-19: \begin{itemize}
+% Saved for later, cut 2026-11-19: \item Built empirical mode decomposition (EMD) pipelines to align 2D and 3D brain scans across visits and to a common template.
+% Saved for later, cut 2026-11-19: \end{itemize}
+
+\section*{Education}
+
+\role{University of California, Berkeley}{2021}{B.A.\ Computer Science --- Regents Scholar}{Berkeley, CA}
+
+\role{Stanford University}{Aug 2021 -- May 2023}{Graduate coursework --- Autonomous Systems \& Artificial Intelligence}{}
+\begin{itemize}
+\item CS231N (Deep Learning for Vision), CS330 (Meta-Learning), AA271A/B (Autonomy I \& II), AA273 (State Estimation).
+\end{itemize}
+
+\section*{Technical Skills}
+\begin{tabular}{@{}p{0.9in}l}
+\textbf{Languages} & Python, C++, Swift, JavaScript / TypeScript \\
+\textbf{Robot learning} & PyTorch, PPO, SAC/RLPD, TD3, IsaacGym, domain randomization, domain adaptation, reward shaping \\
+\textbf{Robotics} & ROS, Gazebo, Unitree Go1, CPG gait control, Kalman filtering \\
+\textbf{Engineering} & Docker, GitHub Actions CI, CUDA/multi-GPU, ONNX, Core ML \\
+\end{tabular}
+
+\section*{Publications}
+\begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=1pt]
+\item Shah, A., \textbf{Mehta, A.}, Wang, M., Neumann, N., McCalmont, T., Zakhor, A. ``Deep Learning Segmentation for Invasive Melanoma.'' \textit{SPIE Medical Imaging}, 2023.
+\item Neumann, N., Wang, M., \textbf{Mehta, A.}, et al. ``Quantifying Invasive Melanoma Volume by Deep Learning Segmentation at the Pixel-Level.'' \textit{USCAP Annual Meeting}, 2022.
+\item \textbf{Mehta, A.}, et al. ``Contract Information Extraction Using Watson NLP and Human-in-the-Loop.'' \textit{INFORMS Annual Meeting}, 2021.
+\end{enumerate}
+
+\end{document}
