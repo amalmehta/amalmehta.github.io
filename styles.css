@@ -145,7 +145,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ridge { display: block; width: 100%; height: 56px; margin: 0 0 1.8rem; overflow: visible; }
 .ridge path { fill: none; stroke: color-mix(in srgb, var(--warm) 55%, var(--line)); stroke-width: 1.5; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: ride-draw 2.4s ease-out 0.2s forwards; }
 @media (prefers-reduced-motion: reduce) { .ridge path { animation: none; stroke-dashoffset: 0; } }
-@media (max-width: 600px) { .ridge { height: 36px; margin-bottom: 1.3rem; } }
+@media (max-width: 600px) { .thoughts.threaded::before, .thoughts.threaded::after { left: -0.7rem; } .ridge { height: 36px; margin-bottom: 1.3rem; } }
 /* A trail map's contour lines, faint, behind Outside work and the Endurance tile */
 .outside, .tile-grit { position: relative; isolation: isolate; }
 .outside::before, .tile-grit::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: url("images/contours.svg") right top / 480px repeat; opacity: 0.16; }
@@ -402,10 +402,10 @@ picture { display: contents; }
 .thought::before { content: counter(thought, decimal-leading-zero); position: absolute; left: 0; top: 0.2rem; font-family: var(--serif); font-size: 1.1rem; color: var(--warm); }
 /* thread.js: a line down the left that draws as you read, lighting each question's number as you reach it */
 .thoughts.threaded { position: relative; }
-.thoughts.threaded::before, .thoughts.threaded::after { content: ""; position: absolute; left: 0.62rem; top: var(--thread-top, 0); width: 2px; border-radius: 1px; }
+.thoughts.threaded::before, .thoughts.threaded::after { content: ""; position: absolute; left: -1.1rem;  /* beside the numbers, not through them */ top: var(--thread-top, 0); width: 2px; border-radius: 1px; }
 .thoughts.threaded::before { height: var(--thread-full, 0); background: var(--line); }
 .thoughts.threaded::after { height: var(--thread-len, 0); background: var(--warm); }
-.thoughts.threaded > .thought::before { z-index: 1; padding: 0.15rem 0; background: var(--bg); color: var(--faint); transition: color 0.4s, transform 0.4s; transform-origin: left center; }
+.thoughts.threaded > .thought::before { color: var(--faint); transition: color 0.4s, transform 0.4s; transform-origin: left center; }
 .thoughts.threaded > .thought.reached::before { color: var(--warm); transform: scale(1.12); }
 .thought h2 { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; line-height: 1.3; margin: 0 0 0.4rem; }
 .thought p { margin: 0 0 0.5rem; }
@@ -583,7 +583,9 @@ path.map-been { fill: color-mix(in srgb, var(--been) 55%, var(--surface)); strok
 .belief-tabs.has-marker [role="tab"] { position: relative; z-index: 1; transition: color 0.25s; }
 .belief-tabs.has-marker [role="tab"][aria-selected="true"] { background: none; }
 .tab-marker { position: absolute; top: 0.25rem; bottom: 0.25rem; left: 0; width: 0; border-radius: 8px; background: var(--accent-soft); transition: transform 0.32s cubic-bezier(0.3, 0.7, 0.2, 1), width 0.32s cubic-bezier(0.3, 0.7, 0.2, 1); }
-.belief-panel.fade-in { animation: panel-in 0.32s ease-out; }
+.belief-panel.fade-in { -webkit-mask: linear-gradient(100deg, #000 42%, transparent 58%) 100% 0 / 260% 100% no-repeat; mask: linear-gradient(100deg, #000 42%, transparent 58%) 100% 0 / 260% 100% no-repeat; animation: panel-wipe 0.6s cubic-bezier(0.35, 0.6, 0.3, 1) both; }  /* the new list wipes in like an ink stroke */
+/* Saved for later, the fade before 2026-11-25: .belief-panel.fade-in { animation: panel-in 0.32s ease-out; } */
+@keyframes panel-wipe { from { -webkit-mask-position: 100% 0; mask-position: 100% 0; } to { -webkit-mask-position: 0 0; mask-position: 0 0; } }
 @keyframes panel-in { from { opacity: 0; transform: translateY(6px); } }
 @media (prefers-reduced-motion: reduce) { .tab-marker { transition: none; } .belief-panel.fade-in { animation: none; } }
 /* Small phones: the three tabs share the full width, sized to their labels; on the narrowest
@@ -1294,8 +1296,8 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
 @media (prefers-reduced-motion: reduce) { .bet-ink path { transition: none; } }
 
 /* develop.js: Travel's drawings start as a pale grey sketch and develop into colour as they come into view */
-.photo.developing img { filter: grayscale(1) sepia(0.3) contrast(0.55) brightness(1.12); opacity: 0.55; }
-.photo.develop img { transition: filter 1.8s ease-out, opacity 1.2s ease-out; }
+.photo.developing img, .writing-photo.developing img { filter: grayscale(1) sepia(0.3) contrast(0.55) brightness(1.12); opacity: 0.55; }
+.photo.develop img, .writing-photo.develop img { transition: filter 1.8s ease-out, opacity 1.2s ease-out; }
 
 /* rail.js: Research & work's rail fills in warm ink as you scroll, and each role's dot and years light up when reached */
 @media (min-width: 720px) {
@@ -1504,3 +1506,11 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 @keyframes fx-fall { 0% { opacity: 0; translate: 0 0; } 10% { opacity: 0.95; } 85% { opacity: 0.9; } 100% { opacity: 0; translate: var(--dx) 170px; } }
 @keyframes fx-flash { 0% { opacity: 0; } 12% { opacity: 0.85; } 100% { opacity: 0; } }
 @media (prefers-color-scheme: dark) { .fx.flash { background: #f6efe2; } }
+
+/* Profile (signature.js): a pen flourish signs itself under the name, after the opening drawing */
+.hero h1.signed::after { display: none; }
+.signature { position: absolute; left: -0.02em; bottom: -0.32em; width: 108%; height: 0.42em; overflow: visible; pointer-events: none; }
+.signature path { fill: none; stroke: color-mix(in srgb, var(--warm) 80%, transparent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.signature.signing path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s cubic-bezier(0.45, 0.05, 0.25, 1) 0.15s; }
+.signature.done path { stroke-dashoffset: 0; }
+@media print { .signature { display: none; } }
