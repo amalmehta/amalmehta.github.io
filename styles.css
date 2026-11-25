@@ -1555,3 +1555,51 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .nav-name { display: inline-block; transform-origin: left center; transition: scale 0.3s ease; }
 .site-header.settled .nav-name { scale: 0.94; }
 @media (prefers-reduced-motion: reduce) { .site-header, .nav-name { transition: none; } }
+
+/* Home, More projects: a game played right inside its card (gamebox.js) */
+.mini.playing { grid-column: 1 / -1; scroll-margin-top: 5rem; }
+.game-box { margin-top: 0.9rem; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 14px 36px -18px rgb(0 0 0 / 0.4); animation: game-open 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.game-box iframe { display: block; width: 100%; height: min(80vh, 760px); border: 0; }
+@media (max-width: 719px) { .game-box iframe { height: 88vh; } }
+@keyframes game-open { from { opacity: 0; transform: translateY(10px) scale(0.985); } }
+@media (prefers-reduced-motion: reduce) { .game-box { animation: none; } }
+
+/* Research & work, robot soccer: the live 3D world that takes the drawing's place (soccer.js, soccer-world.js) */
+.sim-badge { border: 0; cursor: pointer; z-index: 3; }
+.shot.sim-on { scroll-margin-top: 5rem; }
+.shot.sim-on > img { display: none; }
+.sim-box { border-radius: 12px; overflow: hidden; background: #0d1117; color: #eef1f5; box-shadow: 0 18px 44px -20px rgb(0 0 0 / 0.55); animation: game-open 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; font: 0.82rem/1.4 var(--sans); }
+.sim-stage { position: relative; aspect-ratio: 16 / 9; }
+@media (max-width: 719px) { .sim-stage { aspect-ratio: 4 / 5; } }
+.sim-canvas { display: block; width: 100%; height: 100%; touch-action: none; outline: none; cursor: grab; }
+.sim-canvas:active { cursor: grabbing; }
+.sim-btn { font: 600 0.74rem/1 var(--sans); color: #eef1f5; background: rgb(20 26 36 / 0.72); border: 1px solid rgb(255 255 255 / 0.16); border-radius: 7px; padding: 0.42rem 0.62rem; cursor: pointer; backdrop-filter: blur(6px); }
+.sim-btn:hover { background: rgb(40 50 66 / 0.85); }
+.sim-btn[aria-pressed="true"] { background: #ffd23f; color: #1b1410; border-color: #ffd23f; }
+.sim-btn:focus-visible, .sim-canvas:focus-visible { outline: 2px solid #46d7ff; outline-offset: 2px; }
+.sim-cams { position: absolute; top: 0.6rem; left: 0.6rem; display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.sim-hud { position: absolute; left: 0.6rem; bottom: 0.6rem; right: 0.6rem; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; pointer-events: none; }
+.sim-chip { font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; font-size: 0.68rem; padding: 0.3rem 0.55rem; border-radius: 999px; background: #46d7ff; color: #06202a; }
+.sim-score { font-variant-numeric: tabular-nums; padding: 0.28rem 0.55rem; border-radius: 7px; background: rgb(10 14 20 / 0.6); backdrop-filter: blur(6px); }
+.sim-toast { position: absolute; left: 50%; top: 22%; translate: -50% 0; font: 800 clamp(1.2rem, 3.6vw, 2.2rem)/1 var(--sans); letter-spacing: 0.02em; color: #fff; text-shadow: 0 3px 18px rgb(0 0 0 / 0.6); opacity: 0; scale: 0.9; transition: opacity 0.25s, scale 0.35s cubic-bezier(0.2, 1.4, 0.4, 1); pointer-events: none; white-space: nowrap; }
+.sim-toast.show { opacity: 1; scale: 1; }
+.sim-toast.good { color: #ffd23f; }
+.sim-toast.bad { color: #ffb4a8; }
+.sim-kick { position: absolute; right: 0.8rem; bottom: 3rem; padding: 0.9rem 1.1rem; border-radius: 50%; font-size: 0.85rem; background: rgb(255 138 61 / 0.85); border-color: #ff8a3d; }
+.sim-eye { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s; background: radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / 0.55)), repeating-linear-gradient(0deg, rgb(255 255 255 / 0.035) 0 1px, transparent 1px 3px); }
+.eye-on .sim-eye { opacity: 1; }
+.sim-eye-tag { position: absolute; top: 0.7rem; right: 7.5rem; font: 600 0.66rem/1 ui-monospace, monospace; color: #7fe9ff; letter-spacing: 0.08em; }
+@media (max-width: 719px) { .sim-eye-tag { display: none; } }
+.sim-panel { padding: 0.8rem 0.9rem 0.9rem; display: grid; gap: 0.7rem; background: linear-gradient(#121822, #0d1117); }
+.sim-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.sim-seg { display: inline-flex; gap: 0.25rem; margin-right: 0.4rem; }
+.sim-sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 0.6rem 1rem; align-items: end; }
+.sim-slider { display: grid; gap: 0.25rem; }
+.sim-slider-top { display: flex; justify-content: space-between; gap: 0.5rem; color: #aeb6c2; }
+.sim-slider output { color: #eef1f5; font-variant-numeric: tabular-nums; }
+.sim-slider input { width: 100%; accent-color: #ffd23f; }
+.sim-check { display: flex; gap: 0.45rem; align-items: center; color: #eef1f5; padding-bottom: 0.15rem; }
+.sim-check input { accent-color: #46d7ff; width: 1rem; height: 1rem; }
+.sim-hint { margin: 0; color: #8f99a8; font-size: 0.78rem; }
+@media (prefers-reduced-motion: reduce) { .sim-box { animation: none; } .sim-toast { transition: none; } }
+.role .shot.sim-on, .shot.sim-on { aspect-ratio: auto; max-width: none; overflow: visible; border: 0; background: none; transform: none; box-shadow: none; }
