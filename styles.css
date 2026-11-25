@@ -1514,3 +1514,12 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .signature.signing path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s cubic-bezier(0.45, 0.05, 0.25, 1) 0.15s; }
 .signature.done path { stroke-dashoffset: 0; }
 @media print { .signature { display: none; } }
+
+/* Profile, Research & work: earlier research in astrophysics and particle physics, one line each */
+.earlier { max-width: 860px; margin: 0.5rem 0 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+.earlier-title { margin: 0 0 0.5rem; font: italic 500 1rem/1.4 var(--serif); color: var(--muted); }
+.earlier-list { list-style: none; margin: 0; padding: 0; }
+.earlier-list li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 0 0.5rem; padding: 0.3rem 0; color: var(--muted); font-size: 0.95rem; }
+.earlier-list .when { color: var(--faint); font-size: 0.85rem; padding-top: 0.1rem; }
+.earlier-list strong { color: var(--text); font-weight: 600; margin-right: 0.35rem; }
+@media (max-width: 600px) { .earlier-list li { grid-template-columns: 3.4rem 1fr; } }
