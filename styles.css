@@ -1452,3 +1452,42 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 }
 @keyframes eq-bounce { 0% { scale: 1 0.2; } 50% { scale: 1 0.9; } 100% { scale: 1 0.45; } }
 @media print { .paper-line, .eq { display: none; } }
+
+/* Footer end credits (nav.js): the page's section titles roll up through a window and settle on the credit */
+.roll-window { height: var(--win, auto); overflow: hidden; margin: 0.6rem 0 0; -webkit-mask: linear-gradient(transparent, #000 30%, #000 70%, transparent); mask: linear-gradient(transparent, #000 30%, #000 70%, transparent); }
+.roll-window .credits { margin: 0; }
+.roll-track { translate: 0 var(--win, 0); }
+.roll-window.rolled .roll-track { translate: 0 calc(-1 * var(--travel, 0px)); transition: translate var(--roll, 4s) cubic-bezier(0.35, 0.1, 0.25, 1); }
+.roll-line { margin: 0; padding: 0.3rem 0; text-align: center; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.roll-window.done .roll-line { opacity: 0; transition: opacity 0.8s ease; }
+.roll-line.roll-head { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 0.95rem; color: var(--faint); }
+@media print { .roll-window { height: auto; -webkit-mask: none; mask: none; } .roll-track { translate: none; } .roll-line { display: none; } }
+
+/* Interests, Events (events.js): the far-off count flips down like a departure board */
+.flip-num { display: inline-block; min-width: 1.6em; margin: 0 0.15em; padding: 0 0.25em; border-radius: 4px; text-align: center; font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--warm) 16%, transparent); box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--warm) 30%, transparent); background-image: linear-gradient(transparent calc(50% - 0.5px), color-mix(in srgb, var(--warm) 30%, transparent) 50%, transparent calc(50% + 0.5px)); }
+
+/* Profile sketches (sketches.js): the melanoma mask tracing itself, and the drone flying its planned route */
+.sketch { float: right; margin: 0.2rem 0 0.5rem 1.2rem; overflow: visible; }
+.seg-sketch { width: 96px; height: 77px; }
+.drone-sketch { width: 150px; height: 60px; }
+@media (max-width: 600px) { .seg-sketch { width: 72px; height: 58px; } .drone-sketch { width: 112px; height: 45px; } }
+.seg-tissue { fill: #efc3d3; }
+.seg-streak { fill: none; stroke: #e3a9c0; stroke-width: 1.2; stroke-linecap: round; opacity: 0.7; }
+.seg-nucleus { fill: #8a5aa8; opacity: 0.75; }
+.seg-nucleus.dense { fill: #5d3486; opacity: 0.9; }
+.seg-outline { fill: none; stroke: #13a594; stroke-width: 1.8; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.seg-fill { fill: #13a594; opacity: 0; }
+.played .seg-outline { stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s cubic-bezier(0.45, 0, 0.3, 1) 0.2s; }
+.played .seg-fill { opacity: 0.22; transition: opacity 0.6s ease 1.7s; }
+@media (prefers-color-scheme: dark) { .seg-tissue { fill: #c98ea6; } .seg-streak { stroke: #b87c95; } }
+.plan-room { fill: color-mix(in srgb, var(--surface) 70%, transparent); stroke: var(--line); stroke-width: 1.2; }
+.plan-wall { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; }
+.plan-route { fill: none; stroke: var(--warm); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0.8; }
+.played .plan-route { stroke-dashoffset: 0; transition: stroke-dashoffset 2.6s cubic-bezier(0.45, 0, 0.35, 1); }
+.still .seg-outline, .still .plan-route { stroke-dashoffset: 0; transition: none; }
+.still .seg-fill { opacity: 0.22; transition: none; }
+.plan-start { fill: var(--accent); }
+.plan-goal { fill: var(--warm); stroke: var(--warm); stroke-width: 1.2; stroke-linejoin: round; }
+.plan-drone path { stroke: var(--text); stroke-width: 1.6; stroke-linecap: round; }
+.plan-drone circle { fill: none; stroke: var(--text); stroke-width: 1.2; }
+@media print { .sketch { display: none; } }

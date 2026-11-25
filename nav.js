@@ -140,3 +140,44 @@
     io.observe(t);
   }
 })();
+
+// Footer: end credits. When you reach the bottom, the page's section titles roll up through the credits like
+// a film's end credits and the roll settles on "Written and directed by Amal Mehta", once per page view.
+// The rolling lines are decoration (hidden from screen readers); the credit itself is the same element as ever.
+(() => {
+  const credits = document.querySelector(".footer .credits");
+  if (!credits || matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const titles = [...new Set([...document.querySelectorAll("main .section-title, main .page-head h1")]
+    .filter(t => t.offsetParent !== null).map(t => t.textContent.replace(/#\s*$/, "").trim()).filter(Boolean))].slice(0, 9);
+  if (titles.length < 2) return;
+  const win = document.createElement("div"), track = document.createElement("div");
+  win.className = "roll-window"; track.className = "roll-track";
+  credits.replaceWith(win); win.appendChild(track);
+  const head = document.createElement("p");
+  head.className = "roll-line roll-head"; head.textContent = "Featuring";
+  head.setAttribute("aria-hidden", "true");
+  track.appendChild(head);
+  for (const t of titles) {
+    const line = document.createElement("p");
+    line.className = "roll-line"; line.textContent = t;
+    line.setAttribute("aria-hidden", "true");
+    track.appendChild(line);
+  }
+  track.appendChild(credits);
+  const place = () => {
+    const h = credits.offsetHeight, w = Math.max(h * 3, 84);  // a window three credits tall; the credit ends in its middle
+    win.style.setProperty("--win", `${w}px`);
+    win.style.setProperty("--travel", `${track.offsetHeight - h - (w - h) / 2}px`);
+    win.style.setProperty("--roll", `${(1.2 + titles.length * 0.45).toFixed(2)}s`);
+  };
+  place();
+  addEventListener("resize", place);
+  const io = new IntersectionObserver(es => {
+    if (!es.some(e => e.isIntersecting)) return;
+    io.disconnect();
+    place();
+    win.classList.add("rolled");
+    track.addEventListener("transitionend", () => win.classList.add("done"), { once: true });  // the roll fades away
+  }, { threshold: 1 });
+  io.observe(win);
+})();
