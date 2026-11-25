@@ -1167,19 +1167,51 @@ body { hanging-punctuation: first last; }
 /* Grateful for: not a list but a lantern garden at dusk. The scene stays dark in both themes; haven.js lights the lanterns in turn. */
 main:has(#grateful-for) { overflow-x: visible; }  /* main clips to its column, which would crop the full-width scene */
 html:has(#grateful-for), body:has(#grateful-for) { overflow-x: clip; }  /* 100vw counts the scrollbar; both, so body clips instead of handing it to the viewport */
-#grateful-for { margin: 4rem calc(50% - 50vw) 3rem; position: relative; padding: 9rem max(16px, calc(50vw - 340px)) 15rem; color-scheme: dark; background: #2d3570 url("images/inspiration/grateful-garden.svg") no-repeat center bottom / cover; }
-/* The page fades into the dusk instead of meeting it at a hard edge */
-#grateful-for::before { content: ""; position: absolute; inset: 0 0 auto; height: 11rem; background: linear-gradient(var(--bg), color-mix(in srgb, var(--bg) 55%, transparent) 40%, transparent); pointer-events: none; }
+/* Dusk falls as you scroll toward it: haven.js sets --dusk (0 to 1) and the page's own background warms
+   toward sunset, so the cream page, the sunset band and the night sky are one sky with no edge. */
+body:has(#grateful-for) { --dusk-tint: #f0cfb2; --page-bg: color-mix(in oklab, var(--bg), var(--dusk-tint) calc(var(--dusk, 0) * 70%)); background-color: var(--page-bg); }
+@media (prefers-color-scheme: dark) { body:has(#grateful-for) { --dusk-tint: #2a2b55; } }
+#grateful-for { margin: 4rem calc(50% - 50vw) 0; position: relative; overflow: hidden; padding: 16rem max(16px, calc(50vw - 340px)) 15rem; color-scheme: dark; background: #2d3570 url("images/inspiration/grateful-garden.svg") no-repeat center bottom / cover; }
+/* Saved for later, before the page and the dusk became one sky: #grateful-for { margin: 4rem calc(50% - 50vw) 3rem; position: relative; padding: 9rem max(16px, calc(50vw - 340px)) 15rem; color-scheme: dark; background: #2d3570 url("images/inspiration/grateful-garden.svg") no-repeat center bottom / cover; } */
+/* The page runs into the sky through a sunset band instead of meeting it at a hard edge */
+#grateful-for::before { content: ""; position: absolute; inset: 0 0 auto; height: 20rem; background: linear-gradient(var(--page-bg) 0, color-mix(in oklab, var(--page-bg), #f2c7a0 35%) 22%, rgb(222 150 140 / 0.75) 46%, rgb(120 88 140 / 0.45) 72%, transparent); pointer-events: none; }
+/* The garden's ground runs on into the footer, which turns night with it */
+main:has(#grateful-for) { padding-bottom: 0; margin-bottom: 0; }
+body:has(#grateful-for) .footer { margin-top: 0; background: #181a30; box-shadow: 0 0 0 100vmax #181a30; clip-path: inset(0 -100vmax); color: #a9a3bd; }
+body:has(#grateful-for) .footer::before { display: none; }
+body:has(#grateful-for) .footer a { color: #f3e3bd; }
+body:has(#grateful-for) .footer .credits dt { color: #8e88a6; }
+body:has(#grateful-for) .footer .credits dd { color: #f6ecd4; }
+/* The live night (haven.js): a moon that rises as you scroll, stars that twinkle, fireflies that drift and blink */
+#grateful-for .g-sky { position: absolute; inset: 0; pointer-events: none; }
+#grateful-for .g-moon { position: absolute; top: 15rem; right: max(5vw, calc(50vw - 560px)); width: 3.4rem; height: 3.4rem; border-radius: 50%; box-shadow: inset -0.9rem 0.55rem 0 0 #f4e6bd, 0 0 40px 6px rgb(244 230 189 / 0.12); translate: 0 calc((1 - var(--rise, 1)) * 7rem); opacity: calc(0.35 + var(--rise, 1) * 0.65); }
+@media (max-width: 720px) { #grateful-for .g-moon { width: 2.4rem; height: 2.4rem; box-shadow: inset -0.65rem 0.4rem 0 0 #f4e6bd, 0 0 30px 4px rgb(244 230 189 / 0.12); } }
+#grateful-for .g-star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fbf3dd; box-shadow: 0 0 6px 1px rgb(251 243 221 / 0.7); }
+#grateful-for .g-fly { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #fff2b8; box-shadow: 0 0 8px 3px rgb(255 214 120 / 0.75), 0 0 26px 10px rgb(255 200 100 / 0.25); }
+/* The festoon: a string between the trees that each lantern hangs from, drawn in as it comes into view */
+/* The ground fades into the footer instead of stopping at an edge */
+#grateful-for::after { content: ""; position: absolute; inset: auto 0 0; height: 5rem; background: linear-gradient(transparent, #181a30); pointer-events: none; }
+#grateful-for svg.festoon { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+#grateful-for .festoon path { fill: none; stroke: rgb(246 231 192 / 0.5); stroke-width: 1.2; stroke-linecap: round; }
+@media (prefers-reduced-motion: no-preference) {
+  #grateful-for .festoon path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  #grateful-for .festoon path.strung { stroke-dashoffset: 0; transition: stroke-dashoffset 1.8s ease-out; }
+  #grateful-for .g-star { animation: g-twinkle var(--t, 3s) ease-in-out var(--d, 0s) infinite; }
+  #grateful-for .g-fly { animation: g-drift var(--t, 9s) ease-in-out var(--d, 0s) infinite alternate, g-blink var(--b, 3s) ease-in-out var(--d, 0s) infinite; }
+}
+@keyframes g-twinkle { 50% { opacity: 0.25; scale: 0.6; } }
+@keyframes g-drift { 33% { translate: calc(var(--dx) * 0.4) calc(var(--dy) * -0.6); } 100% { translate: var(--dx) var(--dy); } }
+@keyframes g-blink { 0%, 100% { opacity: 0.15; } 45%, 60% { opacity: 1; } }
 #grateful-for > * { position: relative; }
 #grateful-for .section-title { justify-content: center; color: #f6e7c0; border-bottom: 0; font-size: 0.95rem; margin-bottom: 2.6rem; }
 /* Saved for later, with the title dot: #grateful-for .section-title::before { background: #ffcf70; box-shadow: 0 0 12px 4px rgb(255 207 112 / 0.6); } */
 #grateful-for .section-title::after { display: none; }
-#grateful-for .inspo { display: grid; gap: 2.1rem 2.5rem; }
+#grateful-for .inspo { display: grid; gap: 3.6rem 2.5rem; }
 #grateful-for .inspo-item { position: relative; display: flex; align-items: flex-start; gap: 1.1rem; padding: 0; border: 0; transition: opacity 1.4s ease; }
 #grateful-for .inspo-item strong { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.2rem; line-height: 1.42; color: #fbf3dd; text-shadow: 0 1px 10px rgb(10 12 32 / 0.9); }
 /* The lantern: a cord, a small glowing body and its light on the dark */
 #grateful-for .inspo-item::before { content: ""; flex: none; width: 1.05rem; height: 1.45rem; margin: 0.15rem 0 0 0.3rem; border-radius: 45% 45% 40% 40% / 30% 30% 50% 50%; background: radial-gradient(circle at 50% 55%, #fff4c8 0, #ffcf70 45%, #e58b3a 100%); box-shadow: 0 -0.32rem 0 -0.42rem #000, 0 0 16px 5px rgb(255 190 95 / 0.65), 0 0 46px 16px rgb(255 170 80 / 0.24); transition: box-shadow 1.4s ease, filter 1.4s ease; }
-#grateful-for .inspo-item::after { content: ""; position: absolute; left: 0.8rem; top: -0.75rem; width: 1px; height: 0.9rem; background: rgb(246 231 192 / 0.5); }
+#grateful-for .inspo-item::after { content: ""; position: absolute; left: 0.8rem; top: -2.1rem; width: 1px; height: 2.25rem; background: rgb(246 231 192 / 0.5); }
 #grateful-for .inspo-item.unlit:not(.lit) { opacity: 0.35; }
 #grateful-for .inspo-item.unlit:not(.lit)::before { box-shadow: none; filter: brightness(0.45) saturate(0.6); }
 @media (min-width: 720px) {
@@ -1187,10 +1219,14 @@ html:has(#grateful-for), body:has(#grateful-for) { overflow-x: clip; }  /* 100vw
   #grateful-for .inspo-item:nth-child(even) { transform: translateY(1.6rem); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  #grateful-for .inspo-item.lit::before { animation: lantern-breathe 5.5s ease-in-out infinite; }
-  #grateful-for .inspo-item:nth-child(2n).lit::before { animation-delay: -2s; }
-  #grateful-for .inspo-item:nth-child(3n).lit::before { animation-delay: -3.6s; }
+  #grateful-for .inspo-item::before { transform-origin: 50% -2.25rem; }
+  #grateful-for .inspo-item::after { transform-origin: 50% 0; }
+  #grateful-for .inspo-item.lit::before { animation: lantern-breathe 5.5s ease-in-out infinite, lantern-sway 4.6s ease-in-out infinite; }
+  #grateful-for .inspo-item.lit::after { animation: lantern-sway 4.6s ease-in-out infinite; }
+  #grateful-for .inspo-item:nth-child(2n).lit::before, #grateful-for .inspo-item:nth-child(2n).lit::after { animation-delay: -2s; }
+  #grateful-for .inspo-item:nth-child(3n).lit::before, #grateful-for .inspo-item:nth-child(3n).lit::after { animation-delay: -3.6s; }
 }
+@keyframes lantern-sway { 0%, 100% { rotate: -3deg; } 50% { rotate: 3deg; } }
 @keyframes lantern-breathe { 50% { filter: brightness(1.14); box-shadow: 0 -0.32rem 0 -0.42rem #000, 0 0 22px 7px rgb(255 190 95 / 0.8), 0 0 60px 22px rgb(255 170 80 / 0.3); } }
 @media print { #grateful-for { margin: 1rem 0; padding: 0; background: none; } #grateful-for .section-title, #grateful-for .inspo-item strong { color: #000; text-shadow: none; } #grateful-for .inspo-item::before, #grateful-for .inspo-item::after { display: none; } #grateful-for .inspo-item.unlit { opacity: 1; } }
 

@@ -797,8 +797,10 @@ def grateful_garden():
     for _ in range(120):
         x, y = rng.uniform(0, W), rng.uniform(0, 470)
         body.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{rng.uniform(0.6, 1.8):.1f}" fill="#f4efdc" opacity="{rng.uniform(0.25, 0.85):.2f}"/>')
-    body.append('<mask id="gmoon"><rect width="1200" height="800" fill="#fff"/><circle cx="1022" cy="88" r="27" fill="#000"/></mask>'
-                '<circle cx="1010" cy="96" r="30" fill="#f4e6bd" opacity="0.9" mask="url(#gmoon)"/>')  # a crescent moon, cut out so any sky shows through
+    # The moon and the fireflies are drawn live on the page by haven.js now, so the moon can rise and the fireflies drift.
+    # Saved for later, the drawn crescent moon:
+    # body.append('<mask id="gmoon"><rect width="1200" height="800" fill="#fff"/><circle cx="1022" cy="88" r="27" fill="#000"/></mask>'
+    #             '<circle cx="1010" cy="96" r="30" fill="#f4e6bd" opacity="0.9" mask="url(#gmoon)"/>')
     # Hills, far to near
     body.append('<path d="M0 640 C160 590 330 610 520 640 C720 670 930 590 1200 625 V800 H0 Z" fill="#33284f"/>')
     body.append('<path d="M0 690 C220 640 420 680 620 700 C820 720 1010 660 1200 690 V800 H0 Z" fill="#231f3f"/>')
@@ -815,8 +817,9 @@ def grateful_garden():
         x, y = rng.uniform(0, W), rng.uniform(748, 796)
         h = rng.uniform(8, 18)
         body.append(f'<path d="M{x:.1f} {y:.1f} q{rng.uniform(-4, 4):.1f} {-h / 2:.1f} {rng.uniform(-5, 5):.1f} {-h:.1f}" fill="none" stroke="#2e3a48" stroke-width="2"/>')
-    for x, y in ((240, 665), (330, 720), (455, 690), (800, 705), (905, 670), (985, 725), (130, 705), (1095, 690)):
-        body.append(f'<circle cx="{x}" cy="{y}" r="14" fill="url(#gglow)"/><circle cx="{x}" cy="{y}" r="2.2" fill="#fff0b8"/>')
+    # Saved for later, the drawn fireflies:
+    # for x, y in ((240, 665), (330, 720), (455, 690), (800, 705), (905, 670), (985, 725), (130, 705), (1095, 690)):
+    #     body.append(f'<circle cx="{x}" cy="{y}" r="14" fill="url(#gglow)"/><circle cx="{x}" cy="{y}" r="2.2" fill="#fff0b8"/>')
     return wrap(defs, body)
 
 def waymo():
