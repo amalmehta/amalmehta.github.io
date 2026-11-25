@@ -125,3 +125,18 @@
     })
     .catch(() => {});
 })();
+
+// Section titles: the brush stroke under each paints itself in as it scrolls into view. styles.css does this
+// with scroll-driven animation where browsers support it; elsewhere (Safari, Firefox) this does the same.
+(() => {
+  if (CSS.supports("animation-timeline: view()") || matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(es => {
+    for (const e of es) if (e.isIntersecting) { e.target.classList.add("brushed"); io.unobserve(e.target); }
+  }, { rootMargin: "0px 0px -15% 0px" });
+  for (const t of document.querySelectorAll(".section-title")) {
+    const r = t.getBoundingClientRect();
+    if (r.top < innerHeight * 0.85 && r.bottom > 0) continue;  // already on screen: leave it painted
+    t.classList.add("brush-wait");
+    io.observe(t);
+  }
+})();

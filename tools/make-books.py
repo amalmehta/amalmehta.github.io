@@ -52,7 +52,10 @@ def card(book, kind, date_field, text_field):
         raise SystemExit(f"{title}: cover should be 0–{COVERS - 1}")
     e = html.escape
     lines = [f'<article class="book cover-{cover}">',
-             f'  <div class="book-cover" aria-hidden="true"><span>{e(title)}</span></div>',
+             '  <div class="book-art" aria-hidden="true">',
+             f'    <div class="book-page"><span>{e(title)}</span><span>{e(author)}</span></div>',
+             f'    <div class="book-cover"><span>{e(title)}</span></div>',
+             '  </div>',
              '  <div class="book-body">']
     if date_field and book.get(date_field):
         when = month(book[date_field], date_field, title)
