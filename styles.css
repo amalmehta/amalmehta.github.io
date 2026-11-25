@@ -1418,3 +1418,37 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
 /* Where scroll-driven animation isn't supported (Safari, Firefox), nav.js paints the brush strokes in instead */
 .section-title.brush-wait::after { clip-path: inset(0 100% 0 0); }
 .section-title.brush-wait.brushed::after { clip-path: inset(0 0 0 0); transition: clip-path 0.9s cubic-bezier(0.3, 0.7, 0.3, 1); }
+
+/* Interests, Papers that shaped me (papers.js): a line of years with a dot per paper, dropped in as it scrolls into view */
+.paper-line { position: relative; height: 4.2rem; margin: 0.4rem 0.6rem 2.4rem; border-bottom: 1px solid var(--line); }
+.paper-year { position: absolute; bottom: -1.35rem; left: calc(var(--x) * 100%); translate: -50% 0; font-size: 0.7rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+.paper-year::before { content: ""; position: absolute; left: 50%; top: -0.45rem; width: 1px; height: 0.3rem; background: var(--line); }
+.paper-dot { position: absolute; left: calc(var(--x) * 100%); bottom: calc(0.45rem + var(--stack) * 0.85rem); width: 0.6rem; height: 0.6rem; margin-left: -0.3rem; border-radius: 50%; background: var(--warm); cursor: default; opacity: 0; translate: 0 -1.4rem; }
+.paper-line.still .paper-dot { opacity: 0.75; translate: 0 0; }
+.paper-line.dropped .paper-dot { opacity: 0.75; translate: 0 0; transition: translate 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) var(--d, 0s), opacity 0.3s ease var(--d, 0s), scale 0.2s, box-shadow 0.2s; }
+.paper-dot.lit { opacity: 1; scale: 1.5; box-shadow: 0 0 0 4px color-mix(in srgb, var(--warm) 22%, transparent); }
+#papers .inspo-item { transition: color 0.2s; }
+#papers .inspo-item.paper-lit strong a { color: var(--warm); }
+
+/* Profile (tags.js): a tag used on more than one entry lights every entry that carries it and dims the rest */
+.chip.linked { cursor: pointer; text-decoration: underline dotted color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 0.25em; }
+.chip.linked:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
+.chip.tag-hit { background: var(--warm); color: var(--bg); }
+main .project, main .role { transition: opacity 0.35s ease, filter 0.35s ease; }
+main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: saturate(0.4); }
+@media (prefers-reduced-motion: reduce) { main .project, main .role { transition: none; } }
+
+/* Interests, Favorite artists (eq.js): equalizer bars beside the name that dance on hover or tap */
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 0.8em; margin-left: 0.5rem; vertical-align: baseline; }
+.eq i { display: block; width: 3px; height: 100%; border-radius: 1px; background: var(--warm); transform-origin: bottom; scale: 1 0.3; opacity: 0.6; }
+.eq i:nth-child(2) { scale: 1 0.55; }
+.eq i:nth-child(3) { scale: 1 0.4; }
+.eq i:nth-child(4) { scale: 1 0.25; }
+@media (prefers-reduced-motion: no-preference) {
+  #artists .tile:hover .eq i, #artists .tile.playing .eq i { opacity: 1; animation: eq-bounce 0.9s ease-in-out infinite alternate; }
+  #artists .tile:hover .eq i:nth-child(2), #artists .tile.playing .eq i:nth-child(2) { animation-duration: 0.62s; animation-delay: -0.3s; }
+  #artists .tile:hover .eq i:nth-child(3), #artists .tile.playing .eq i:nth-child(3) { animation-duration: 0.78s; animation-delay: -0.5s; }
+  #artists .tile:hover .eq i:nth-child(4), #artists .tile.playing .eq i:nth-child(4) { animation-duration: 0.55s; animation-delay: -0.15s; }
+}
+@keyframes eq-bounce { 0% { scale: 1 0.2; } 50% { scale: 1 0.9; } 100% { scale: 1 0.45; } }
+@media print { .paper-line, .eq { display: none; } }
