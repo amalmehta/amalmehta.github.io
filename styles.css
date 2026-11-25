@@ -677,11 +677,20 @@ path.map-been { fill: color-mix(in srgb, var(--been) 55%, var(--surface)); strok
 .math3d-tabs button { font: 500 0.85rem/1 var(--sans); padding: 0.5rem 0.85rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
 .math3d-tabs button:hover { color: var(--text); border-color: color-mix(in srgb, var(--text) 30%, var(--line)); }
 .math3d-tabs button[aria-selected="true"] { background: #15171c; color: #ffd23f; border-color: #15171c; }
-.math3d-canvas { display: block; width: 100%; aspect-ratio: 16 / 10; border-radius: 14px; background: #121419; cursor: grab; touch-action: pan-y; box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.6); }
+.math3d-canvas { display: block; width: 100%; aspect-ratio: 16 / 10; border-radius: 14px; background: #080a12; cursor: grab; touch-action: pan-y; box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.6); }
 .math3d-canvas.grabbing { cursor: grabbing; }
 .math3d-caption { margin: 0.8rem 0 0.2rem; color: var(--muted); line-height: 1.55; }
 .math3d-caption strong { color: var(--text); font-family: var(--serif); font-size: 1.05rem; margin-right: 0.35rem; }
 .math3d-hint { margin: 0; font-size: 0.8rem; color: var(--faint); }
+.math3d-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; margin: 0.7rem 0 0; }
+.math3d-controls .spacer { flex: 1; }
+.math3d-controls button { font: 500 0.8rem/1 var(--sans); padding: 0.45rem 0.8rem; border-radius: 999px; border: 1px solid #15171c; background: #15171c; color: #ffd23f; cursor: pointer; transition: transform 0.15s, background 0.2s; }
+.math3d-controls button:hover { background: #262a35; }
+.math3d-controls button:active { transform: scale(0.96); }
+.math3d-controls button.quiet { background: var(--surface); color: var(--muted); border-color: var(--line); }
+.math3d-controls button.quiet:hover { color: var(--text); border-color: color-mix(in srgb, var(--text) 30%, var(--line)); }
+.math3d-controls label { display: inline-flex; align-items: center; gap: 0.6rem; font: 500 0.8rem/1 var(--sans); color: var(--muted); }
+.math3d-controls input[type="range"] { width: 10rem; accent-color: #e0a92a; }
 @media (max-width: 640px) { .math3d-canvas { aspect-ratio: 1 / 1; } }
 /* skills.js: a skill that's used in work on the page shows where, in a small card under it */
 #skills .chip.has-work { cursor: pointer; text-decoration: underline dotted color-mix(in srgb, var(--warm) 45%, transparent); text-underline-offset: 0.25em; }

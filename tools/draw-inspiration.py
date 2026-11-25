@@ -1322,110 +1322,165 @@ def kobe():
 
 
 def neistat():
-    """Casey Neistat riding an electric skateboard down a Manhattan avenue at dusk: black wayfarers, black tee,
-    messy hair, his vlog camera on a bendy tripod held out to film himself, a yellow cab, a rooftop water tower
-    and DO MORE sprayed on the wall."""
-    rng = random.Random(7)
-    vx, vy = 600, 340  # where the avenue meets the sky
+    """Casey Neistat's vlog shot: the camera on its bendy tripod held out at arm's length, filming him as he
+    carves down a grey Manhattan avenue on an electric skateboard. Black wayfarers, messy hair, stubble, black
+    tee, mid-sentence; behind him, tilted with the lean, yellow cabs, a Con Ed steam stack and a traffic light.
+    REC and a timecode in the viewfinder, and DO MORE written over the shot in his Sharpie hand."""
+    rng = random.Random(11)
+    vx, vy = 800, 330  # where the avenue meets the sky, inside the tilted frame
     defs = ('<linearGradient id="nsky" x1="0" y1="0" x2="0" y2="1">'
-            '<stop offset="0" stop-color="#2d2f5e"/><stop offset="0.55" stop-color="#9a5a86"/><stop offset="1" stop-color="#f4a25a"/></linearGradient>'
+            '<stop offset="0" stop-color="#b9bec6"/><stop offset="1" stop-color="#e4e3df"/></linearGradient>'
             '<linearGradient id="nroad" x1="0" y1="0" x2="0" y2="1">'
-            '<stop offset="0" stop-color="#5d5566"/><stop offset="1" stop-color="#2a2730"/></linearGradient>'
-            '<radialGradient id="nglow" cx="0.5" cy="0.5" r="0.5">'
-            '<stop offset="0" stop-color="#ffd29a" stop-opacity="0.75"/><stop offset="1" stop-color="#ffd29a" stop-opacity="0"/></radialGradient>')
-    body = [f'<rect width="{W}" height="{vy + 20}" fill="url(#nsky)"/>',
-            f'<ellipse cx="{vx}" cy="{vy}" rx="260" ry="90" fill="url(#nglow)"/>']
-    # Far towers at the end of the avenue, one taller with a spire
-    x = 470
-    for w, h in ((40, 120), (34, 170), (46, 140), (30, 230), (52, 150), (38, 190), (44, 130)):
-        body.append(f'<rect x="{x}" y="{vy - h}" width="{w}" height="{h + 20}" fill="#3a3352" opacity="0.85"/>')
-        x += w
-    body.append(f'<line x1="{470 + 40 + 34 + 46 + 15}" y1="{vy - 230}" x2="{470 + 40 + 34 + 46 + 15}" y2="{vy - 285}" stroke="#3a3352" stroke-width="4"/>')
-    # The avenue running away from us, its centre line and a crosswalk near the front
-    body.append(f'<polygon points="{pts([(-200, H), (W + 200, H), (vx + 40, vy), (vx - 40, vy)])}" fill="url(#nroad)"/>')
-    for k in range(12):
-        t0, t1 = (k / 12) ** 1.8, ((k + 0.55) / 12) ** 1.8
-        y0, y1 = vy + (H - vy) * t0, vy + (H - vy) * t1
-        body.append(f'<polygon points="{pts([(vx - 2 - 10 * t0, y0), (vx + 2 + 10 * t0, y0), (vx + 2 + 10 * t1, y1), (vx - 2 - 10 * t1, y1)])}" fill="#f2c94c" opacity="0.85"/>')
-    for k in range(9):
-        cx = 180 + k * 105
-        body.append(f'<polygon points="{pts([(cx - 30, 742), (cx + 30, 742), (cx + 36, 780), (cx - 36, 780)])}" fill="#e9e4da" opacity="0.55"/>')
-    # Buildings down both sides, their windows lit
+            '<stop offset="0" stop-color="#77787c"/><stop offset="1" stop-color="#3c3d41"/></linearGradient>'
+            '<radialGradient id="nvig" cx="0.5" cy="0.5" r="0.75">'
+            '<stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.55"/></radialGradient>'
+            '<radialGradient id="nface" cx="0.42" cy="0.38" r="0.7">'
+            '<stop offset="0" stop-color="#f0c7a2"/><stop offset="1" stop-color="#c9926c"/></radialGradient>'
+            '<linearGradient id="nlens" x1="0" y1="0" x2="1" y2="1">'
+            '<stop offset="0" stop-color="#3a414d"/><stop offset="0.5" stop-color="#0c0d11"/><stop offset="1" stop-color="#1d2129"/></linearGradient>')
+    body = ['<g transform="rotate(-8 600 400)">',
+            '<rect x="-300" y="-300" width="1800" height="1400" fill="url(#nsky)"/>']
+    # Buildings down both sides of the avenue: limestone, brick and grey, with dark window grids
+    shades = ["#a89f92", "#8b5e4b", "#979ca3", "#b5ad9f", "#7d6a5c", "#a3a7ad"]
     for side in (-1, 1):
-        edge = 0 if side < 0 else W
-        for k in range(5):
-            t0, t1 = k / 5, (k + 1) / 5
-            near = lambda t: edge + (vx - 60 * side - edge) * t
-            xa, xb = near(t0 * 0.85), near(t1 * 0.85)
-            top_a, top_b = 170 + (vy - 230) * t0 * 0.85, 170 + (vy - 230) * t1 * 0.85
-            bot_a, bot_b = H - 120 - (H - 120 - vy) * t0 * 0.85, H - 120 - (H - 120 - vy) * t1 * 0.85
-            shade = ["#2e2a3d", "#36304a", "#2b2738", "#3a3350", "#312c42"][k]
-            body.append(f'<polygon points="{pts([(xa, top_a - 40 * (1 - t0)), (xb, top_b), (xb, bot_b), (xa, bot_a)])}" fill="{shade}"/>')
-            for r in range(9):
+        edge = -300 if side < 0 else 1500
+        for k in range(6):
+            t0, t1 = (k / 6) ** 0.8, ((k + 1) / 6) ** 0.8
+            near = lambda t: edge + (vx - 70 * side - edge) * t
+            xa, xb = near(t0 * 0.9), near(t1 * 0.9)
+            top_a, top_b = -300 + (vy - 160 + 300) * t0 * 0.9, -300 + (vy - 160 + 300) * t1 * 0.9
+            bot_a, bot_b = 1000 - (1000 - vy - 20) * t0 * 0.9, 1000 - (1000 - vy - 20) * t1 * 0.9
+            sh = shades[(k + (side > 0) * 3) % len(shades)]
+            body.append(f'<polygon points="{pts([(xa, top_a), (xb, top_b), (xb, bot_b), (xa, bot_a)])}" fill="{sh}"/>')
+            for r in range(10):
                 for c in range(3):
-                    if rng.random() < 0.45:
-                        u = (c + 0.5) / 3
-                        wx = xa + (xb - xa) * u
-                        ty = top_a + (top_b - top_a) * u + 30 + r * ((bot_a + (bot_b - bot_a) * u) - (top_a + (top_b - top_a) * u) - 60) / 9
-                        sz = 10 * (1 - (t0 + (t1 - t0) * u) * 0.8)
-                        body.append(f'<rect x="{wx - sz / 2:.1f}" y="{ty:.1f}" width="{sz:.1f}" height="{sz * 1.3:.1f}" fill="#ffd27a" opacity="0.8"/>')
-    # A yellow cab coming up the avenue behind him
-    cx0 = 500
-    body.append(f'<rect x="{cx0}" y="404" width="58" height="28" rx="6" fill="#f2c230"/><rect x="{cx0 + 12}" y="394" width="34" height="14" rx="4" fill="#f2c230"/>'
-                f'<rect x="{cx0 + 16}" y="397" width="26" height="9" rx="2" fill="#3a3b4a"/><circle cx="{cx0 + 11}" cy="433" r="6" fill="#1c1b22"/><circle cx="{cx0 + 48}" cy="433" r="6" fill="#1c1b22"/>'
-                f'<circle cx="{cx0 + 5}" cy="418" r="3" fill="#fff4d0"/><circle cx="{cx0 + 54}" cy="418" r="3" fill="#fff4d0"/>')
-    # Speed lines streaming past
+                    u = (c + 0.5) / 3
+                    wx = xa + (xb - xa) * u
+                    top, bot = top_a + (top_b - top_a) * u, bot_a + (bot_b - bot_a) * u
+                    ty = top + 20 + r * (bot - top - 140) / 10
+                    sz = 26 * (1 - (t0 + (t1 - t0) * u) * 0.85)
+                    body.append(f'<rect x="{wx - sz / 2:.1f}" y="{ty:.1f}" width="{sz:.1f}" height="{sz * 1.5:.1f}" fill="#4b525d" opacity="{0.55 + rng.random() * 0.3:.2f}"/>')
+    # The avenue, its lane lines rushing toward us
+    body.append(f'<polygon points="{pts([(-300, 1000), (1500, 1000), (vx + 60, vy + 10), (vx - 60, vy + 10)])}" fill="url(#nroad)"/>')
+    for lane in (-0.5, 0.5):
+        for k in range(10):
+            t0, t1 = (k / 10) ** 1.7, ((k + 0.5) / 10) ** 1.7
+            p = lambda t: (vx + (lane * 900) * t, vy + 10 + (1000 - vy - 10) * t)
+            (ax, ay), (bx, by) = p(t0), p(t1)
+            body.append(f'<line x1="{ax:.1f}" y1="{ay:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="#ecebe6" stroke-width="{2 + 9 * t1:.1f}" opacity="0.8"/>')
+    # A traffic light hung out over the avenue
+    body.append('<line x1="1500" y1="150" x2="900" y2="170" stroke="#2f3236" stroke-width="7"/>'
+                '<rect x="906" y="168" width="30" height="78" rx="5" fill="#e2b33a"/>'
+                '<circle cx="921" cy="186" r="8" fill="#5a2a24"/><circle cx="921" cy="207" r="8" fill="#5a4a24"/><circle cx="921" cy="228" r="9" fill="#5fe08a"/>')
+    # Two yellow cabs coming up behind him
+    for cx0, cy0, s in ((870, 380, 0.7), (1010, 470, 1.25)):
+        body.append(f'<g transform="translate({cx0} {cy0}) scale({s})">'
+                    '<rect x="-46" y="0" width="92" height="38" rx="8" fill="#f1c22e"/><rect x="-30" y="-20" width="60" height="26" rx="6" fill="#f1c22e"/>'
+                    '<rect x="-25" y="-16" width="50" height="17" rx="3" fill="#3b3f48"/><rect x="-10" y="-30" width="20" height="9" rx="2" fill="#f6f1e2"/>'
+                    '<circle cx="-34" cy="20" r="6" fill="#fff6d6"/><circle cx="34" cy="20" r="6" fill="#fff6d6"/>'
+                    '<rect x="-40" y="36" width="16" height="10" rx="3" fill="#1c1b20"/><rect x="24" y="36" width="16" height="10" rx="3" fill="#1c1b20"/></g>')
+    # A Con Ed steam stack, orange and white, its steam drifting up the street
+    sx, sy = 1060, 600
+    for k in range(4):
+        body.append(f'<rect x="{sx - 22}" y="{sy - 130 + k * 32}" width="44" height="32" fill="{"#e8742b" if k % 2 == 0 else "#f6f2ea"}"/>')
     for k in range(7):
-        y = 520 + k * 26
-        body.append(f'<line x1="{170 + rng.randint(0, 80)}" y1="{y}" x2="{330 + rng.randint(0, 60)}" y2="{y - 6}" stroke="#f4ead8" stroke-width="3" stroke-linecap="round" opacity="0.35"/>')
-    # The board, its shadow and wheels
-    x, y = 600, 690
-    body.append(f'<ellipse cx="{x}" cy="{y + 26}" rx="120" ry="14" fill="#141218" opacity="0.6"/>')
-    body.append(f'<rect x="{x - 110}" y="{y}" width="220" height="16" rx="8" fill="#3b3d46"/>'
-                f'<rect x="{x - 96}" y="{y + 14}" width="52" height="8" rx="3" fill="#24252c"/><rect x="{x + 44}" y="{y + 14}" width="52" height="8" rx="3" fill="#24252c"/>')
-    for wx in (x - 84, x - 56, x + 56, x + 84):
-        body.append(f'<circle cx="{wx}" cy="{y + 24}" r="9" fill="#e8873a"/><circle cx="{wx}" cy="{y + 24}" r="3" fill="#2a2730"/>')
-    # "DO MORE" sprayed on the wall on the left, in drippy white paint
-    body.append('<g transform="translate(108 470) rotate(-17) skewX(-8)" opacity="0.85">'
-                '<text x="0" y="0" text-anchor="middle" font-family="Impact, Arial Black, Arial, sans-serif" font-size="46" fill="#f4f1ea" letter-spacing="3">DO MORE</text>')
-    for dx, h in ((-70, 16), (-24, 26), (12, 12), (50, 22), (82, 15)):
-        body.append(f'<rect x="{dx}" y="2" width="3.5" height="{h}" rx="1.75" fill="#f4f1ea"/>')
+        r = 34 + k * 14
+        body.append(f'<circle cx="{sx - 10 - k * 22 + rng.randint(-8, 8)}" cy="{sy - 160 - k * 46}" r="{r}" fill="#f4f3ef" opacity="{0.75 - k * 0.09:.2f}"/>')
+    # Speed streaks along the street, from the board moving
+    for k in range(16):
+        side = -1 if k % 2 else 1
+        t0 = 0.45 + rng.random() * 0.45
+        a = (vx + (side * 1300) * t0, vy + (1000 - vy) * (0.2 + rng.random() * 0.8) * t0)
+        b = (vx + (a[0] - vx) * 0.75, vy + (a[1] - vy) * 0.75)
+        body.append(f'<line x1="{a[0]:.1f}" y1="{a[1]:.1f}" x2="{b[0]:.1f}" y2="{b[1]:.1f}" stroke="#ffffff" stroke-width="{2 + rng.random() * 3:.1f}" stroke-linecap="round" opacity="0.35"/>')
     body.append('</g>')
-    # A rooftop water tower on the right, very New York
-    body.append('<g transform="translate(0 34)" fill="#1e1a2b" stroke="#1e1a2b"><rect x="1080" y="62" width="62" height="52" rx="5" stroke="none"/><polygon points="1074,64 1111,34 1148,64" stroke="none"/>'
-                '<line x1="1086" y1="114" x2="1082" y2="140" stroke-width="5"/><line x1="1136" y1="114" x2="1140" y2="140" stroke-width="5"/>'
-                '<line x1="1084" y1="128" x2="1138" y2="128" stroke-width="3"/></g>'
-                '<g transform="translate(0 34)" stroke="#2c2740" stroke-width="2">' + ''.join(f'<line x1="{1080 + k * 10}" y1="66" x2="{1080 + k * 10}" y2="112"/>' for k in range(1, 7)) + '</g>')
-    # Him: legs apart for balance, black tee, grey trousers, one arm out with the vlog camera pointed back at him
-    skin, tee, trousers = "#e2b48f", "#1b1b20", "#7d7a72"
-    for leg in (((x - 14, 540), (x - 40, 610), (x - 62, 690)), ((x + 14, 540), (x + 34, 612), (x + 58, 690))):
-        body.append(f'<polyline points="{pts(leg)}" fill="none" stroke="{trousers}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>')
-        fx, fy = leg[-1]
-        body.append(f'<rect x="{fx - 21}" y="{fy - 12}" width="42" height="14" rx="6" fill="#f2efe8"/><rect x="{fx - 21}" y="{fy - 1}" width="42" height="4" rx="2" fill="#c9c4b8"/>')
-    body.append(f'<rect x="{x - 36}" y="420" width="72" height="130" rx="20" fill="{tee}"/>')
-    body.append(f'<polyline points="{pts([(x - 30, 440), (x - 70, 500), (x - 92, 548)])}" fill="none" stroke="{skin}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>')
-    body.append(f'<polyline points="{pts([(x + 30, 440), (x + 106, 424), (x + 172, 410)])}" fill="none" stroke="{skin}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>')
-    # The camera on a bendy tripod, legs wrapped round as a handle, a shotgun mic on top, lens turned to his face
-    cx, cy = x + 196, 384
-    for k, (dx, dy) in enumerate(((-8, 30), (2, 34), (12, 30))):
-        body.append(f'<path d="M{cx + dx / 3:.0f} {cy + 14} q{dx} {dy / 2:.0f} {dx - 10} {dy}" fill="none" stroke="#2a2a30" stroke-width="7" stroke-linecap="round"/>')
-        for b in range(3):
-            body.append(f'<circle cx="{cx + dx / 3 + (dx - 10) * (b + 1) / 4:.1f}" cy="{cy + 14 + dy * (b + 1) / 4:.1f}" r="4" fill="#3d3d45"/>')
-    body.append(f'<rect x="{cx - 24}" y="{cy - 14}" width="48" height="32" rx="6" fill="#2b2c34"/><rect x="{cx - 24}" y="{cy - 14}" width="48" height="6" rx="3" fill="#3c3d47"/>')
-    body.append(f'<circle cx="{cx - 22}" cy="{cy + 2}" r="11" fill="#1a1b22" stroke="#55607a" stroke-width="4"/><circle cx="{cx - 24}" cy="{cy}" r="3" fill="#9fb4d8"/>')
-    body.append(f'<rect x="{cx - 30}" y="{cy - 30}" width="52" height="11" rx="5.5" fill="#1d1e24"/><rect x="{cx - 34}" y="{cy - 31}" width="12" height="13" rx="4" fill="#3a3b44"/>'
-                f'<rect x="{cx - 4}" y="{cy - 20}" width="6" height="8" fill="#1d1e24"/><circle cx="{cx + 14}" cy="{cy - 6}" r="2.5" fill="#e5483a"/>')
-    # Neck, head, the messy swept hair, stubble and the black wayfarer sunglasses
-    body.append(f'<rect x="{x - 10}" y="398" width="20" height="26" fill="{skin}"/>')
-    body.append(f'<circle cx="{x}" cy="372" r="34" fill="{skin}"/>')
-    body.append(f'<path d="M{x - 30} 388 q30 30 60 0 q-6 14 -30 16 q-24 -2 -30 -16z" fill="#6b4b38" opacity="0.45"/>')
-    body.append(f'<path d="M{x - 36} 372 q-6 -36 20 -48 q-4 10 4 12 q2 -18 22 -20 q-2 10 6 12 q8 -14 24 -6 q-10 4 -6 10 q14 4 8 30 '
-                f'q-6 -16 -22 -20 q-18 -4 -34 2 q-12 6 -16 24 q-4 4 -6 4z" fill="#4e3324"/>')
-    body.append(f'<polygon points="{pts([(x - 30, 360), (x - 3, 360), (x - 6, 378), (x - 26, 378)])}" fill="#0e0e12"/>'
-                f'<polygon points="{pts([(x + 3, 360), (x + 30, 360), (x + 26, 378), (x + 6, 378)])}" fill="#0e0e12"/>'
-                f'<rect x="{x - 32}" y="357" width="64" height="5" rx="2" fill="#0e0e12"/>'
-                f'<line x1="{x - 24}" y1="364" x2="{x - 15}" y2="364" stroke="#5c6376" stroke-width="2"/><line x1="{x + 9}" y1="364" x2="{x + 18}" y2="364" stroke="#5c6376" stroke-width="2"/>')
-    body.append(f'<path d="M{x - 9} 391 q9 7 18 0" fill="none" stroke="#7a4a36" stroke-width="3" stroke-linecap="round"/>')
+    # Him, close to the wide lens, leaning with the carve: black tee, his arm reaching out to the camera
+    x, y = 520, 400
+    body.append(f'<g transform="rotate(-4 {x} 700)">')
+    body.append('<path d="M150 820 Q170 630 360 585 L690 580 Q860 610 930 820 Z" fill="#17171b"/>')
+    body.append('<path d="M370 590 Q520 680 680 588" fill="none" stroke="#2b2b31" stroke-width="12"/>')
+    # the arm to the camera: from his shoulder toward the lens, growing as it comes near
+    body.append('<path d="M700 600 Q840 620 900 700 L1120 820 L870 820 Q800 720 700 690 Z" fill="#cf9a74"/>')
+    body.append('<path d="M660 585 Q790 590 860 660 L800 740 Q740 690 650 680 Z" fill="#202026"/>')
+    body.append(f'<rect x="{x - 48}" y="{y + 100}" width="96" height="96" fill="#b98463"/>')
+    body.append(f'<g transform="translate({x} {y + 150}) scale(1.18) translate({-x} {-y - 150})">')
+    body.append(f'<ellipse cx="{x - 108}" cy="{y + 18}" rx="20" ry="34" fill="#c9926c"/><ellipse cx="{x + 108}" cy="{y + 18}" rx="20" ry="34" fill="#c9926c"/>')
+    body.append(f'<ellipse cx="{x}" cy="{y}" rx="110" ry="136" fill="url(#nface)"/>')
+    # stubble round the jaw and over the lip
+    body.append(f'<path d="M{x - 104} {y + 30} Q{x - 92} {y + 128} {x} {y + 136} Q{x + 92} {y + 128} {x + 104} {y + 30} Q{x + 70} {y + 84} {x} {y + 66} Q{x - 70} {y + 84} {x - 104} {y + 30} Z" fill="#5b3f2e" opacity="0.32"/>')
+    for _ in range(90):
+        a = rng.uniform(0.15, math.pi - 0.15)
+        rr = rng.uniform(0.62, 0.98)
+        px, py = x + math.cos(a) * 104 * rr, y + 40 + math.sin(a) * 92 * rr
+        body.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="1.2" fill="#3e2a1f" opacity="0.4"/>')
+    # mid-sentence, a big grin
+    body.append(f'<path d="M{x - 46} {y + 74} Q{x} {y + 122} {x + 48} {y + 70} Q{x} {y + 90} {x - 46} {y + 74} Z" fill="#3a1d18"/>'
+                f'<path d="M{x - 40} {y + 77} Q{x} {y + 92} {x + 42} {y + 74} L{x + 36} {y + 84} Q{x} {y + 98} {x - 34} {y + 86} Z" fill="#f6f2ea"/>')
+    body.append(f'<path d="M{x + 6} {y + 2} Q{x - 6} {y + 36} {x - 14} {y + 46} Q{x} {y + 54} {x + 16} {y + 46}" fill="none" stroke="#a8714f" stroke-width="5" stroke-linecap="round"/>')
+    # the black wayfarers, sky caught in the lenses
+    for s in (-1, 1):
+        lens = [(x + s * 10, y - 38), (x + s * 104, y - 44), (x + s * 96, y + 8), (x + s * 20, y + 12)]
+        body.append(f'<polygon points="{pts(lens)}" fill="url(#nlens)" stroke="#060608" stroke-width="9" stroke-linejoin="round"/>')
+        body.append(f'<line x1="{x + s * 30}" y1="{y - 26}" x2="{x + s * 58}" y2="{y + 2}" stroke="#d9dde3" stroke-width="6" opacity="0.35" stroke-linecap="round"/>')
+    body.append(f'<path d="M{x - 112} {y - 50} L{x + 112} {y - 50} L{x + 106} {y - 32} L{x - 106} {y - 32} Z" fill="#060608"/>'
+                f'<rect x="{x - 12}" y="{y - 34}" width="24" height="10" fill="#060608"/>')
+    # messy hair, swept up and back
+    hair = (f'M{x - 118} {y - 20} Q{x - 132} {y - 120} {x - 70} {y - 158} Q{x - 82} {y - 186} {x - 40} {y - 192} '
+            f'Q{x - 30} {y - 220} {x + 10} {y - 204} Q{x + 40} {y - 232} {x + 66} {y - 196} Q{x + 110} {y - 206} {x + 104} {y - 160} '
+            f'Q{x + 140} {y - 130} {x + 116} {y - 20} Q{x + 104} {y - 96} {x + 50} {y - 110} Q{x - 10} {y - 136} {x - 70} {y - 100} Q{x - 106} {y - 80} {x - 118} {y - 20} Z')
+    body.append(f'<path d="{hair}" fill="#4a3022"/>')
+    for k in range(7):  # a few lighter tufts flicking up and back
+        a = x - 70 + k * 22
+        body.append(f'<path d="M{a} {y - 150 + abs(k - 3) * 10} q{14 + rng.randint(-4, 4)} {-22 - rng.randint(0, 14)} {34 + rng.randint(-6, 8)} {-30 - rng.randint(0, 12)}" fill="none" stroke="#6e4a34" stroke-width="7" stroke-linecap="round" opacity="0.7"/>')
+    body.append('</g></g>')
+    body.append(f'<rect width="{W}" height="{H}" fill="url(#nvig)"/>')
+    # The viewfinder: corner marks, REC, the timecode and the battery
+    for cx, cy, dx, dy in ((40, 40, 1, 1), (1160, 40, -1, 1), (40, 760, 1, -1), (1160, 760, -1, -1)):
+        body.append(f'<polyline points="{pts([(cx, cy + dy * 50), (cx, cy), (cx + dx * 50, cy)])}" fill="none" stroke="#ffffff" stroke-width="5" opacity="0.9"/>')
+    body.append('<circle cx="86" cy="86" r="13" fill="#ff3b30"/>'
+                '<text x="110" y="98" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#ffffff">REC</text>'
+                '<text x="1110" y="98" text-anchor="end" font-family="Menlo, Courier, monospace" font-size="32" fill="#ffffff">00:04:12</text>'
+                '<rect x="1032" y="700" width="64" height="30" rx="4" fill="none" stroke="#ffffff" stroke-width="4"/><rect x="1096" y="708" width="7" height="14" fill="#ffffff"/>'
+                '<rect x="1038" y="706" width="40" height="18" fill="#ffffff"/>')
+    # DO MORE in his Sharpie hand, written over the shot
+    glyphs = {
+        "D": ["M0 0 L0 1.4", "M0 0 Q0.95 0.05 0.92 0.7 Q0.9 1.36 0 1.4"],
+        "O": ["M0.45 0 Q-0.05 0.05 0 0.72 Q0.05 1.42 0.48 1.4 Q0.95 1.36 0.92 0.68 Q0.9 0 0.4 0.04"],
+        "M": ["M0 1.4 L0.06 0 L0.5 0.92 L0.94 0 L1 1.4"],
+        "R": ["M0 1.4 L0 0 Q0.9 -0.02 0.84 0.38 Q0.78 0.74 0.02 0.72", "M0.32 0.72 L0.9 1.4"],
+        "E": ["M0.85 0 L0 0 L0 1.4 L0.85 1.4", "M0 0.7 L0.66 0.7"],
+    }
+    def word(s, ox, oy, size, gap):
+        out, cx = [], ox
+        for ch in s:
+            if ch == " ":
+                cx += size * 0.55
+                continue
+            for d in glyphs[ch]:
+                toks, nums, res = d.split(), [], []
+                for t in toks:
+                    if t[0].isalpha():
+                        res.append(t[0]); t = t[1:]
+                    if t:
+                        nums.append(float(t))
+                        res.append(None)
+                it = iter(nums); xy = 0; parts = []
+                for r in res:
+                    if r:
+                        parts.append(r); xy = 0
+                    else:
+                        v = next(it)
+                        parts.append(f"{(cx + v * size + rng.uniform(-3, 3)) if xy == 0 else (oy + v * size + rng.uniform(-3, 3)):.1f}")
+                        xy ^= 1
+                out.append(" ".join(parts))
+            cx += size * (1.0 if ch == "M" else 0.92) + gap
+        return out
+    strokes = word("DO MORE", 0, 0, 50, 16)
+    body.append('<g transform="translate(70 640) rotate(-6)">')
+    for col, w, off in (("#000000", 22, 5), ("#ffffff", 13, 0)):
+        body.append(f'<g transform="translate({off} {off})" fill="none" stroke="{col}" stroke-width="{w}" stroke-linecap="round" stroke-linejoin="round" opacity="{0.45 if off else 1}">'
+                    + "".join(f'<path d="{d}"/>' for d in strokes) + '</g>')
+    body.append('</g>')
     return wrap(defs, body)
 
 
