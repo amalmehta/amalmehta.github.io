@@ -192,3 +192,29 @@
   addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
   update();
 })();
+
+// Every page, the header: a tiny sun or moon rides the header's bottom line, sitting where it is in the sky for
+// the visitor's own clock (sunrise at the left edge around 6 am, sunset at the right around 6 pm, then the moon
+// crosses overnight), with a soft glow that warms at dawn and dusk and cools at night. It moves on its own a
+// little each minute. Decoration only.
+(() => {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+  const sky = document.createElement("span");
+  sky.className = "sky";
+  sky.setAttribute("aria-hidden", "true");
+  sky.innerHTML = '<span class="sky-glow"></span><span class="sky-body"></span>';
+  header.appendChild(sky);
+  const place = () => {
+    const d = new Date(), h = d.getHours() + d.getMinutes() / 60;
+    const day = h >= 6 && h < 18;
+    const t = day ? (h - 6) / 12 : ((h + 6) % 24) / 12;   // 0 → 1 across the sky
+    const phase = h >= 5 && h < 7.5 ? "dawn" : h >= 7.5 && h < 17 ? "day" : h >= 17 && h < 19.5 ? "dusk" : "night";
+    sky.style.setProperty("--sky-x", `${(3 + t * 94).toFixed(2)}%`);
+    sky.style.setProperty("--sky-lift", (Math.sin(Math.PI * t)).toFixed(3));
+    sky.dataset.phase = phase;
+    sky.classList.toggle("moon", !day);
+  };
+  place();
+  setInterval(place, 60000);
+})();
