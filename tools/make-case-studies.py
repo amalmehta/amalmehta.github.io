@@ -75,7 +75,8 @@ PAGES = [
         "slug": "bci", "card": "bci-projects",
         "title": "BCI Projects",
         "when": "2026 · offline decoding on public data; closed loop simulated",
-        "hook": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 over all 19 held-out days up to day 138, against 0.35 for a re-centred Wiener filter, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.",
+        "hook": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder holds R² 0.64 across 19 later days, against 0.35 for the classic linear decoder.",
+        "hook_saved": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 over all 19 held-out days up to day 138, against 0.35 for a re-centred Wiener filter, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.",  # the longer hook, kept as a Saved for later comment
         "spine": [
             ('Once upon a time,', 'a cursor BCI was only as good as its worst day.'),
             ('Every day,', 'the neurons an implant records drift a little, and a decoder trained once slowly stops working.'),
@@ -155,6 +156,8 @@ PAGES = [
     },
     {
         "slug": "drone", "card": "drone-autonomy",
+        # The key figure opens the project's own flight simulator in place (simicon.js)
+        "scripts": ["simicon.js"], "figure_attrs": ' data-embed="/DroneAutonomy/" data-icon="drone" data-label="Fly the drone simulator here"',
         "title": "Drone Autonomy",
         "when": "2026 · simulation only; paper draft",
         "hook": "A simulated quadrotor that maps unknown rooms, plans with A* and adapts to payload, wind and worn motors; a learned residual roughly halves tuned adaptive control’s error on held-out tasks.",
@@ -247,6 +250,8 @@ PAGES = [
     },
     {
         "slug": "robot-soccer", "card": "hybrid-robotics",
+        # The key figure opens the 3D soccer world in place (simicon.js, soccer.js)
+        "scripts": ["simicon.js", "soccer.js"], "figure_attrs": ' data-sim="soccer"',
         "title": "Robot Soccer",
         "when": "2023 – 2024 · Hybrid Robotics Lab, UC Berkeley; research report",
         "hook": "One reinforcement-learning policy walks a Unitree Go1 robot dog to a ball, kicks it at a target and stays balanced; trained only in simulation, it hit the target about 60% of the time on the real robot.",
@@ -286,6 +291,8 @@ def paras(items, cls=""):
 def page(p, i):
     url = f"{SITE}project-{p['slug']}.html"
     desc = e(p["hook"])
+    extra_scripts = "".join(f'  <script src="{js}" defer></script>\n' for js in p.get("scripts", []))
+    hook_saved = f'<!-- Saved for later, until 2026-11-26: {p["hook_saved"]} -->' if p.get("hook_saved") else ""
     name, w, h, alt = p["figure"]
     if name.endswith(".svg"):  # a drawing already on the site: no AVIF/WebP variants needed
         figure_img = f'<img src="images/{name}" alt="{e(alt)}" loading="lazy" width="{w}" height="{h}">'
@@ -346,15 +353,20 @@ def page(p, i):
   <script src="email.js" defer></script>
   <script src="updated.js" defer></script>
   <script src="nav.js" defer></script>
-  <script src="case.js" defer></script>
+{extra_scripts}  <script src="case.js" defer></script>
   <script src="spine.js" defer></script>
   <script src="countup.js" defer></script>
+  <script src="nextcase.js" defer></script>
+  <script src="zoom.js" defer></script>
+  <script src="anchors.js" defer></script>
+  <script src="steps.js" defer></script>
+  <script src="related.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#top">Skip to content</a>
   <header class="site-header">
     <nav class="wrap nav">
-      <span class="nav-brand"><a class="nav-name" href="index.html">Amal Mehta</a><a class="nav-status" href="https://github.com/amalmehta/PortfolioWebsite/commits/main/" title="See every change on GitHub">Evolving site · <time datetime="2026-11">Nov 2026</time></a></span>
+      <span class="nav-brand"><a class="nav-name" href="index.html">Amal Mehta</a><a class="nav-status" href="changes.html" title="What changed lately">Evolving site · <time datetime="2026-11">Nov 2026</time></a></span>
       <div class="nav-links">
         <a href="index.html">Profile</a>
         <a href="index.html#featured" aria-current="true">Projects</a>
@@ -370,7 +382,7 @@ def page(p, i):
     <header class="page-head">
       <p class="card-when">{e(p["when"])}</p>
       <h1>{e(p["title"])}</h1>
-      <p class="case-hook">{e(p["hook"])}</p>
+      <p class="case-hook">{e(p["hook"])}</p>{hook_saved}
       <p class="links">{links}</p>
     </header>
 {spine}
@@ -397,7 +409,7 @@ def page(p, i):
 {stats}
       </div>
 {paras(p["results"])}{notes}
-      <figure class="case-figure">
+      <figure class="case-figure"{p.get("figure_attrs", "")}>
         {figure_img}
         <figcaption>{e(alt)}.</figcaption>
       </figure>
