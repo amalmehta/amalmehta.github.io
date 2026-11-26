@@ -8,6 +8,7 @@
 //     ghost arm shows a reach once and a solid arm copies it. Defensive retraining: two sumo agents, one
 //     shoving the other out of the ring. WaferSat: a laser beam reaches a tiny wafer with a sail, and it speeds off.
 //     Pose graphs: a drifting trajectory, a loop-closure edge, and the corrected loop drawing itself in.
+//     Contract extraction: a term in a contract lights up and a check mark ticks beside it.
 //   More projects, Drone Autonomy: a floor plan with a wall in the way; the planned path draws itself from
 //     start to goal around the wall's end, and a tiny quadrotor flies it.
 // Decoration only (hidden from screen readers), added with JavaScript; with reduced motion each shows its
@@ -55,7 +56,7 @@
   }
 
   // ---------------------------------------------------------------- the drone and its planned path
-  const drone = document.querySelector("#drone-autonomy");
+  const drone = document.querySelector("li.mini#drone-autonomy");  // only as a More projects line; the Featured card has its own picture
   if (drone) {
     const svg = el("svg", { class: "sketch drone-sketch", viewBox: "0 0 160 64", "aria-hidden": "true" });
     el("rect", { class: "plan-room", x: 3, y: 3, width: 154, height: 58, rx: 3 }, svg);
@@ -95,7 +96,7 @@
   }
 
   // ---------------------------------------------------------------- publications & reports
-  const pubs = { "robot-soccer-thesis": "kick", "spie-2023": "cells", "uscap-2022": "cells", "few-shot-imitation": "arm", "defensive-retraining": "sumo", "wafersat-2016": "sail", "pose-graph-2023": "graph" };
+  const pubs = { "robot-soccer-thesis": "kick", "spie-2023": "cells", "uscap-2022": "cells", "few-shot-imitation": "arm", "defensive-retraining": "sumo", "wafersat-2016": "sail", "pose-graph-2023": "graph", "informs-2021": "contract" };
   for (const [id, kind] of Object.entries(pubs)) {
     const h = document.querySelector(`#writeups #${id} h3`);
     if (!h) continue;
@@ -116,6 +117,11 @@
         el("circle", { cx: 14, cy: 9, r: 1.3 }, g);
       }
       el("circle", { class: "arm-target", cx: 18, cy: 16, r: 1.6 }, svg);
+    } else if (kind === "contract") {
+      el("rect", { class: "ct-doc", x: 3, y: 3, width: 12, height: 18, rx: 1.5 }, svg);
+      for (const y of [7, 10.5, 14, 17.5]) el("path", { class: "ct-line", d: `M5.5,${y} H12.5` }, svg);
+      el("rect", { class: "ct-mark", x: 5, y: 9.3, width: 8, height: 2.4, rx: 0.6 }, svg);
+      el("path", { class: "ct-check", d: "M16.5,11.5 L18.6,13.8 L22,9", pathLength: 1 }, svg);
     } else if (kind === "graph") {
       el("path", { class: "pg-drift", d: "M5,18 L5,7 L13,3.5 L21,7.5 L22,18.5 L14,22.5" }, svg);
       el("path", { class: "pg-close", d: "M14,22.5 L5,18" }, svg);

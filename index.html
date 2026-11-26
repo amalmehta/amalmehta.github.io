@@ -98,9 +98,25 @@
             "item": {
                 "@type": "SoftwareSourceCode",
                 "name": "BCI Projects",
-                "description": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 across all 19 later days, against 0.35 for the classic linear decoder, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.",
+                "description": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder holds R² 0.64 across 19 later days, against 0.35 for the classic linear decoder.",
                 "url": "https://github.com/amalmehta/BCIProjects",
                 "codeRepository": "https://github.com/amalmehta/BCIProjects",
+                "author": {
+                    "@type": "Person",
+                    "name": "Amal Mehta",
+                    "url": "https://amalmehta.com/"
+                }
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "Drone Autonomy",
+                "description": "A simulated quadrotor that maps unknown rooms, plans paths with A* and adapts to payload, wind and worn motors; a learned residual roughly halves tuned adaptive control’s error on held-out tasks.",
+                "url": "https://amalmehta.com/DroneAutonomy/",
+                "codeRepository": "https://github.com/amalmehta/DroneAutonomy",
                 "author": {
                     "@type": "Person",
                     "name": "Amal Mehta",
@@ -192,6 +208,8 @@
   <script src="soccer.js" defer></script>
   <script src="jet.js" defer></script>
   <script src="apps-live.js" defer></script>
+  <script src="cite.js" defer></script>
+  <script src="bci-demo.js" defer></script>
   <script src="outside.js" defer></script>
 </head>
 <body>
@@ -253,7 +271,7 @@
         <div class="project-text">
           <p class="card-when">2026 · offline decoding on public data; closed loop simulated</p>
           <h3>BCI Projects</h3>
-          <p>Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 across all 19 later days, against 0.35 for the classic linear decoder, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.</p>
+          <p>Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder holds R² 0.64 across 19 later days, against 0.35 for the classic linear decoder.</p><!-- Saved for later, until 2026-11-26: Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 across all 19 later days, against 0.35 for the classic linear decoder, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days. -->
           <!-- Saved for later, cut 2026-11-17: <p class="card-miss"><span>What didn’t work</span> Adaptation still fades three to four weeks out: R² 0.21 and 0.15, against 0.42–0.45 on earlier days (Neuro Falcon).</p> -->
           <p class="tags"><span class="chip">PyTorch</span> <span class="chip">Neural decoding</span> <span class="chip">Shared autonomy</span></p><!-- Saved for later, chips cut 2026-11-17: Closed-loop simulation, Public neural data -->
           <p class="links"><a class="deep" href="project-bci.html">Deep dive →</a> <a href="https://github.com/amalmehta/BCIProjects">Code and write-ups on GitHub →</a></p>
@@ -274,19 +292,18 @@
       </article>
       -->
 
-      <!-- Saved for later, cut from Featured on 2026-11-16, now a line in More projects:
+      <!-- Back in Featured 2026-11-26 (cut 2026-11-16, then a line in More projects) -->
       <article class="project" id="drone-autonomy">
         <figure class="shot has-badge"><a class="shot-link" href="https://amalmehta.com/DroneAutonomy/" tabindex="-1" aria-hidden="true"><picture><source type="image/avif" srcset="images/drone-autonomy-960.avif 960w, images/drone-autonomy-1600.avif 1600w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><source type="image/webp" srcset="images/drone-autonomy-960.webp 960w, images/drone-autonomy-1600.webp 1600w" sizes="(min-width: 1040px) 472px, (min-width: 820px) 46vw, 100vw"><img src="images/drone-autonomy-960.webp" alt="Drone Autonomy: a recorded flight replayed from above, mid-route across a 14 × 8 m room, with the obstacles its depth camera has mapped so far, the A* plan ahead to the goal and the track flown from the start" loading="lazy" width="960" height="600"></picture></a><a class="try-badge" href="https://amalmehta.com/DroneAutonomy/" tabindex="-1" aria-hidden="true">Try it live</a></figure>
         <div class="project-text">
           <p class="card-when">2026 · simulation only; paper draft</p>
           <h3>Drone Autonomy</h3>
-          <p>A simulated quadrotor that maps unknown rooms, plans paths with A* and adapts to payload, wind and worn motors; a learned residual on top of the controller roughly halves tuned adaptive control’s error on held-out tasks.</p>
-          <p class="card-miss"><span>What didn’t work</span> Out of distribution every method fails (navigation success ≤ 17%), and learned residuals crash more often than the plain controller, 43–49% against 34%.</p>
-          <p class="tags"><span class="chip">Python</span> <span class="chip">Meta-learning (7 methods)</span> <span class="chip">L1 adaptive control</span> <span class="chip">A* planning</span> <span class="chip">Simulation</span></p>
+          <p>A simulated quadrotor that maps unknown rooms, plans paths with A* and adapts to payload, wind and worn motors; a learned residual roughly halves tuned adaptive control’s error on held-out tasks.</p>
+          <!-- Saved for later, cut 2026-11-26 to match the other cards: <p class="card-miss"><span>What didn’t work</span> Out of distribution every method fails (navigation success ≤ 17%), and learned residuals crash more often than the plain controller, 43–49% against 34%.</p> -->
+          <p class="tags"><span class="chip">Meta-learning</span> <span class="chip">L1 adaptive control</span> <span class="chip">A* planning</span></p><!-- Saved for later, chips cut 2026-11-26 to match the other cards: Python, Meta-learning (7 methods), Simulation -->
           <p class="links"><a class="deep" href="project-drone.html">Deep dive →</a> <a href="https://amalmehta.com/DroneAutonomy/">Live demo: replay the flights →</a> <a href="https://github.com/amalmehta/DroneAutonomy">Source on GitHub →</a></p>
         </div>
       </article>
-      -->
       </div>
       <p class="more"><a href="#more-projects">More projects ↓</a></p>
     </section>
@@ -484,6 +501,14 @@
         </div>
       </article>
 
+      <article class="role" id="informs-2021">
+        <p class="when">2021</p>
+        <div>
+          <h3>Contract Information Extraction using Watson NLP and Human-in-the-loop</h3>
+          <p class="where">INFORMS Annual Meeting · poster · IBM Research – Almaden · with P. Chowdhary, J. Cappi, S. Asthana and T. Nakamura</p>
+        </div>
+      </article>
+
       <!-- Back 2026-11-25 (saved for later from earlier) -->
 <article class="role" id="few-shot-imitation">
         <p class="when">2021</p>
@@ -567,11 +592,13 @@
           <p class="links"><a href="project-replicate-sota.html">Deep dive →</a> <a href="https://amalmehta.com/ReplicateSOTA/">Demo →</a> <a href="https://github.com/amalmehta/ReplicateSOTA">Code →</a></p>
         </li>
         -->
-        <li class="mini" id="drone-autonomy">
+        <!-- Saved for later, moved up to Featured on 2026-11-26:
+        <li class="mini" id="drone-autonomy-mini">
           <h3>Drone Autonomy <a class="try-badge inline" href="https://amalmehta.com/DroneAutonomy/">Try it</a></h3>
           <p>A simulated quadrotor that maps unknown rooms, plans paths with A* and adapts to payload, wind and worn motors; a learned residual roughly halves tuned adaptive control’s error on held-out tasks.</p>
           <p class="links"><a href="project-drone.html">Deep dive →</a> <a href="https://amalmehta.com/DroneAutonomy/">Demo →</a> <a href="https://github.com/amalmehta/DroneAutonomy">Code →</a></p>
         </li>
+        -->
         <!-- Back 2026-11-25, playable in place (gamebox.js); cut 2026-11-16 as a toy project -->
         <li class="mini" id="alphago-lite">
           <h3>AlphaGo Lite <a class="try-badge inline" href="https://amalmehta.com/AlphaGoLite/" data-embed="/AlphaGoLite/">Play it</a></h3>
