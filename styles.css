@@ -1693,6 +1693,15 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 @keyframes sumo-push { 0%, 30% { translate: 0 0; } 100% { translate: 6px 0; } }
 @keyframes sumo-out { 0%, 30% { translate: 0 0; opacity: 1; } 85% { translate: 7px 0; opacity: 1; } 100% { translate: 8px 0; opacity: 0.35; } }
 .spark-sumo.still .sumo-a { translate: 6px 0; } .spark-sumo.still .sumo-b { translate: 8px 0; opacity: 0.35; }
+.sail-star { fill: var(--muted); opacity: 0.6; }
+.sail-beam { fill: none; stroke: var(--warm); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0.75; }
+.sail-sheet { fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-linecap: round; }
+.sail-wafer { fill: var(--accent); }
+.spark-sail.played .sail-beam { animation: sail-beam 1.7s ease-out 0.1s both; }
+.spark-sail.played .sail-craft { animation: sail-go 1.2s cubic-bezier(0.55, 0, 0.9, 0.6) 0.55s both; }
+@keyframes sail-beam { 0% { stroke-dashoffset: 1; opacity: 0.75; } 30% { stroke-dashoffset: 0; opacity: 0.75; } 100% { stroke-dashoffset: 0; opacity: 0.3; } }
+@keyframes sail-go { from { translate: 0 0; } to { translate: 11px 0; } }
+.spark-sail.still .sail-beam { stroke-dashoffset: 0; opacity: 0.3; } .spark-sail.still .sail-craft { translate: 11px 0; }
 
 /* Open to: a light beside each line switches on in turn (outside.js) */
 #open-to .inspo-item { position: relative; }

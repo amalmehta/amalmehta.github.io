@@ -6,7 +6,7 @@
 //   Publications & reports: a tiny sketch beside each title. The thesis: a ball chipped into a goal. The two
 //     melanoma papers: dense cells and the tumour's outline tracing itself round them. Few-shot imitation: a
 //     ghost arm shows a reach once and a solid arm copies it. Defensive retraining: two sumo agents, one
-//     shoving the other out of the ring.
+//     shoving the other out of the ring. WaferSat: a laser beam reaches a tiny wafer with a sail, and it speeds off.
 //   More projects, Drone Autonomy: a floor plan with a wall in the way; the planned path draws itself from
 //     start to goal around the wall's end, and a tiny quadrotor flies it.
 // Decoration only (hidden from screen readers), added with JavaScript; with reduced motion each shows its
@@ -94,7 +94,7 @@
   }
 
   // ---------------------------------------------------------------- publications & reports
-  const pubs = { "robot-soccer-thesis": "kick", "spie-2023": "cells", "uscap-2022": "cells", "few-shot-imitation": "arm", "defensive-retraining": "sumo" };
+  const pubs = { "robot-soccer-thesis": "kick", "spie-2023": "cells", "uscap-2022": "cells", "few-shot-imitation": "arm", "defensive-retraining": "sumo", "wafersat-2016": "sail" };
   for (const [id, kind] of Object.entries(pubs)) {
     const h = document.querySelector(`#writeups #${id} h3`);
     if (!h) continue;
@@ -115,6 +115,12 @@
         el("circle", { cx: 14, cy: 9, r: 1.3 }, g);
       }
       el("circle", { class: "arm-target", cx: 18, cy: 16, r: 1.6 }, svg);
+    } else if (kind === "sail") {
+      for (const [x, y] of [[17, 5], [21, 9], [19, 18], [22, 15]]) el("circle", { class: "sail-star", cx: x, cy: y, r: 0.6 }, svg);
+      for (const d of ["M1,9 H8", "M1,12 H8.8", "M1,15 H8"]) el("path", { class: "sail-beam", d, pathLength: 1 }, svg);
+      const craft = el("g", { class: "sail-craft" }, svg);
+      el("path", { class: "sail-sheet", d: "M8,6 Q10.6,12 8,18" }, craft);
+      el("rect", { class: "sail-wafer", x: 9.6, y: 11, width: 2.2, height: 2, rx: 0.3 }, craft);
     } else {
       el("circle", { class: "sumo-ring", cx: 12, cy: 13, r: 9 }, svg);
       el("circle", { class: "sumo-a", cx: 8, cy: 13, r: 2.6 }, svg);
