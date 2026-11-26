@@ -81,6 +81,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) { .nav-brand { flex-direction: column; row-gap: 0; line-height: 1.2; } .nav-status { font-size: 0.8rem; } }
 .nav-status { padding: 0.35rem 0; margin: -0.35rem 0; }  /* a taller tap target, same layout */
 .nav-status:hover { color: var(--warm); text-decoration: underline; text-underline-offset: 0.2em; }
+/* Phones: just "Updated 12 min. ago", so the line stays clear of the nav links beside it */
+@media (max-width: 520px) { .nav-status { font-size: 0; } .nav-status time { display: inline-block; font-size: 0.8rem; } .nav-status time::first-letter { text-transform: uppercase; } }
 .site-header {
   position: sticky; top: 0; z-index: 10;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
