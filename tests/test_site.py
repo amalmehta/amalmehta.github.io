@@ -966,12 +966,13 @@ class LinkingTest(unittest.TestCase):
             self.assertIn(line, unescape(values))
 
     def test_header_says_when_the_site_last_changed(self):
-        # "Evolving site · <month>" in every header links to the change history and matches the newest page in the sitemap.
+        # "Evolving site · <month>" in every header links to What changed (changes.html) and matches the newest page in the sitemap.
         newest = max(re.findall(r"<lastmod>(\d{4}-\d{2})", (ROOT / "sitemap.xml").read_text(encoding="utf-8")))
         for page in sorted(ROOT.glob("*.html")):
             with self.subTest(page=page.name):
                 html = page.read_text(encoding="utf-8")
-                self.assertIn(f'<a class="nav-status" href="https://github.com/amalmehta/PortfolioWebsite/commits/main/" title="See every change on GitHub">Evolving site · <time datetime="{newest}">', html)
+                href = "https://amalmehta.com/changes.html" if page.name == "404.html" else "changes.html"
+                self.assertIn(f'<a class="nav-status" href="{href}" title="What changed lately">Evolving site · <time datetime="{newest}">', html)
 
     def test_places_im_going_is_a_reel(self):
         # reel.js rolls the Trip timeline past on its own; without it the row still scrolls by hand.

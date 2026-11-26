@@ -214,7 +214,15 @@
     sky.style.setProperty("--sky-lift", (Math.sin(Math.PI * t)).toFixed(3));
     sky.dataset.phase = phase;
     sky.classList.toggle("moon", !day);
+    // The tab icon follows the same sky: a sun by day, a low orange sun at dawn and dusk, the moon at night.
+    // (Browsers that only show the PNG icon keep the plain monogram.)
+    if (icon) {
+      const want = `${root}favicon-${!day ? "night" : phase === "day" ? "day" : "dusk"}.svg`;
+      if (icon.getAttribute("href") !== want) icon.setAttribute("href", want);
+    }
   };
+  const icon = document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+  const root = icon ? icon.getAttribute("href").replace(/favicon[^/]*\.svg$/, "") : "";
   place();
   setInterval(place, 60000);
 })();

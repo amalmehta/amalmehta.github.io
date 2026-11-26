@@ -1,5 +1,14 @@
 // Publications & reports: a small "Cite" beside each paper with a DOI. Pressing it copies the paper's BibTeX and
 // shows it underneath, selectable, in case copying isn't allowed. Pressing again hides it.
+// Research & work's "Published: …" and "Poster: …" lines link to their entries here, which flash on arrival.
+(() => {
+  for (const a of document.querySelectorAll("a.pub-link[href^='#']")) {
+    a.addEventListener("click", () => {
+      const el = document.querySelector(a.getAttribute("href"));
+      if (el) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+    });
+  }
+})();
 (() => {
   const BIB = {
     "spie-2023": `@inproceedings{shah2023melanoma,
