@@ -956,6 +956,62 @@ def acatenango():
     return svg("acatenango", "".join(b), ("#1c2547", "#e58a62"))
 
 
+# ---------------------------------------------------------------- Chimborazo: the glaciated dome above the páramo at sunrise
+def chimborazo():
+    rng = random.Random(53)
+    b = []
+    # Dawn light behind the mountain, a few high clouds catching it
+    b.append(glow(640, 300, 760, 300, "#ffd9a8", 0.6))
+    b.append(clouds(rng, 3, 80, 170, colour="#fff1e0", opacity=0.55))
+    # Chimborazo: a broad, heavy dome with its summits (Veintimilla and Whymper) on top, not a sharp cone
+    dome = [(80, 600), (260, 470), (400, 330), (500, 250), (560, 214), (610, 200), (660, 206), (700, 198),
+            (750, 212), (820, 262), (930, 360), (1060, 480), (1200, 560), (1200, 620), (80, 620)]
+    b.append(poly(dome, "#8c7f86"))
+    # Its glaciers: a thick ice cap with tongues running down the gullies
+    ice = [(330, 400), (400, 330), (500, 250), (560, 214), (610, 200), (660, 206), (700, 198), (750, 212),
+           (820, 262), (930, 360), (980, 410), (930, 420), (880, 380), (850, 430), (800, 390), (760, 440),
+           (720, 380), (670, 430), (630, 370), (580, 420), (540, 360), (490, 410), (450, 360), (400, 420), (370, 390)]
+    b.append(poly(ice, "#f7f3f1"))
+    # Sunlit right faces of the ice, cool shadow on the left
+    b.append(poly([(700, 198), (750, 212), (820, 262), (930, 360), (980, 410), (930, 420), (880, 380), (820, 330), (760, 260)], "#ffe6cc", opacity="0.85"))
+    b.append(poly([(330, 400), (400, 330), (500, 250), (560, 214), (520, 300), (470, 360), (400, 420), (370, 390)], "#c9d3e3", opacity="0.7"))
+    # Crevasse lines across the cap
+    for d in ("M520,262 q40,-8 80,4", "M600,240 q50,-10 96,2", "M470,320 q60,-12 120,0", "M690,250 q50,4 90,26", "M760,300 q60,8 110,40"):
+        b.append(f'<path d="{d}" fill="none" stroke="#b9c4d6" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>')
+    # Dark scree and moraine below the ice
+    b.append(poly([(180, 560), (330, 440), (420, 470), (520, 440), (640, 470), (760, 450), (900, 480), (1060, 520), (1200, 570), (1200, 620), (180, 620)], "#6e5f5f", opacity="0.6"))
+    # The páramo: rolling golden grassland in front
+    b.append(f'<path d="M0,600 C200,560 420,610 640,596 S1000,560 1200,590 L1200,800 L0,800 Z" fill="#c9a45a"/>')
+    b.append(f'<path d="M0,670 C240,640 520,690 780,676 S1080,650 1200,670 L1200,800 L0,800 Z" fill="#b08a43"/>')
+    b.append(f'<path d="M0,730 C300,712 640,748 900,736 S1120,724 1200,732 L1200,800 L0,800 Z" fill="#8f6d33"/>')
+    # Tufts of ichu grass
+    for _ in range(90):
+        x, y = rng.uniform(0, W), rng.uniform(640, 790)
+        h = rng.uniform(10, 22) * (0.6 + (y - 640) / 300)
+        b.append(f'<path d="M{x:.0f},{y:.0f} l{-h * 0.35:.1f},{-h:.1f} M{x:.0f},{y:.0f} l0,{-h * 1.1:.1f} M{x:.0f},{y:.0f} l{h * 0.35:.1f},{-h:.1f}" '
+                 f'stroke="#e2c07a" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>')
+    # The Whymper refuge, a small stone hut on the moraine
+    b.append(poly([(872, 560), (872, 540), (886, 528), (900, 540), (900, 560)], "#e9ddd0"))
+    b.append(poly([(866, 542), (886, 524), (906, 542)], "#9b3b2e"))
+    b.append(f'<rect x="882" y="546" width="7" height="14" fill="#5a4636"/>')
+    # Vicuñas grazing: slender bodies, long necks, pale bellies
+    def vicuna(x, y, s, flip=1):
+        out = []
+        out.append(f'<ellipse cx="{x}" cy="{y}" rx="{26 * s:.1f}" ry="{11 * s:.1f}" fill="#b5763a"/>')
+        out.append(f'<ellipse cx="{x}" cy="{y + 5 * s:.1f}" rx="{20 * s:.1f}" ry="{5 * s:.1f}" fill="#f3e6d2"/>')
+        nx = x + flip * 20 * s
+        out.append(f'<path d="M{nx:.1f},{y - 4 * s:.1f} L{nx + flip * 10 * s:.1f},{y - 30 * s:.1f}" stroke="#b5763a" stroke-width="{7 * s:.1f}" stroke-linecap="round"/>')
+        out.append(f'<ellipse cx="{nx + flip * 14 * s:.1f}" cy="{y - 32 * s:.1f}" rx="{8 * s:.1f}" ry="{4.5 * s:.1f}" fill="#b5763a"/>')
+        out.append(f'<path d="M{nx + flip * 8 * s:.1f},{y - 34 * s:.1f} l{flip * 1 * s:.1f},{-7 * s:.1f}" stroke="#8a5528" stroke-width="{2.4 * s:.1f}" stroke-linecap="round"/>')
+        for lx in (-18, -10, 12, 20):
+            out.append(f'<path d="M{x + lx * s:.1f},{y + 7 * s:.1f} l0,{22 * s:.1f}" stroke="#9c6230" stroke-width="{3.2 * s:.1f}" stroke-linecap="round"/>')
+        return "".join(out)
+    b.append('<g class="glide">' + vicuna(300, 690, 1.3) + "</g>")
+    b.append(vicuna(420, 706, 1.1, -1))
+    b.append(vicuna(1000, 650, 0.8))
+    return svg("chimborazo", "".join(b), ("#6f8fc4", "#f7c9a0"))
+
+
 # ---------------------------------------------------------------- Cerro Torre: the needle and its ice mushroom
 def cerro_torre():
     rng = random.Random(31)
@@ -1688,7 +1744,7 @@ PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofot
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq), ("scuba", scuba), ("acatenango", acatenango))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq), ("scuba", scuba), ("acatenango", acatenango), ("chimborazo", chimborazo))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:
