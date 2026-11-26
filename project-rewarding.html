@@ -11,13 +11,13 @@
   <link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <meta name="description" content="A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%; random audits stopped it in the pilot but only delayed it in follow-ups.">
+  <meta name="description" content="A small network trained only on visible tests learns to delete untested code until real correctness falls to 2%.">
   <link rel="canonical" href="https://amalmehta.com/project-rewarding.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Amal Mehta">
   <meta property="og:url" content="https://amalmehta.com/project-rewarding.html">
   <meta property="og:title" content="Rewarding What You Can’t Verify · Amal Mehta">
-  <meta property="og:description" content="A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%; random audits stopped it in the pilot but only delayed it in follow-ups.">
+  <meta property="og:description" content="A small network trained only on visible tests learns to delete untested code until real correctness falls to 2%.">
   <meta property="og:image" content="https://amalmehta.com/images/og-project-rewarding.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -57,9 +57,9 @@
   <!-- Built by tools/make-case-studies.py; edit the content there, not here. -->
   <main id="top" class="wrap page case">
     <header class="page-head">
-      <p class="card-when">2026 · pilot, then 50 follow-ups, each predicted first · toy scale, on a laptop</p>
+      <p class="card-when">2026 · 50 experiments, each predicted first · toy scale, on a laptop</p>
       <h1>Rewarding What You Can’t Verify</h1>
-      <p class="case-hook">A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%; random audits stopped it in the pilot but only delayed it in follow-ups.</p>
+      <p class="case-hook">A small network trained only on visible tests learns to delete untested code until real correctness falls to 2%.</p><!-- Saved for later, until 2026-11-26: A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%; random audits stopped it in the pilot but only delayed it in follow-ups. -->
       <p class="links"><a href="https://amalmehta.com/long_term_horizon_planning/">Live demo: proposal and results →</a> <a href="https://github.com/amalmehta/long_term_horizon_planning">Source on GitHub →</a> <a href="https://amalmehta.com/long_term_horizon_planning/#log">Experiment log →</a></p>
     </header>
 
@@ -126,7 +126,7 @@
 
     <section class="case-part" id="related-work">
       <h2 class="section-title">Related work</h2>
-      <p>Reward hacking, where a policy scores well on a proxy while failing the real task, is well documented. Amodei et al. (2016) name it and propose scalable oversight: checking only some episodes with the expensive signal. Skalse et al. (2022) define it formally. Gao et al. (2022) measure how true reward falls as a policy optimises a proxy harder. Baker et al. (2025) catch frontier reasoning models gaming tests in coding tasks. Choosing which examples to send for a costly check goes back to Christiano et al. (2017). GRPO is from Shao et al. (2024).</p>
+      <p>Reward hacking, where a policy scores well on a proxy while failing the real task, is well documented. Amodei et al. (2016) name it and propose scalable oversight: checking only some episodes with the expensive signal. Skalse et al. (2022) define it formally. Gao et al. (2023) measure how true reward falls as a policy optimises a proxy harder. Baker et al. (2025) catch frontier reasoning models gaming tests in coding tasks. Choosing which examples to send for a costly check goes back to Christiano et al. (2017). GRPO is from Shao et al. (2024).</p>
       <p><strong>What’s new here:</strong> a setting small enough to run hundreds of times, where the gap between visible and true correctness is known exactly. In it, I compare choosing which episodes to audit against random audits at the same budget.</p>
       <ol class="refs">
         <li>Amodei, D., et al. <a href="https://arxiv.org/abs/1606.06565">Concrete Problems in AI Safety</a>. arXiv, 2016.</li>

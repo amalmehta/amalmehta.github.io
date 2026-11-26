@@ -16,8 +16,9 @@ PAGES = [
     {
         "slug": "rewarding", "card": "unverifiable-rewards",
         "title": "Rewarding What You Can’t Verify",
-        "when": "2026 · pilot, then 50 follow-ups, each predicted first · toy scale, on a laptop",
-        "hook": "A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%; random audits stopped it in the pilot but only delayed it in follow-ups.",
+        "when": "2026 · 50 experiments, each predicted first · toy scale, on a laptop",
+        "hook": "A small network trained only on visible tests learns to delete untested code until real correctness falls to 2%.",
+        "hook_saved": "A code agent trained only on visible tests learns to delete untested code until real correctness falls to 2%; random audits stopped it in the pilot but only delayed it in follow-ups.",  # the older hook, kept as a Saved for later comment
         "spine": [
             ('Once upon a time,', 'code agents were trained on cheap checks: does it build, do the visible tests pass.'),
             ('Every day,', 'my agent was rewarded when the visible tests passed.'),
@@ -50,7 +51,7 @@ PAGES = [
             "<strong>E31, refuted.</strong> A small transformer that reads the whole program learned honest repair instead of hacking: 0.49 truly correct, against 0.12 for the small network (run at reduced scale, 2 seeds and 600 steps).",
         ],
         "related": [
-            'Reward hacking, where a policy scores well on a proxy while failing the real task, is well documented. Amodei et al. (2016) name it and propose scalable oversight: checking only some episodes with the expensive signal. Skalse et al. (2022) define it formally. Gao et al. (2022) measure how true reward falls as a policy optimises a proxy harder. Baker et al. (2025) catch frontier reasoning models gaming tests in coding tasks. Choosing which examples to send for a costly check goes back to Christiano et al. (2017). GRPO is from Shao et al. (2024).',
+            'Reward hacking, where a policy scores well on a proxy while failing the real task, is well documented. Amodei et al. (2016) name it and propose scalable oversight: checking only some episodes with the expensive signal. Skalse et al. (2022) define it formally. Gao et al. (2023) measure how true reward falls as a policy optimises a proxy harder. Baker et al. (2025) catch frontier reasoning models gaming tests in coding tasks. Choosing which examples to send for a costly check goes back to Christiano et al. (2017). GRPO is from Shao et al. (2024).',
             '<strong>What’s new here:</strong> a setting small enough to run hundreds of times, where the gap between visible and true correctness is known exactly. In it, I compare choosing which episodes to audit against random audits at the same budget.',
         ],
         "refs": [
@@ -124,6 +125,43 @@ PAGES = [
         "links": [("Code and write-ups on GitHub", "https://github.com/amalmehta/BCIProjects"),
                   ("Cursor decoding write-up (PDF)", "https://github.com/amalmehta/BCIProjects/blob/main/papers/Telepathy.pdf"),
                   ("Neuro Falcon follow-up", "https://github.com/amalmehta/NeuroFalcon")],
+    },
+    {
+        "slug": "neuro-falcon", "card": "neuro-falcon",
+        "title": "Neuro Falcon",
+        "when": "2026 · offline, on the FALCON M2 benchmark; not yet submitted",
+        "hook": "On the FALCON M2 benchmark, re-normalising a decoder’s inputs with a few seconds of a new day’s spikes, with no labels, beats fine-tuning on up to 20 s of labelled data.",
+        "spine": [
+            ("Once upon a time,", "a decoder trained on one week of motor-cortex recordings decoded finger movement well."),
+            ("Every day,", "the recordings drifted a little, and on later days it fell apart."),
+            ("One day,", "I re-normalised each channel with a few seconds of the new day’s spikes, no labels."),
+            ("Because of that,", "the two collapsed days came back (−0.05 to 0.21, 0.00 to 0.12) and the healthy ones held."),
+            ("Until finally,", "it beat fine-tuning on up to 20 s of labelled data at every budget."),
+            ("And ever since,", "the late days, three to four weeks out, are what I’m working on."),
+        ],
+        "question": [
+            "A decoder is trained on one week of motor-cortex recordings. How much does it lose on later days, and what’s the cheapest way to win that back?",
+            "This follows up the BCI Projects cursor decoder on a public benchmark, FALCON, where the data, the scoring and the held-out days are fixed in advance.",
+        ],
+        "setup": [
+            "FALCON M2: one monkey, a 96-channel array in motor cortex, decoding 2-D finger velocity from 20 ms spike counts. Training uses 7 runs from 19–28 October 2020; testing uses 6 runs from 4 later days, 30 October to 24 November. Loading, binning and the R² score come from the FALCON harness itself.",
+            "Two decoders: a Wiener filter on 200 ms of lagged bins, and a GRU with 64 units. Each held-out run is cut in half; a method may adapt on up to 20 s of the first halves and is scored on the second halves, which it never sees.",
+        ],
+        "flow": ["Count spikes per channel, every 20 ms", "Z-score each channel", "Linear layer, 96 channels to 32",
+                 "GRU with 64 units", "Linear readout to finger velocity", "New day: re-z-score with its own spikes"],
+        "stats": [("0.28", "R² after re-normalising with 2.5 s of a new day’s spikes, no labels"), ("0.18", "with no adaptation, on the same held-back halves"),
+                  ("0.26", "fine-tuning the readout on 20 s of labelled data"), ("0.05", "a new GRU trained only on those 20 s")],
+        "results": [
+            "With no adaptation, the Wiener filter collapses to R² 0.01 on held-out days while the GRU keeps 0.16 (5 seeds). The drop isn’t even: two days stay decodable and two fail.",
+            "Re-normalising the inputs with the new day’s spikes reaches 0.28 with 2.5 s and 0.31 with 20 s, averaged over the 4 days. No method that uses labels beats it at any budget from 2.5 to 20 s, and fine-tuning on 2.5 s does worse than not adapting at all. A decoder trained only on the new day’s 20 s reaches 0.05 to 0.13, so the pretraining is worth more than the new labels.",
+        ],
+        "missed": [
+            "The late days stay hard: even the best method reaches only 0.21 and 0.15 three to four weeks out, against 0.42–0.45 on the earlier days, so something beyond firing rates changes. There are only 4 held-out days, the scores use the public calibration runs rather than FALCON’s hidden split, and the leaderboard image is written but not yet submitted.",
+        ],
+        "next": ["Submit the re-normalising decoder to the FALCON leaderboard. Then test whether per-channel statistics alone explain the late-day gap, and try re-normalising continuously during a session."],
+        "figure": ("neuro-falcon", 1125, 630, "Recalibration curve: R² on each day’s held-back half against seconds of new-day data, for re-normalising, fine-tuning parts of the decoder, and training from scratch"),
+        "links": [("Source on GitHub", "https://github.com/amalmehta/NeuroFalcon"),
+                  ("One-page write-up", "https://github.com/amalmehta/NeuroFalcon/blob/main/docs/Writeup.md")],
     },
     {
         "slug": "replicate-sota", "card": "replicate-sota",
@@ -278,7 +316,7 @@ PAGES = [
         ],
         "next": ["Track the ball and target with a camera, and finish the RLPD fine-tuning on real runs."],
         "figure": ("robot-soccer.svg", 1280, 720, "Drawing: a four-legged robot dog kicks a soccer ball along an arc into a target in a goal, on a simulation grid"),
-        "links": [("Report (PDF, 330 KB)", "papers/robot-soccer-thesis.pdf")],
+        "links": [("Report (PDF, 395 KB)", "papers/robot-soccer-thesis.pdf")],
     },
 ]
 

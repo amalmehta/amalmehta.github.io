@@ -1,18 +1,31 @@
 // Profile, Skills: point at, focus or tap a skill and a small card under it lists the work on this page
 // that used it, each a link that takes you there and lights the entry up for a moment. A skill is matched
-// by its name (or each name in it, like "PPO, SAC, TD3") appearing in a role or project.
+// by its name (or each name in it, like "PPO, SAC, TD3") appearing in a role, project or app, or in that entry's
+// USED list below (for what the work used but its text doesn't name; each checked against that project's code
+// or the resume).
 (() => {
   const section = document.getElementById("skills");
   if (!section) return;
-  const work = [...document.querySelectorAll("article.role[id], article.project[id], li.mini[id]")].filter(el => !el.closest("[hidden]"));
+  const work = [...document.querySelectorAll("article.role[id], article.project[id], li.mini[id], li.app[id]")].filter(el => !el.closest("[hidden]"));
   const titleOf = el => {
     const h = el.querySelector("h3");
     const t = (h?.firstChild?.textContent || h?.textContent || "").trim();
     return t.includes(" · ") ? t.split(" · ").pop() : t;
   };
+  const USED = {
+    "bci-projects": "Kalman filtering, scikit-learn",
+    "physicsai": "GANs, Object detection, Synthetic data generation, CUDA",
+    "hybrid-robotics": "CPG gait control",
+    "neuro-falcon": "scikit-learn, Docker",
+    "alphago-lite": "MCTS self-play, ONNX, Core ML",
+    "llm-understander": "Swift, SwiftUI",
+    "ai-advances": "Swift, SwiftUI, Claude API",
+  };
+  // Words that only make sense as part of a skill's name ("Claude API & agents"), not as a match on their own
+  const GENERIC = new Set(["agents"]);
   const seen = new Set();
   const entries = work.filter(el => { const k = titleOf(el); if (!k || seen.has(k)) return false; seen.add(k); return true; })
-    .map(el => ({ el, title: titleOf(el), text: el.textContent }));
+    .map(el => ({ el, title: titleOf(el), text: `${el.textContent} ${USED[el.id] || ""}` }));
   const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   section.style.position = "relative";
   const pop = document.createElement("div");
@@ -39,7 +52,7 @@
   };
   const later = () => { clearTimeout(hideTimer); hideTimer = setTimeout(hide, 250); };
   for (const chip of section.querySelectorAll(".chip")) {
-    const names = chip.textContent.split(/[,()/]/).map(s => s.trim()).filter(s => s.length > 1);
+    const names = chip.textContent.split(/[,()/&]/).map(s => s.trim()).filter(s => s.length > 1 && !GENERIC.has(s));
     chip._work = entries.filter(({ text }) => names.some(n => new RegExp(`(^|[^\\w-])${esc(n)}($|[^\\w-])`).test(text)));
     if (!chip._work.length) continue;
     chip.classList.add("has-work");

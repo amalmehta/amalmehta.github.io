@@ -133,7 +133,7 @@
   };
 
   for (const li of items) {
-    const name = li.querySelector("strong");
+    const name = li.querySelector("a.iphone-name") || li.querySelector("strong");
     const kind = /cook/i.test(name?.textContent) ? cook : /garden/i.test(name?.textContent) ? garden : null;
     if (!kind) continue;
     const peek = document.createElement("span");
@@ -155,6 +155,8 @@
     const hide = () => { peek.classList.remove("on"); cancelAnimationFrame(raf); raf = 0; };
     name.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") show(); });
     name.addEventListener("pointerleave", hide);
+    name.addEventListener("focus", show);
+    name.addEventListener("blur", hide);
     frame(0.01);
   }
 })();

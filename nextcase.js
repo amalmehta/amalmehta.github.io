@@ -4,8 +4,9 @@
   const main = document.querySelector("main.case");
   if (!main) return;
   const ORDER = [
-    ["project-rewarding.html", "Rewarding What You Can’t Verify", "A code agent trained on visible tests learns to delete untested code until real correctness falls to 2%.", "images/case/rewarding.webp"],
+    ["project-rewarding.html", "Rewarding What You Can’t Verify", "A small network trained on visible tests learns to delete untested code until real correctness falls to 2%.", "images/case/rewarding.webp"],
     ["project-bci.html", "BCI Projects", "Decoding movement from neural recordings for 138 days with no new labels.", "images/case/bci.webp"],
+    ["project-neuro-falcon.html", "Neuro Falcon", "A few seconds of a new day’s spikes, no labels, beat fine-tuning on 20 s of labelled data.", "images/case/neuro-falcon.webp"],
     ["project-replicate-sota.html", "Replicate SOTA", "Qwen3.5-0.8B rebuilt from scratch, matching the official model at every position.", "images/case/replicate-sota.webp"],
     ["project-drone.html", "Drone Autonomy", "A simulated quadrotor that maps unknown rooms, plans with A* and adapts to wind and worn motors.", "images/case/drone.webp"],
     ["project-robot-soccer.html", "Robot Soccer", "One RL policy walks a Unitree Go1 to a ball and kicks it at a target, trained only in simulation.", "images/robot-soccer.svg"],
@@ -23,7 +24,7 @@
   const aside = document.createElement("aside");
   aside.className = "next-case";
   aside.setAttribute("aria-label", "Next project");
-  aside.innerHTML = `<p class="next-kicker">Next project</p><a class="next-card" href="${href}"><span class="next-thumb"><img src="${img}" alt="" loading="lazy"></span><span class="next-text"><strong></strong><span class="next-line"></span></span><span class="next-arrow" aria-hidden="true">→</span></a>`;
+  aside.innerHTML = `<p class="next-kicker">Next project</p><a class="next-card" href="${href}"><span class="next-thumb"><img src="${img}" alt="" loading="lazy" width="1200" height="750"></span><span class="next-text"><strong></strong><span class="next-line"></span></span><span class="next-arrow" aria-hidden="true">→</span></a>`;
   aside.querySelector("strong").textContent = title;
   aside.querySelector(".next-line").textContent = line;
   main.appendChild(aside);

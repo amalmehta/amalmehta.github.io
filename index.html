@@ -337,7 +337,7 @@
           <!-- Saved for later, cut 2026-11-19: <p>I run my own research on one question: what does a learning system actually learn when you can’t fully check its work?</p> -->
           <!-- Saved for later, until 2026-11-20 the line began: I trained a small coding agent with reinforcement learning (GRPO), rewarding … -->
           <p><strong>Code agents.</strong> I trained a small network to repair code, one choice per branch, with reinforcement learning (GRPO), rewarding it whenever the tests it could see passed. Its pass rate rose from 35% to 58%, but the share of programs that were actually correct fell from 31% to 2%: it had learned to delete the code no test checks. Spot-checking <a class="quiet-link" href="interests.html#math-clt">a random sample</a> of its work with a hidden, complete check only slowed this down. Choosing which attempts to check held it off: 4% false passes, against 24% for random checks on the same budget.</p>
-          <p><strong>Brain–computer interfaces.</strong> The signals an implant records <a class="quiet-link" href="interests.html#math-walk">drift from day to day</a>, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.64<!-- Saved for later, cut 2026-11-19: (1.0 is perfect) --> across all 19 later days, up to 138 days out, against 0.35 for the standard linear decoder. Leaving out the two days the electrodes were re-mapped, it’s 0.72, against 0.66 for a plain GRU.</p><!-- Saved for later, until 2026-11-20: …scoring R² 0.72 on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder. -->
+          <p><strong>Brain–computer interfaces.</strong> The signals an implant records <a class="quiet-link" href="interests.html#math-walk">drift from day to day</a>, so a decoder that turns brain activity into cursor movement slowly stops working unless someone recalibrates it. Mine kept working with no new labelled data, scoring R² 0.64<!-- Saved for later, cut 2026-11-19: (1.0 is perfect) --> across all 19 later days, up to 138 days out, against 0.35 for the standard linear decoder.</p><!-- Saved for later, cut 2026-11-26 to match the card: Leaving out the two days the electrodes were re-mapped, it’s 0.72, against 0.66 for a plain GRU. --><!-- Saved for later, until 2026-11-20: …scoring R² 0.72 on 17 of 19 later days, up to 138 days out, against 0.42 for the standard linear decoder. -->
           <!-- Saved for later, cut 2026-11-19: <p>Both are small-scale experiments; I wrote down a prediction before each run.</p> -->
           <p class="tags"><span class="chip">GRPO</span> <span class="chip">Neural decoding</span> <span class="chip">Sim-to-real</span></p><!-- Saved for later, chips cut 2026-11-17: Meta-learning -->
         </div>
@@ -381,7 +381,7 @@
           <p>Earlier work used a separate policy for each step; I trained one. Its reward came in three stages (reach the ball, kick it, then wait to see whether it scores), and the ball and goal positions were hidden from it until each stage needed them, so one network could move smoothly from walking to kicking.</p>
           <figure class="shot"><img src="images/robot-soccer.svg" alt="Drawing: a four-legged robot dog kicks a soccer ball along an arc into a target in a goal, on a simulation grid" loading="lazy" width="1280" height="720"></figure>
           <p class="tags"><span class="chip">PPO</span> <span class="chip">IsaacGym</span> <span class="chip">Sim-to-real</span></p><!-- Saved for later, chips cut 2026-11-17: Multi-stage rewards, RLPD, ROS, OpenCV, RealSense -->
-          <p class="links"><a class="deep" href="project-robot-soccer.html">Deep dive →</a> <a href="papers/robot-soccer-thesis.pdf" type="application/pdf">Report (PDF, 330 KB) →</a></p>
+          <p class="links"><a class="deep" href="project-robot-soccer.html">Deep dive →</a> <a href="papers/robot-soccer-thesis.pdf" type="application/pdf">Report (PDF, 395 KB) →</a></p>
         </div>
       </article>
 
@@ -470,7 +470,7 @@
         <div>
           <h3>Robot Soccer with Deep RL</h3>
           <p class="where">Thesis · Hybrid Robotics Lab, UC Berkeley · advised by Prof. Koushil Sreenath</p>
-          <p class="links"><a href="papers/robot-soccer-thesis.pdf" type="application/pdf">Report (PDF, 330 KB) →</a> <a href="project-robot-soccer.html">Deep dive →</a></p>
+          <p class="links"><a href="papers/robot-soccer-thesis.pdf" type="application/pdf">Report (PDF, 395 KB) →</a> <a href="project-robot-soccer.html">Deep dive →</a></p>
         </div>
       </article>
 
@@ -603,7 +603,7 @@
         <li class="mini" id="neuro-falcon">
           <h3>Neuro Falcon</h3>
           <p>On the FALCON M2 benchmark, re-normalising a decoder’s inputs with a few seconds of a new day’s spikes, with no labels, beats fine-tuning on up to 20 s of labelled data.</p>
-          <p class="links"><a href="https://github.com/amalmehta/NeuroFalcon">Code →</a></p>
+          <p class="links"><a href="project-neuro-falcon.html">Deep dive →</a> <a href="https://github.com/amalmehta/NeuroFalcon">Code →</a></p>
         </li>
         <!-- Back 2026-11-25, playable in place (gamebox.js); cut 2026-11-16 as a toy project -->
         <li class="mini" id="alphago-lite">
@@ -733,8 +733,8 @@
       <div class="iphone-apps" id="iphone-apps">
         <h3>Coming to iPhone</h3>
         <ul>
-          <li><strong>What To Cook Next</strong> An adaptive cooking course that picks one recipe at a time to train your weakest skill. <span class="soon">Coming soon</span></li>
-          <li><strong>Goal Garden</strong> Goals grow as plants as you log steps, with a home-screen widget. <span class="soon">Coming soon</span></li>
+          <li><a class="iphone-name" href="https://amalmehta.com/UsefulApps/#what-to-cook-next"><strong>What To Cook Next</strong></a> An adaptive cooking course that picks one recipe at a time to train your weakest skill. <span class="soon">Coming soon</span></li>
+          <li><a class="iphone-name" href="https://amalmehta.com/UsefulApps/#goal-garden"><strong>Goal Garden</strong></a> Goals grow as plants as you log steps, with a home-screen widget. <span class="soon">Coming soon</span></li>
         </ul>
       </div>
     </section>
