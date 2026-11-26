@@ -163,7 +163,7 @@
   if (links) {
     const b = document.createElement("button");
     b.type = "button"; b.className = "link-btn";
-    b.textContent = "Live demo: 19 days, no new labels →";
+    b.textContent = "Live demo: replay the 19 days →";
     b.addEventListener("click", () => { if (!fig.classList.contains("sim-open")) icon.click(); else fig.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); });
     links.firstElementChild.after(" ", b);
   }
