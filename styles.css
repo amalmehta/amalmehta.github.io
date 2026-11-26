@@ -1693,6 +1693,18 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 @keyframes sumo-push { 0%, 30% { translate: 0 0; } 100% { translate: 6px 0; } }
 @keyframes sumo-out { 0%, 30% { translate: 0 0; opacity: 1; } 85% { translate: 7px 0; opacity: 1; } 100% { translate: 8px 0; opacity: 0.35; } }
 .spark-sumo.still .sumo-a { translate: 6px 0; } .spark-sumo.still .sumo-b { translate: 8px 0; opacity: 0.35; }
+.pg-drift { fill: none; stroke: var(--muted); stroke-width: 1; stroke-linejoin: round; stroke-dasharray: 1.4 1.2; opacity: 0.7; }
+.pg-close { fill: none; stroke: var(--warm); stroke-width: 1.1; stroke-linecap: round; opacity: 0; }
+.pg-fixed { fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.pg-node { fill: var(--accent); opacity: 0; }
+.spark-graph.played .pg-close { animation: pg-close 1.6s ease 0.15s both; }
+.spark-graph.played .pg-drift { animation: pg-drift 1.4s ease 0.4s both; }
+.spark-graph.played .pg-fixed { stroke-dashoffset: 0; transition: stroke-dashoffset 1s ease-in-out 0.5s; }
+.spark-graph.played .pg-node { animation: pg-node 0.4s ease 1.3s both; }
+@keyframes pg-close { 0% { opacity: 0; } 25%, 60% { opacity: 0.9; } 100% { opacity: 0; } }
+@keyframes pg-drift { to { opacity: 0.2; } }
+@keyframes pg-node { to { opacity: 1; } }
+.spark-graph.still .pg-fixed { stroke-dashoffset: 0; transition: none; } .spark-graph.still .pg-node { opacity: 1; } .spark-graph.still .pg-drift { opacity: 0.2; }
 .sail-star { fill: var(--muted); opacity: 0.6; }
 .sail-beam { fill: none; stroke: var(--warm); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0.75; }
 .sail-sheet { fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-linecap: round; }

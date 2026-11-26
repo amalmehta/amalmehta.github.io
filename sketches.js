@@ -7,6 +7,7 @@
 //     melanoma papers: dense cells and the tumour's outline tracing itself round them. Few-shot imitation: a
 //     ghost arm shows a reach once and a solid arm copies it. Defensive retraining: two sumo agents, one
 //     shoving the other out of the ring. WaferSat: a laser beam reaches a tiny wafer with a sail, and it speeds off.
+//     Pose graphs: a drifting trajectory, a loop-closure edge, and the corrected loop drawing itself in.
 //   More projects, Drone Autonomy: a floor plan with a wall in the way; the planned path draws itself from
 //     start to goal around the wall's end, and a tiny quadrotor flies it.
 // Decoration only (hidden from screen readers), added with JavaScript; with reduced motion each shows its
@@ -94,7 +95,7 @@
   }
 
   // ---------------------------------------------------------------- publications & reports
-  const pubs = { "robot-soccer-thesis": "kick", "spie-2023": "cells", "uscap-2022": "cells", "few-shot-imitation": "arm", "defensive-retraining": "sumo", "wafersat-2016": "sail" };
+  const pubs = { "robot-soccer-thesis": "kick", "spie-2023": "cells", "uscap-2022": "cells", "few-shot-imitation": "arm", "defensive-retraining": "sumo", "wafersat-2016": "sail", "pose-graph-2023": "graph" };
   for (const [id, kind] of Object.entries(pubs)) {
     const h = document.querySelector(`#writeups #${id} h3`);
     if (!h) continue;
@@ -115,6 +116,11 @@
         el("circle", { cx: 14, cy: 9, r: 1.3 }, g);
       }
       el("circle", { class: "arm-target", cx: 18, cy: 16, r: 1.6 }, svg);
+    } else if (kind === "graph") {
+      el("path", { class: "pg-drift", d: "M5,18 L5,7 L13,3.5 L21,7.5 L22,18.5 L14,22.5" }, svg);
+      el("path", { class: "pg-close", d: "M14,22.5 L5,18" }, svg);
+      el("path", { class: "pg-fixed", d: "M5,18 L5,7 L12,4 L19,7 L19,17 L12,20 Z", pathLength: 1 }, svg);
+      for (const [x, y] of [[5, 18], [5, 7], [12, 4], [19, 7], [19, 17], [12, 20]]) el("circle", { class: "pg-node", cx: x, cy: y, r: 1.3 }, svg);
     } else if (kind === "sail") {
       for (const [x, y] of [[17, 5], [21, 9], [19, 18], [22, 15]]) el("circle", { class: "sail-star", cx: x, cy: y, r: 0.6 }, svg);
       for (const d of ["M1,9 H8", "M1,12 H8.8", "M1,15 H8"]) el("path", { class: "sail-beam", d, pathLength: 1 }, svg);
