@@ -86,3 +86,75 @@
     frame(0.01);
   }
 })();
+
+// Apps you can use, Coming to iPhone: pointing at an app's name shows the same kind of glimpse.
+//   What To Cook Next: tonight's recipe, and the skill it trains filling a little.
+//   Goal Garden: a sprout grows a leaf with each logged step, then blooms.
+(() => {
+  const items = [...document.querySelectorAll(".iphone-apps li")];
+  if (!items.length) return;
+  const NS = "http://www.w3.org/2000/svg";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const el = (name, attrs, parent) => { const n = document.createElementNS(NS, name); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); if (parent) parent.appendChild(n); return n; };
+  const W = 160, H = 72;
+
+  const cook = svg => {
+    const meals = [["Pan-seared salmon", "searing", 0.35, 0.62], ["Vegetable stir-fry", "knife skills", 0.48, 0.71], ["Mushroom risotto", "patience", 0.22, 0.5]];
+    el("text", { x: 12, y: 17, class: "gp-label" }, svg).textContent = "tonight";
+    const dish = el("text", { x: 12, y: 34, class: "gp-dish" }, svg);
+    const skill = el("text", { x: 12, y: 52, class: "gp-label" }, svg);
+    el("rect", { x: 12, y: 57, width: W - 24, height: 5, rx: 2.5, class: "gp-track" }, svg);
+    const bar = el("rect", { x: 12, y: 57, height: 5, rx: 2.5, class: "gp-bar" }, svg);
+    return t => {
+      const k = Math.floor(t / 3) % meals.length, c = (t % 3) / 3, [name, what, a, b] = meals[k];
+      dish.textContent = name;
+      skill.textContent = `trains: ${what}`;
+      const f = a + (b - a) * Math.min(1, Math.max(0, (c - 0.25) / 0.5));
+      bar.setAttribute("width", ((W - 24) * f).toFixed(1));
+    };
+  };
+
+  const garden = svg => {
+    el("path", { d: `M14,60 H${W - 14}`, class: "gp-pitch" }, svg);
+    const stem = el("path", { class: "gp-stem" }, svg);
+    const leaves = [[-1, 50], [1, 42], [-1, 34]].map(([s, y]) => el("ellipse", { cx: W / 2 + s * 8, cy: y, rx: 7, ry: 3.4, transform: `rotate(${s * -28} ${W / 2 + s * 8} ${y})`, class: "gp-leaf" }, svg));
+    const bloom = el("g", { class: "gp-bloom" }, svg);
+    for (let k = 0; k < 6; k++) { const a = k * Math.PI / 3; el("circle", { cx: (W / 2 + Math.cos(a) * 5).toFixed(1), cy: (20 + Math.sin(a) * 5).toFixed(1), r: 3.6 }, bloom); }
+    el("circle", { cx: W / 2, cy: 20, r: 2.6, class: "gp-heart" }, bloom);
+    const note = el("text", { x: 12, y: 16, class: "gp-label" }, svg);
+    return t => {
+      const c = t % 6, steps = Math.min(4, Math.floor(c / 1.1));
+      const h = 6 + Math.min(1, c / 4.4) * 34;
+      stem.setAttribute("d", `M${W / 2},60 C${W / 2 - 3},${60 - h * 0.5} ${W / 2 + 3},${60 - h * 0.8} ${W / 2},${60 - h}`);
+      leaves.forEach((l, k) => l.setAttribute("opacity", steps > k ? "1" : "0"));
+      bloom.setAttribute("opacity", steps >= 4 ? "1" : "0");
+      note.textContent = steps >= 4 ? "goal reached" : `${steps} step${steps === 1 ? "" : "s"} logged`;
+    };
+  };
+
+  for (const li of items) {
+    const name = li.querySelector("strong");
+    const kind = /cook/i.test(name?.textContent) ? cook : /garden/i.test(name?.textContent) ? garden : null;
+    if (!kind) continue;
+    const peek = document.createElement("span");
+    peek.className = "game-peek";
+    peek.setAttribute("aria-hidden", "true");
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}` }, peek);
+    const frame = kind(svg);
+    li.classList.add("has-peeks");
+    li.appendChild(peek);
+    let raf = 0, t0 = 0;
+    const tick = now => { frame((now - t0) / 1000); raf = requestAnimationFrame(tick); };
+    const show = () => {
+      peek.style.setProperty("--peek-x", `${name.offsetLeft + name.offsetWidth / 2}px`);
+      peek.style.setProperty("--peek-y", `${name.offsetTop}px`);
+      peek.classList.add("on");
+      if (reduce) { frame(5.5); return; }
+      if (!raf) { t0 = performance.now(); raf = requestAnimationFrame(tick); }
+    };
+    const hide = () => { peek.classList.remove("on"); cancelAnimationFrame(raf); raf = 0; };
+    name.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") show(); });
+    name.addEventListener("pointerleave", hide);
+    frame(0.01);
+  }
+})();

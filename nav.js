@@ -226,3 +226,17 @@
   place();
   setInterval(place, 60000);
 })();
+
+// Every page's footer: "Written and directed by · Amal Mehta" rises into place like a film's end credits, the
+// first time the footer comes into view. Without JavaScript, or with reduced motion, it's simply there.
+(() => {
+  const credits = document.querySelector(".footer .credits");
+  if (!credits || matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  credits.classList.add("roll-wait");
+  const io = new IntersectionObserver(es => {
+    if (!es.some(e => e.isIntersecting)) return;
+    io.disconnect();
+    credits.classList.replace("roll-wait", "roll-play");
+  }, { threshold: 1 });
+  io.observe(credits);
+})();

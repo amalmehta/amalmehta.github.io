@@ -1874,7 +1874,7 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .bd-note { flex: 1 1 100%; font-size: 0.72rem; color: #9aa6b8; }
 
 /* Outside work, Games I made for fun (games.js): a tiny live glimpse above a game's name while you point at it */
-.games-line.has-peeks { position: relative; }
+.games-line.has-peeks, .iphone-apps li.has-peeks { position: relative; }
 .game-peek { position: absolute; left: var(--peek-x, 50%); top: var(--peek-y, 0); margin-top: -82px; z-index: 5; width: 160px; height: 72px; translate: -50% 4px; scale: 0.96; opacity: 0; pointer-events: none; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: 0 12px 30px -16px rgb(0 0 0 / 0.45); transition: opacity 0.2s ease, translate 0.25s ease, scale 0.25s ease; }
 .game-peek.on { opacity: 1; translate: -50% 0; scale: 1; }
 .game-peek svg { display: block; width: 100%; height: 100%; }
@@ -1927,3 +1927,29 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .iphone-apps li { line-height: 1.55; }
 .iphone-apps strong { margin-right: 0.35rem; }
 .iphone-apps .soon { margin-left: 0.35rem; padding: 0.1rem 0.6rem; font-size: 0.74rem; vertical-align: 0.08em; }
+.gp-dish { font: 600 12.5px/1 var(--serif); fill: var(--text); }
+.gp-track { fill: var(--line); }
+.gp-bar { fill: var(--warm); }
+.gp-stem { fill: none; stroke: #4f8a4f; stroke-width: 2.4; stroke-linecap: round; }
+.gp-leaf { fill: #6aa86a; transition: opacity 0.3s ease; }
+.gp-bloom circle { fill: #f1a7b8; } .gp-bloom .gp-heart { fill: #f2c14e; }
+.gp-bloom { transition: opacity 0.35s ease; }
+
+/* What changed (activity.js): the last eight weeks, a dot per day sized by how much changed */
+.activity { margin: 0 0 2rem; }
+.activity svg { display: block; width: 100%; height: auto; overflow: visible; }
+.activity figcaption { margin-top: 0.3rem; font-size: 0.8rem; color: var(--faint); }
+.activity .a-day { fill: var(--accent); }
+.activity .a-none { fill: var(--line); }
+.activity .a-label { font: 500 9px/1 var(--sans); fill: var(--faint); }
+.activity circle { transform-box: fill-box; transform-origin: center; }
+.activity .a-wait circle { scale: 0; }
+.activity .a-play circle { animation: a-grow 0.45s cubic-bezier(0.3, 1.5, 0.5, 1) calc(var(--i) * 22ms) both; }
+@keyframes a-grow { from { scale: 0; } to { scale: 1; } }
+.activity circle:hover { fill: var(--warm); }
+
+/* Footer (nav.js): the credits rise into place like a film's end credits */
+.footer .credits.roll-wait > div { opacity: 0; translate: 0 22px; }
+.footer .credits.roll-play > div > * { animation: credit-rise 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.footer .credits.roll-play > div > dd { animation-delay: 0.45s; }
+@keyframes credit-rise { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
