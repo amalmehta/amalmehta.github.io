@@ -39,6 +39,7 @@ PINS = [
     ("want", "Dublin, Ireland", 53.35, -6.26, "place-dublin"),
     ("want", "Edinburgh, Scotland", 55.95, -3.19, "place-edinburgh"),
     ("want", "Taipei, Taiwan", 25.03, 121.56, "place-taipei"),
+    ("want", "Acatenango, Guatemala", 14.50, -90.88, "place-acatenango"),  # the summit camp facing Fuego
     ("been", "London", 51.51, -0.13, None),
     ("been", "Rome", 41.90, 12.50, None),
     ("been", "Florence", 43.77, 11.26, "place-florence"),

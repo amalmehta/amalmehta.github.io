@@ -909,6 +909,53 @@ def kilimanjaro():
     return svg("kilimanjaro", "".join(b), ("#7fa9d6", "#f6dcc0"))
 
 
+# ---------------------------------------------------------------- Acatenango: Fuego erupting across the saddle at dusk
+def acatenango():
+    rng = random.Random(41)
+    b = []
+    # Stars coming out over the dusk
+    for _ in range(70):
+        x, y = rng.uniform(0, W), rng.uniform(0, 300)
+        b.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rng.uniform(0.8, 2.2):.1f}" fill="#fff6e8" opacity="{rng.uniform(0.35, 0.9):.2f}"/>')
+    b.append(glow(760, 560, 820, 220, "#f3a06a", 0.55))
+    # Volcán de Fuego: a steep dark cone across the saddle, glowing at the top
+    fuego = [(250, 600), (520, 400), (650, 290), (700, 250), (735, 248), (780, 286), (900, 390), (1200, 590)]
+    b.append(poly(fuego, "#2c2633"))
+    b.append(poly([(735, 248), (780, 286), (900, 390), (1200, 590), (860, 600)], "#160f1c", opacity="0.35"))
+    # Its ash plume, billowing up and drifting
+    plume = []
+    for k in range(14):
+        cx, cy = 718 + k * 9 + rng.uniform(-14, 14), 230 - k * 15 + rng.uniform(-6, 6)
+        plume.append(f'<ellipse cx="{cx:.0f}" cy="{cy:.0f}" rx="{30 + k * 5 + rng.uniform(0, 10):.0f}" ry="{20 + k * 3:.0f}" fill="#6d6470" opacity="{0.75 - k * 0.04:.2f}"/>')
+    b.append('<g class="drift">' + "".join(plume) + "</g>")
+    # The eruption: a glow at the crater, lava running down the flanks, sparks thrown out
+    b.append(glow(718, 252, 120, 70, "#ff8a2a", 0.95))
+    for d, w in (("M712,256 C700,300 668,340 640,392 S600,450 586,470", 5), ("M728,258 C744,302 770,336 800,374", 4), ("M720,258 C716,296 708,330 700,360", 3)):
+        b.append(f'<path d="{d}" fill="none" stroke="#ff7a1f" stroke-width="{w}" stroke-linecap="round" opacity="0.9"/>')
+        b.append(f'<path d="{d}" fill="none" stroke="#ffd27a" stroke-width="{max(1, w - 3)}" stroke-linecap="round" opacity="0.8"/>')
+    for _ in range(40):
+        a, r = rng.uniform(-2.6, -0.5), rng.uniform(20, 110)
+        x, y = 718 + r * math.cos(a), 248 + r * math.sin(a) * 1.1
+        b.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rng.uniform(1.4, 3.6):.1f}" fill="{rng.choice(("#ffb347", "#ff7a1f", "#ffe08a"))}"/>')
+    # A sea of cloud filling the saddle and the valleys below
+    for _ in range(30):
+        x, y = rng.uniform(-60, W + 60), rng.uniform(560, 630)
+        b.append(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="{rng.uniform(80, 170):.0f}" ry="{rng.uniform(18, 34):.0f}" fill="#d9c3c8" opacity="0.85"/>')
+    b.append(f'<rect x="0" y="610" width="{W}" height="40" fill="#cfb6bd" opacity="0.6"/>')
+    # Acatenango's own slope in front, where the tents are pitched
+    b.append(f'<path d="M0,640 C220,600 460,650 700,680 S1000,700 1200,720 L1200,800 L0,800 Z" fill="#1f1a24"/>')
+    b.append(f'<path d="M0,700 C260,668 520,720 820,740 S1100,760 1200,770 L1200,800 L0,800 Z" fill="#141118"/>')
+    for x, base, s in ((170, 668, 1.0), (300, 676, 0.8), (1040, 748, 0.9)):
+        b.append(glow(x, base - 22 * s, 70 * s, 40 * s, "#ffb85c", 0.55))
+        b.append(poly([(x - 46 * s, base), (x, base - 58 * s), (x + 46 * s, base)], "#d98b3c"))
+        b.append(poly([(x - 10 * s, base), (x, base - 34 * s), (x + 10 * s, base)], "#ffd38a"))
+    # A small fire between the tents
+    b.append(glow(470, 690, 90, 46, "#ff9a3c", 0.8))
+    for k in range(3):
+        b.append(f'<path d="M{462 + k * 8},{700} q{-6 + k * 4},-18 {2},-{30 - k * 6}" stroke="#ffb347" stroke-width="4" fill="none" stroke-linecap="round"/>')
+    return svg("acatenango", "".join(b), ("#1c2547", "#e58a62"))
+
+
 # ---------------------------------------------------------------- Cerro Torre: the needle and its ice mushroom
 def cerro_torre():
     rng = random.Random(31)
@@ -1641,7 +1688,7 @@ PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofot
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq), ("scuba", scuba))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq), ("scuba", scuba), ("acatenango", acatenango))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:

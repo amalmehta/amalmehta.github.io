@@ -278,14 +278,14 @@ h3 { font-family: var(--serif); font-weight: 600; font-size: 1.55rem; line-heigh
 .where { margin: 0 0 0.7rem; font-size: 0.92rem; color: var(--muted); }
 .role p { margin-top: 0; }
 .role .tags { margin-bottom: 0; }
-/* Research & work: a thin rail with a dot per role, between the years and the entry */
+/* Research & work and Publications & reports: a thin rail with a dot per entry, between the years and the entry */
 @media (min-width: 720px) {
-  #research .role { position: relative; border-top: 0; }
-  #research .role::before { content: ""; position: absolute; left: 10rem; top: 0; bottom: 0; width: 1px; background: var(--line); }
-  #research .role:first-of-type::before { top: 0.75rem; }
-  #research .role:last-of-type::before { bottom: auto; height: 2.5rem; }
-  #research .role::after { content: ""; position: absolute; left: calc(10rem - 4.5px); top: calc(1.75rem + 0.55rem); width: 10px; height: 10px; box-sizing: border-box; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
-  #research .role:first-of-type::after { top: 0.55rem; }
+  :is(#research, #writeups) .role { position: relative; border-top: 0; }
+  :is(#research, #writeups) .role::before { content: ""; position: absolute; left: 10rem; top: 0; bottom: 0; width: 1px; background: var(--line); }
+  :is(#research, #writeups) .role:first-of-type::before { top: 0.75rem; }
+  :is(#research, #writeups) .role:last-of-type::before { bottom: auto; height: 2.5rem; }
+  :is(#research, #writeups) .role::after { content: ""; position: absolute; left: calc(10rem - 4.5px); top: calc(1.75rem + 0.55rem); width: 10px; height: 10px; box-sizing: border-box; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+  :is(#research, #writeups) .role:first-of-type::after { top: 0.55rem; }
 }
 .more { color: var(--muted); margin-top: 1.5rem; }
 
@@ -1317,14 +1317,15 @@ html.chaos-intro body::after { content: ""; position: fixed; inset: 0; z-index: 
 .photo.developing img, .writing-photo.developing img { filter: grayscale(1) sepia(0.3) contrast(0.55) brightness(1.12); opacity: 0.55; }
 .photo.develop img, .writing-photo.develop img { transition: filter 1.8s ease-out, opacity 1.2s ease-out; }
 
-/* rail.js: Research & work's rail fills in warm ink as you scroll, and each role's dot and years light up when reached */
+/* rail.js: the rails of Research & work and Publications fill in warm ink as you scroll, and each entry's dot and
+   years light up when reached */
 @media (min-width: 720px) {
-  #research.railed .role::before { background: linear-gradient(var(--warm) calc(var(--fill, 0) * 100%), var(--line) 0); }
-  #research.railed .role::after { transition: background 0.4s, border-color 0.4s, transform 0.4s; }
-  #research.railed .role.reached::after { background: var(--warm); border-color: var(--warm); transform: scale(1.15); }
+  .railed .role::before { background: linear-gradient(var(--warm) calc(var(--fill, 0) * 100%), var(--line) 0); }
+  .railed .role::after { transition: background 0.4s, border-color 0.4s, transform 0.4s; }
+  .railed .role.reached::after { background: var(--warm); border-color: var(--warm); transform: scale(1.15); }
 }
-#research.railed .role .when { transition: color 0.4s; }
-#research.railed .role.reached .when { color: var(--warm); }
+.railed .role .when { transition: color 0.4s; }
+.railed .role.reached .when { color: var(--warm); }
 
 /* sketch.js: the Skills icons trace their own lines in, one after another */
 .skill-icon.sketching :is(path, circle, ellipse, line, polyline, rect) { stroke-dasharray: 1; stroke-dashoffset: 1; }
@@ -1491,7 +1492,8 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .sketch { float: right; margin: 0.2rem 0 0.5rem 1.2rem; overflow: visible; }
 .seg-sketch { width: 96px; height: 77px; }
 .drone-sketch { width: 150px; height: 60px; }
-@media (max-width: 600px) { .seg-sketch { width: 72px; height: 58px; } .drone-sketch { width: 112px; height: 45px; } }
+.nf-sketch { width: 150px; height: 60px; }
+@media (max-width: 600px) { .seg-sketch { width: 72px; height: 58px; } .drone-sketch, .nf-sketch { width: 112px; height: 45px; } }
 .seg-tissue { fill: #efc3d3; }
 .seg-streak { fill: none; stroke: #e3a9c0; stroke-width: 1.2; stroke-linecap: round; opacity: 0.7; }
 .seg-nucleus { fill: #8a5aa8; opacity: 0.75; }
@@ -1511,6 +1513,18 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .plan-goal { fill: var(--warm); stroke: var(--warm); stroke-width: 1.2; stroke-linejoin: round; }
 .plan-drone path { stroke: var(--text); stroke-width: 1.6; stroke-linecap: round; }
 .plan-drone circle { fill: none; stroke: var(--text); stroke-width: 1.2; }
+.nf-axis { stroke: var(--line); stroke-width: 1.2; }
+.nf-ref { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.5; }
+.nf-sink { fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.nf-day { fill: var(--muted); opacity: 0; }
+.nf-snap { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.nf-end { fill: var(--accent); opacity: 0; transform-box: fill-box; transform-origin: center; }
+.played .nf-sink { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.6, 1) 0.1s; }
+.played .nf-day { opacity: 0.8; transition: opacity 0.3s ease calc(0.15s + var(--k) * 0.32s); }
+.played .nf-snap { stroke-dashoffset: 0; transition: stroke-dashoffset 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) 1.75s; }
+.played .nf-end { opacity: 1; animation: nf-pop 0.4s ease 2.15s both; }
+@keyframes nf-pop { from { scale: 0.2; } 60% { scale: 1.4; } to { scale: 1; } }
+.still .nf-sink, .still .nf-snap { stroke-dashoffset: 0; transition: none; } .still .nf-day { opacity: 0.8; transition: none; } .still .nf-end { opacity: 1; animation: none; }
 @media print { .sketch { display: none; } }
 
 /* Interests, Hobbies (hobbies.js): bubbles rise in Scuba diving, snow drifts in Skiing, a shutter flash in Photography */
@@ -1858,3 +1872,19 @@ main.tag-focus :is(.project, .role):not(.tag-match) { opacity: 0.32; filter: sat
 .bd-play:focus-visible, .bci-demo input:focus-visible { outline: 2px solid #7aa2ff; outline-offset: 2px; }
 .bci-demo input[type="range"] { flex: 1 1 8rem; accent-color: #7aa2ff; }
 .bd-note { flex: 1 1 100%; font-size: 0.72rem; color: #9aa6b8; }
+
+/* Outside work, Games I made for fun (games.js): a tiny live glimpse above a game's name while you point at it */
+.games-line.has-peeks { position: relative; }
+.game-peek { position: absolute; left: var(--peek-x, 50%); top: var(--peek-y, 0); margin-top: -82px; z-index: 5; width: 160px; height: 72px; translate: -50% 4px; scale: 0.96; opacity: 0; pointer-events: none; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: 0 12px 30px -16px rgb(0 0 0 / 0.45); transition: opacity 0.2s ease, translate 0.25s ease, scale 0.25s ease; }
+.game-peek.on { opacity: 1; translate: -50% 0; scale: 1; }
+.game-peek svg { display: block; width: 100%; height: 100%; }
+.gp-type { font: 500 12px/1 ui-monospace, Menlo, monospace; fill: var(--text); }
+.gp-caret { fill: var(--accent); }
+.gp-num { font: 700 18px/1 var(--sans); fill: var(--accent); }
+.gp-label { font: 500 10.5px/1 var(--sans); fill: var(--muted); }
+.gp-face { font-size: 28px; }
+.gp-pitch { stroke: color-mix(in srgb, var(--accent) 35%, var(--line)); stroke-width: 2; stroke-linecap: round; }
+.gp-cone { fill: var(--warm); }
+.gp-ball { fill: var(--surface); stroke: var(--text); stroke-width: 1.6; }
+@media (prefers-reduced-motion: reduce) { .game-peek { transition: none; } }
+@media print { .game-peek { display: none; } }

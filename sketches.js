@@ -11,6 +11,8 @@
 //     Contract extraction: a term in a contract lights up and a check mark ticks beside it.
 //   More projects, Drone Autonomy: a floor plan with a wall in the way; the planned path draws itself from
 //     start to goal around the wall's end, and a tiny quadrotor flies it.
+//   More projects, Neuro Falcon: a decoder's accuracy sinks day after day (R² 0.33 on its own week down to 0.16),
+//     then snaps back up (0.31) once the new day's inputs are re-normalised, the README's GRU numbers.
 // Decoration only (hidden from screen readers), added with JavaScript; with reduced motion each shows its
 // finished state.
 (() => {
@@ -74,6 +76,22 @@
     else quad.setAttribute("transform", "translate(18 20)");
     drone.prepend(svg);
     playOnView(svg, () => { quad.removeAttribute("transform"); try { fly.beginElement(); } catch { /* not ready */ } });
+  }
+
+  // ---------------------------------------------------------------- Neuro Falcon: drift, then re-normalising
+  const falcon = document.querySelector("li.mini#neuro-falcon");
+  if (falcon) {
+    const svg = el("svg", { class: "sketch nf-sketch", viewBox: "0 0 160 64", "aria-hidden": "true" });
+    const y = v => (56 - v * 130).toFixed(1);
+    el("path", { class: "nf-axis", d: "M6,56 H154" }, svg);
+    el("path", { class: "nf-ref", d: `M6,${y(0.33)} H154` }, svg);
+    const days = [[14, 0.33], [40, 0.27], [66, 0.22], [92, 0.18], [118, 0.16]];
+    el("path", { class: "nf-sink", d: "M" + days.map(([x, v]) => `${x},${y(v)}`).join(" L"), pathLength: 1 }, svg);
+    days.forEach(([x, v], k) => el("circle", { class: "nf-day", cx: x, cy: y(v), r: 2.2 }, svg).style.setProperty("--k", k));
+    el("path", { class: "nf-snap", d: `M118,${y(0.16)} C128,${y(0.16)} 132,${y(0.31)} 142,${y(0.31)}`, pathLength: 1 }, svg);
+    el("circle", { class: "nf-end", cx: 142, cy: y(0.31), r: 3 }, svg);
+    falcon.prepend(svg);
+    playOnView(svg, () => {});
   }
 
   // ---------------------------------------------------------------- earlier research: a supernova and particle tracks

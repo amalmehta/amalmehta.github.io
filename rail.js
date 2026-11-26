@@ -1,12 +1,17 @@
-// Profile, Research & work: the thin rail between the years and each role fills in warm ink as you scroll,
-// and each role's dot and years light up as the reading line reaches them. Wide screens, where the rail shows.
+// Profile, Research & work and Publications & reports: the thin rail between the years and each entry fills in
+// warm ink as you scroll, and each entry's dot and years light up as the reading line reaches them. Wide screens,
+// where the rail shows.
 // Added only with JavaScript; without it, or with reduced motion, the rail stays as drawn.
 (() => {
-  const section = document.getElementById("research");
-  if (!section || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const roles = [...section.querySelectorAll(".role")];
-  if (roles.length < 2) return;
-  section.classList.add("railed");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const roles = [];
+  for (const section of [document.getElementById("research"), document.getElementById("writeups")]) {
+    const mine = section ? [...section.querySelectorAll(".role")] : [];
+    if (mine.length < 2) continue;
+    section.classList.add("railed");
+    roles.push(...mine);
+  }
+  if (!roles.length) return;
   let queued = false;
   const update = () => {
     queued = false;
