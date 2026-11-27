@@ -956,6 +956,84 @@ def acatenango():
     return svg("acatenango", "".join(b), ("#1c2547", "#e58a62"))
 
 
+# ---------------------------------------------------------------- Kathmandu: Boudhanath Stupa, its painted eyes above the prayer flags
+def kathmandu():
+    rng = random.Random(61)
+    b = []
+    b.append(glow(600, 260, 640, 260, "#fff3d6", 0.55))
+    b.append('<g class="drift">' + clouds(rng, 3, 90, 200, colour="#ffffff", opacity=0.6) + "</g>")
+    # Faint Himalaya far behind
+    b.append(f'<path d="M0,470 L120,400 L200,430 L300,350 L380,410 L470,380 L560,420 L700,400 L820,330 L900,390 L1000,360 L1100,410 L1200,380 L1200,520 L0,520 Z" fill="#c7d4e6" opacity="0.8"/>')
+    b.append(f'<path d="M300,350 L330,372 L316,374 L346,392 L270,372 Z M820,330 L852,356 L836,358 L866,380 L790,356 Z" fill="#f4f7fb" opacity="0.9"/>')
+    # The ring of old houses round the stupa
+    x = -10
+    while x < W:
+        w, h = rng.uniform(70, 120), rng.uniform(70, 120)
+        col = rng.choice(("#b8613f", "#c9875a", "#a5523a", "#d9b28a", "#8f4a35"))
+        b.append(f'<rect x="{x:.0f}" y="{560 - h:.0f}" width="{w:.0f}" height="{h + 40:.0f}" fill="{col}"/>')
+        b.append(poly([(x - 6, 562 - h), (x + w / 2, 540 - h), (x + w + 6, 562 - h)], "#6b3b2c"))
+        for wx in range(int(x + 12), int(x + w - 16), 26):
+            for wy in (575 - h, 610 - h):
+                if wy < 560:
+                    b.append(f'<rect x="{wx}" y="{wy:.0f}" width="12" height="18" fill="#4a2c22"/>')
+        x += w + rng.uniform(0, 8)
+    # Plaza
+    b.append(f'<rect x="0" y="600" width="{W}" height="200" fill="#d8c8ad"/>')
+    b.append(f'<path d="M0,640 L1200,640 M0,700 L1200,700 M0,760 L1200,760" stroke="#c4b393" stroke-width="2"/>')
+    # The mandala terraces: three white steps
+    for i, (w, y) in enumerate(((1000, 612), (860, 586), (720, 562))):
+        b.append(f'<rect x="{600 - w / 2}" y="{y}" width="{w}" height="{36 if i == 0 else 30}" fill="#f6f2ea"/>')
+        b.append(f'<rect x="{600 - w / 2}" y="{y}" width="{w}" height="6" fill="#e3dccf"/>')
+    # The dome, with its saffron lotus arcs
+    b.append(f'<path d="M330,566 A270,230 0 0 1 870,566 Z" fill="#fbf8f2"/>')
+    b.append(f'<path d="M360,566 A240,200 0 0 1 840,566 Z" fill="none" stroke="#eeb04a" stroke-width="6" opacity="0.55"/>')
+    for k in range(9):
+        a = math.pi * (k + 0.5) / 9
+        cx, cy = 600 - 230 * math.cos(a), 566 - 190 * math.sin(a)
+        b.append(f'<path d="M{cx:.0f},{cy:.0f} q-14,26 0,52 q14,-26 0,-52 Z" fill="#e89a3c" opacity="0.6"/>')
+    b.append(f'<path d="M330,566 A270,230 0 0 1 470,370" fill="none" stroke="#e5ddd0" stroke-width="18" opacity="0.6"/>')  # shade on the left
+    # The gilded harmika with the eyes
+    b.append(f'<rect x="530" y="268" width="140" height="80" fill="#e2b33f"/>')
+    b.append(f'<rect x="522" y="340" width="156" height="12" fill="#c9952c"/>')
+    for ex in (568, 632):
+        b.append(f'<path d="M{ex - 22},300 Q{ex},286 {ex + 22},300 Q{ex},310 {ex - 22},300 Z" fill="#fdfbf6"/>')
+        b.append(f'<circle cx="{ex}" cy="299" r="7" fill="#1d3f7a"/>')
+        b.append(f'<path d="M{ex - 24},290 Q{ex},276 {ex + 24},288" fill="none" stroke="#1c1b19" stroke-width="4" stroke-linecap="round"/>')
+    b.append(f'<path d="M600,306 q-10,10 -2,18 q8,6 2,14" fill="none" stroke="#b4342b" stroke-width="4" stroke-linecap="round"/>')  # the nose, the number one
+    b.append(f'<circle cx="600" cy="284" r="4" fill="#b4342b"/>')  # third eye
+    # The 13 gilded steps of the spire, then the parasol
+    for k in range(13):
+        w = 120 - k * 6.5
+        b.append(f'<rect x="{600 - w / 2:.1f}" y="{256 - k * 11}" width="{w:.1f}" height="10" fill="{"#e9bd4b" if k % 2 else "#d6a63a"}"/>')
+    b.append(poly([(560, 112), (600, 86), (640, 112)], "#e9bd4b"))
+    b.append(f'<rect x="566" y="112" width="68" height="10" fill="#b4342b"/>')
+    b.append(f'<path d="M600,86 L600,58" stroke="#d6a63a" stroke-width="6" stroke-linecap="round"/><circle cx="600" cy="56" r="7" fill="#e9bd4b"/>')
+    # Prayer flags from the spire's top down to the terraces
+    colours = ("#2f6fc0", "#f7f4ee", "#c8372d", "#3e9a4c", "#f2c230")
+    for tx, ty in ((120, 600), (300, 566), (900, 566), (1080, 600)):
+        sx, sy = 600, 70
+        n = 22
+        mx, my = (sx + tx) / 2, (sy + ty) / 2 + 60
+        b.append(f'<path d="M{sx},{sy} Q{mx:.0f},{my:.0f} {tx},{ty}" fill="none" stroke="#7a6a58" stroke-width="1.5"/>')
+        for i in range(1, n):
+            t = i / n
+            px = (1 - t) ** 2 * sx + 2 * (1 - t) * t * mx + t ** 2 * tx
+            py = (1 - t) ** 2 * sy + 2 * (1 - t) * t * my + t ** 2 * ty
+            b.append(f'<rect x="{px - 6:.1f}" y="{py:.1f}" width="12" height="16" fill="{colours[i % 5]}" opacity="0.92"/>')
+    # Pigeons over the plaza
+    b.append('<g class="glide">')
+    for _ in range(9):
+        px, py = rng.uniform(150, 1050), rng.uniform(150, 330)
+        if 480 < px < 720:
+            continue
+        b.append(f'<path d="M{px - 12:.0f},{py:.0f} q6,-8 12,0 q6,-8 12,0" fill="none" stroke="#4a4a52" stroke-width="2.5" stroke-linecap="round"/>')
+    b.append("</g>")
+    for _ in range(14):  # pigeons on the plaza
+        px, py = rng.uniform(40, 1160), rng.uniform(665, 780)
+        b.append(f'<ellipse cx="{px:.0f}" cy="{py:.0f}" rx="9" ry="5.5" fill="#7d7f8a"/><circle cx="{px + 8:.0f}" cy="{py - 5:.0f}" r="3.5" fill="#5d606b"/>')
+    return svg("kathmandu", "".join(b), ("#7fb2e5", "#f4e7cf"))
+
+
 # ---------------------------------------------------------------- Chimborazo: the glaciated dome above the páramo at sunrise
 def chimborazo():
     rng = random.Random(53)
@@ -1744,7 +1822,7 @@ PLACES = (("cerro-torre", cerro_torre),("hokkaido", hokkaido), ("lofoten", lofot
           ("mexico-city", mexico_city), ("azores", azores), ("tonga", tonga),
           ("machu-picchu", machu_picchu), ("seattle-to-dc", seattle_to_dc), ("hunza", hunza),
           ("yosemite", yosemite), ("japan", japan), ("florence", florence),
-          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq), ("scuba", scuba), ("acatenango", acatenango), ("chimborazo", chimborazo))
+          ("kilimanjaro", kilimanjaro), ("lassen", lassen), ("whistler", whistler), ("dublin", dublin), ("boston", boston), ("edinburgh", edinburgh), ("taipei", taipei), ("philadelphia", philadelphia), ("death-valley", death_valley), ("iraq", iraq), ("scuba", scuba), ("acatenango", acatenango), ("chimborazo", chimborazo), ("kathmandu", kathmandu))
 os.makedirs(OUT, exist_ok=True)
 for name, fn in PLACES:
     with open(os.path.join(OUT, f"{name}.svg"), "w") as f:

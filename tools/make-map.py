@@ -40,6 +40,7 @@ PINS = [
     ("want", "Taipei, Taiwan", 25.03, 121.56, "place-taipei"),
     ("want", "Acatenango, Guatemala", 14.50, -90.88, "place-acatenango"),  # the summit camp facing Fuego
     ("want", "Volcán Chimborazo, Ecuador", -1.47, -78.82, "place-chimborazo"),  # the Whymper refuge side
+    ("want", "Kathmandu, Nepal", 27.72, 85.36, "place-kathmandu"),  # Boudhanath Stupa
     ("been", "London", 51.51, -0.13, None),
     ("been", "Rome", 41.90, 12.50, None),
     ("been", "Florence", 43.77, 11.26, "place-florence"),
