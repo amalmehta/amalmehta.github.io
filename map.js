@@ -60,3 +60,90 @@
     a.addEventListener("blur", hide);
   }
 })();
+
+// Travel: pressing a place's drawing (Trip timeline, Places I'd like to go, Places I've been), or the small map button
+// in its corner, swaps the drawing for a zoomed-in patch of the world map above, centred on that place's pin, which
+// pulses. Pressing again, or the ×, brings the drawing back. The patch is a copy of the map, made on first press.
+// Without JS there's just the drawing.
+(() => {
+  const map = document.querySelector(".travel-map svg");
+  if (!map) return;
+  const NS = "http://www.w3.org/2000/svg";
+  const [vx, vy, vw, vh] = map.getAttribute("viewBox").trim().split(/[\s,]+/).map(Number);
+  const ICON = { map: "M12 21s-6-5.6-6-10.5a6 6 0 0 1 12 0C18 15.4 12 21 12 21z M12 12.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z", close: "M6 6l12 12M18 6 6 18" };
+  const SHRINK = 0.6;  // pins are sized for the whole world; zoomed in they'd swamp the patch
+
+  const buildPatch = (fig, name) => {
+    const s = map.cloneNode(true);
+    s.querySelectorAll("title, defs, mask").forEach(n => n.remove());  // the gradient, shadow and masks stay in the map, which the copy still points at
+    s.querySelectorAll("[id]").forEach(n => n.removeAttribute("id"));
+    s.removeAttribute("aria-labelledby");
+    s.setAttribute("aria-label", `Map: where ${name} is`);
+    s.setAttribute("class", "place-patch");
+    for (const a of s.querySelectorAll("a")) {
+      const here = a.getAttribute("href") === `#${fig.id}`;
+      a.querySelectorAll(".pin").forEach(p => p.classList.add(here ? "pin-here" : "pin-other"));
+      a.replaceWith(...a.childNodes);  // no links or tab stops inside the patch
+    }
+    s.querySelectorAll(".pin").forEach(p => { p.removeAttribute("style"); if (!p.classList.contains("pin-here")) p.classList.add("pin-other"); });
+    s.querySelectorAll(".pin circle").forEach(c => c.setAttribute("r", (+c.getAttribute("r") * SHRINK).toFixed(1)));
+    const dotEls = [...s.querySelectorAll(".pin-here .pin-dot")];
+    const dots = dotEls.map(d => [+d.getAttribute("cx"), +d.getAttribute("cy"), +d.getAttribute("r")]);
+    dotEls.forEach((d, i) => {  // every pin here breathes, been pins included
+      const g = d.parentNode, [cx, cy, r] = dots[i];
+      if (g.querySelector(".pin-pulse")) return;
+      const c = document.createElementNS(NS, "circle");
+      c.setAttribute("class", "pin-pulse"); c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", r);
+      g.insertBefore(c, d);
+    });
+    // a 3:2 window around this place's pins, kept inside the map
+    const xs = dots.map(d => d[0]), ys = dots.map(d => d[1]);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    let w = Math.max(230, x1 - x0 + 140), h = w * 2 / 3;
+    if (h < y1 - y0 + 100) { h = y1 - y0 + 100; w = h * 1.5; }
+    const x = Math.min(Math.max((x0 + x1) / 2 - w / 2, vx), vx + vw - w), y = Math.min(Math.max((y0 + y1) / 2 - h / 2, vy), vy + vh - h);
+    s.setAttribute("viewBox", `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+    s.setAttribute("preserveAspectRatio", "xMidYMid slice");
+    // the place's name beside its first pin, on whichever side has room
+    const [cx, cy, r] = dots[0], right = cx < x + w * 0.62, size = w * 0.045;
+    const t = document.createElementNS(NS, "text");
+    t.setAttribute("class", "place-patch-label");
+    t.setAttribute("x", (cx + (right ? 1 : -1) * (r + size * 0.6)).toFixed(1));
+    t.setAttribute("y", (cy + size * 0.35).toFixed(1));
+    t.setAttribute("font-size", size.toFixed(1));
+    t.setAttribute("stroke-width", (size * 0.28).toFixed(1));
+    t.setAttribute("text-anchor", right ? "start" : "end");
+    const cut = name.lastIndexOf(",");
+    t.textContent = cut > 0 && name.length - cut > 4 ? name.slice(0, cut) : name;  // "Machu Picchu, Peru" → "Machu Picchu"; "Washington, DC" stays whole
+    s.appendChild(t);
+    return s;
+  };
+
+  for (const fig of document.querySelectorAll('figure.photo[id^="place-"]')) {
+    const img = fig.querySelector(":scope > img");
+    if (!img || !map.querySelector(`a[href="#${fig.id}"]`)) continue;
+    const name = fig.querySelector("figcaption strong")?.textContent.trim() || "this place";
+    const frame = document.createElement("div");
+    frame.className = "place-frame";
+    img.before(frame);
+    frame.append(img);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "place-map-btn";
+    btn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${ICON.map}"/></svg>`;
+    frame.append(btn);
+    const path = btn.querySelector("path");
+    let patch = null;
+    const set = open => {
+      if (open && !patch) frame.append(patch = buildPatch(fig, name));
+      frame.classList.toggle("map-open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      btn.setAttribute("aria-label", open ? `Back to the drawing of ${name}` : `Show ${name} on the map`);
+      btn.title = open ? "Back to the drawing" : "Show on the map";
+      path.setAttribute("d", open ? ICON.close : ICON.map);
+    };
+    set(false);
+    frame.addEventListener("click", () => set(!frame.classList.contains("map-open")));
+    btn.addEventListener("keydown", e => { if (e.key === "Escape") set(false); });
+  }
+})();
