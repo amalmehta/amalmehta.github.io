@@ -8,11 +8,19 @@
   if (!(gl.getContext("webgl2") || gl.getContext("webgl"))) return;
   const script = src => new Promise((ok, fail) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
   for (const fig of document.querySelectorAll('#hybrid-robotics .shot, figure[data-sim="soccer"]')) {
-    window.simIcon(fig, "ball", "Step into the robot soccer simulation", async f => {
+    const btn = window.simIcon(fig, "ball", "Step into the robot soccer simulation", async f => {
       const THREE = await import("./assets/vendor/three.module.min.js");
       if (!window.SoccerWorld) await script("soccer-world.js");
       const world = window.SoccerWorld(THREE, f);
       return () => world.dispose();
     });
+    // On the home page, a plain "Try it live" link beside the entry's other links opens the same world
+    const links = fig.closest("#hybrid-robotics")?.querySelector(".links");
+    if (btn && links && !links.querySelector(".try-sim")) {
+      const a = document.createElement("a");
+      a.className = "try-sim"; a.href = "#hybrid-robotics"; a.textContent = "Try it live →";
+      a.addEventListener("click", e => { e.preventDefault(); if (btn.getAttribute("aria-expanded") !== "true") btn.click(); });
+      links.append(" ", a);
+    }
   }
 })();

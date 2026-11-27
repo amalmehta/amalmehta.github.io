@@ -75,7 +75,7 @@ PAGES = [
     {
         "slug": "bci", "card": "bci-projects",
         "title": "BCI Projects",
-        "when": "2026 · offline decoding on public data; closed loop simulated",
+        "when": "2026 · offline decoding on public recordings; cursor control tested in simulation",
         "hook": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder holds R² 0.64 across 19 later days, against 0.35 for the classic linear decoder.",
         "hook_saved": "Four brain–computer interface projects on public neural recordings; with no new labels, the cursor decoder averages R² 0.64 over all 19 held-out days up to day 138, against 0.35 for a re-centred Wiener filter, and 0.72 against 0.66 for a plain GRU without the two electrode re-map days.",  # the longer hook, kept as a Saved for later comment
         "spine": [
