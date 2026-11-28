@@ -12,6 +12,17 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = "https://amalmehta.com/"
 e = html.escape
 
+# The Thinking question each deep dive feeds, shown under its hook (slug: (anchor on thinking.html, the question))
+BEHIND = {
+    "rewarding": ("theory-of-agi", "Should a general intelligence stay unsure of its goal?"),
+    "post-training": ("theory-of-agi", "Should a general intelligence stay unsure of its goal?"),
+    "bci": ("brains-and-robots", "What can brains teach robots about learning to move?"),
+    "neuro-falcon": ("brains-and-robots", "What can brains teach robots about learning to move?"),
+    "drone": ("vla-and-physical-intelligence", "Where do vision-language-action models meet physical intelligence?"),
+    "robot-soccer": ("vla-and-physical-intelligence", "Where do vision-language-action models meet physical intelligence?"),
+    "alphago": ("long-horizon-multi-agent-rl", "How do we train many agents to work together over long horizons?"),
+}
+
 PAGES = [
     {
         "slug": "rewarding", "card": "unverifiable-rewards",
@@ -329,6 +340,8 @@ def paras(items, cls=""):
 def page(p, i):
     url = f"{SITE}project-{p['slug']}.html"
     desc = e(p["hook"])
+    q = BEHIND.get(p["slug"])
+    behind = f'\n      <p class="case-behind">The question behind it: <a href="thinking.html#{q[0]}">{e(q[1])} →</a></p>' if q else ""
     extra_scripts = "".join(f'  <script src="{js}" defer></script>\n' for js in p.get("scripts", []))
     hook_saved = f'<!-- Saved for later, until 2026-11-26: {p["hook_saved"]} -->' if p.get("hook_saved") else ""
     name, w, h, alt = p["figure"]
@@ -420,7 +433,7 @@ def page(p, i):
     <header class="page-head">
       <p class="card-when">{e(p["when"])}</p>
       <h1>{e(p["title"])}</h1>
-      <p class="case-hook">{e(p["hook"])}</p>{hook_saved}
+      <p class="case-hook">{e(p["hook"])}</p>{hook_saved}{behind}
       <p class="links">{links}</p>
     </header>
 {spine}

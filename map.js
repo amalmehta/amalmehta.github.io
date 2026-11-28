@@ -147,3 +147,51 @@
     btn.addEventListener("keydown", e => { if (e.key === "Escape") set(false); });
   }
 })();
+
+// Travel: each name in the Been list under the map is a button; pressing it brings the map into view and makes
+// that place's pin pulse for a few seconds. Without JS the names are plain text.
+(() => {
+  const map = document.querySelector(".travel-map svg");
+  const list = document.querySelector(".map-been-list");
+  if (!map || !list) return;
+  const NS = "http://www.w3.org/2000/svg";
+  const pins = new Map([...map.querySelectorAll(".pin-been")].map(g => [g.querySelector("title")?.textContent.replace(/: been$/, ""), g]));
+  let active = null, timer = 0;
+  const clear = () => {
+    clearTimeout(timer);
+    if (!active) return;
+    active.g.classList.remove("pin-lit");
+    active.ring.remove();
+    active.btn.setAttribute("aria-pressed", "false");
+    active = null;
+  };
+  for (const li of list.querySelectorAll("li")) {
+    const name = li.textContent.trim(), g = pins.get(name);
+    if (!g) continue;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "been-name";
+    btn.textContent = name;
+    btn.setAttribute("aria-pressed", "false");
+    btn.title = "Show on the map";
+    li.replaceChildren(btn);
+    btn.addEventListener("click", () => {
+      const again = active?.btn === btn;
+      clear();
+      if (again) return;
+      const dot = g.querySelector(".pin-dot");
+      const ring = document.createElementNS(NS, "circle");
+      ring.setAttribute("class", "pin-pulse");
+      for (const a of ["cx", "cy", "r"]) ring.setAttribute(a, dot.getAttribute(a));
+      g.insertBefore(ring, dot);
+      g.classList.add("pin-lit");
+      const top = g.closest("a") || g;
+      top.parentNode.appendChild(top);  // on top of its neighbours
+      btn.setAttribute("aria-pressed", "true");
+      active = { g, ring, btn };
+      const box = map.getBoundingClientRect();
+      if (box.top < 0 || box.bottom > innerHeight) map.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+      timer = setTimeout(clear, 6000);
+    });
+  }
+})();
